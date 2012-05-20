@@ -33,6 +33,10 @@ void QuoteText::setup ( string fontPath , int fontSize )
     curTextIndex = -1 ; 
     targetIndex = 0 ; 
     nextIndex = 1 ; 
+    
+    bHasLooped = false ; 
+    maxLoopIndex = 5 ; 
+    
     startNewCharacter(  ) ; 
 }
 
@@ -59,7 +63,7 @@ ofPoint QuoteText::startNewCharacter( )
     letterOffset.x += charBounds.width + 10 ; 
     
     curTextIndex++ ; 
-    cout << "1 ) curTextIndex is : " <<  curTextIndex << endl ; 
+    //cout << "1 ) curTextIndex is : " <<  curTextIndex << endl ; 
     //cout << "curLine : " << curLine << endl ; 
     //If the index has looped over all the vertices
     if ( curTextIndex > text.size()-1 ) 
@@ -67,19 +71,19 @@ ofPoint QuoteText::startNewCharacter( )
         letterOffset.x = 0 ; 
         curTextIndex = 0 ; 
         curLine++  ;
-        cout << "textLines.size() " << textLines.size() << endl ; 
+        //cout << "textLines.size() " << textLines.size() << endl ; 
         if ( curLine < textLines.size() )
         {
-            cout << "old text was : " << text << endl ; 
+        //    cout << "old text was : " << text << endl ; 
             text = textLines[curLine] ; 
-            cout << "newText is : " << text << endl ; 
+        //    cout << "newText is : " << text << endl ; 
         }
         else
         {
             bFinished = true ; 
             return ofVec3f( ) ; 
         }
-            cout << "INVALID TEXT LINE!! : " << curLine << endl ; 
+        //    cout << "INVALID TEXT LINE!! : " << curLine << endl ; 
           
         letterOffset.y += charBounds.height + 15 ;
         
@@ -92,13 +96,13 @@ ofPoint QuoteText::startNewCharacter( )
         curTextIndex = 0 ; 
     }
     
-    cout << "2 ) curTextIndex is : " <<  curTextIndex << endl ; 
+    //cout << "2 ) curTextIndex is : " <<  curTextIndex << endl ; 
     
     //Get the current letter, if it's a space move on
     letter = text[curTextIndex] ; 
     if ( letter == ' ' )
         startNewCharacter() ; 
-    cout << "The Letter is : " << letter << endl ; 
+    //cout << "The Letter is : " << letter << endl ; 
     //First we get the outline points of the letter as a font
     character = font.getCharacterAsPoints(letter);
     collectAllPointsCharacter() ; 
@@ -127,7 +131,7 @@ ofPoint QuoteText::startNewCharacter( )
     }
     
     //Format it in a coordinate space that's easy to play with
-    charBounds = normalizeRectangle( charBounds , true ) ; 
+    charBounds = normalizeRectangle( charBounds , false ) ; 
     
     return p ; 
     
@@ -147,25 +151,42 @@ void QuoteText::collectAllPointsCharacter()
     }
 }
 
+/*
 ofVec2f QuoteText::getNextPathPoint( ) 
 {
     int maxIndex = characterPoints.size() - 1 ; 
     if ( targetIndex > maxIndex ) 
     {
-        ofVec2f p = startNewCharacter() ;
-        //ofNotifyEvent(AgentEvent::Instance()->TELEPORT_NEW_TARGET, p ) ; 
-        bTeleportFlag = true ;
-        return  p ; 
+        if ( bHasLooped == false )
+        {
+            bHasLooped = true ; 
+            targetIndex = 0 ; 
+            nextIndex = 0 ; 
+            return getNextTarget() ; 
+        }
+        
     }
     else
     {
+        if ( bHasLooped == true ) 
+        {
+            if ( targetIndex > maxLoopIndex ) 
+            {
+                ofVec2f p = startNewCharacter() ;
+                //ofNotifyEvent(AgentEvent::Instance()->TELEPORT_NEW_TARGET, p ) ; 
+                bTeleportFlag = true ;
+                bHasLooped = false ; 
+                return  p ; 
+
+            }
+        }
         nextIndex = targetIndex + 1 ; 
         if ( nextIndex > maxIndex ) 
             nextIndex = 0 ; 
         return getNextTarget() ; 
     }
 }
-
+*/
 
 void QuoteText::endPath ( ) 
 {

@@ -34,6 +34,9 @@ void testApp::setup()
     ofPoint p1 = quote.getPointByChar ( 0 ) ; 
     agent.startNewPath() ; 
     agent.position = p1 ; 
+    agent.target = p1 ; 
+    //cout << "p1 : " << p1 << endl ; 
+    
     
 }
 //--------------------------------------------------------------
@@ -50,24 +53,13 @@ void testApp::update()
         ofPoint _position = quote.getNextTarget() ; 
         if ( quote.bTeleportFlag == true ) 
         {
-            cout << "SHOULD BE TELEPORTING!!!" << endl ; 
+            //cout << "SHOULD BE TELEPORTING!!!" << endl ; 
             agent.position = _position ; 
             quote.bTeleportFlag = false ; 
             agent.startNewPath() ; 
         }
-      //  if ( _position == NULL ) 
-      //  {
-      //      _position = quote.startNewCharacter() ; 
-      //  }
-        agent.bTarget = false ; 
-        /*
-        if ( _position.z > 0 ) 
-        {
-            cout << "jump to new location!" << endl ;
-            agent.startNewPath() ; 
-            agent.position = _position ; 
-        }*/
         
+        agent.bTarget = false ; 
         agent.setTarget ( _position ) ;
     }
 }

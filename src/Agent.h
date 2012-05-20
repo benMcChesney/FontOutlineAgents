@@ -100,7 +100,7 @@ class Agent
             acceleration = ofVec2f( .4 , .4 ) ; 
             
             force = ofVec2f( 0.0f , 0.0f ) ; 
-            maxVelocity = ofRandom( 4, 6 )  ;
+            maxVelocity = ofRandom( 1, 2 )  ;
             
             //Max turn
             maxForce = 5.0f  ; 

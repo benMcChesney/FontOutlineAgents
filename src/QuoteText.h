@@ -43,13 +43,10 @@ class QuoteText
     
     int targetIndex ;               //Target for the next index
     int nextIndex ;                 //next index
-   // int curContour ;                //current contour of the letter
-   // int curMaxContours ;            //total # of contours in character
-    
     ofVec3f letterOffset ;          //offset for drawing the current letter
 
-    //bool hasLooped ;                //for repeating over contour points to fully close shapes
-    //int maxLoopIndex ;
+    bool bHasLooped ;                //for repeating over contour points to fully close shapes
+    int maxLoopIndex ;
     
     vector<ofVec2f> characterPoints ; 
     void collectAllPointsCharacter( )  ;
