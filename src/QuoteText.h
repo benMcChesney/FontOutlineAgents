@@ -10,6 +10,7 @@
 #define emptyExample_QuoteText_h
 
 #include "ofMain.h"
+#include "QuotePath.h"
 #include "AgentEvent.h"
 
 
@@ -19,44 +20,26 @@ class QuoteText
         
     QuoteText ( ) { }
     
-        
     void setup ( string fontPath , int fontSize ) ;
-    ofPoint getPointByChar( int charIndex ) ;       //Get x , y of a character
     void addLine ( string line ) ;                  //add line
     
     ofRectangle normalizeRectangle ( ofRectangle rect ,  bool verboseLog = false ) ;
     
-    ofPoint getNextTarget ( ) ; 
-    ofPoint startNewCharacter( ) ;
+    ofPoint getNextTarget ( int pathIndex ) ; 
+    ofPoint startNewCharacter( int pathIndex ) ;
+    ofPoint getPointByChar( int charIndex , int pathIndex) ;       //Get x , y of a character
  
-    int curLine ;                   //current line
     vector<string> textLines ;      //Text line by line
-    int curTextIndex ;              //cur line index
-    char letter;                    //current character
-
     ofTrueTypeFont font ;           //Font
-
-    ofTTFCharacter character ;
-    ofVec2f charTranslateOffset ;   //offset for all the characters from 0 , 0
-    ofRectangle charBounds ;        //Bounds of the current character ( 0 , 0 , width , height ) 
-    string text ;                   //current line text
     
-    int targetIndex ;               //Target for the next index
-    int nextIndex ;                 //next index
-    ofVec3f letterOffset ;          //offset for drawing the current letter
-
-    bool bHasLooped ;                //for repeating over contour points to fully close shapes
-    int maxLoopIndex ;
+    void collectAllPointsCharacter( int pathIndex )  ;
     
-    vector<ofVec2f> characterPoints ; 
-    void collectAllPointsCharacter( )  ;
+    vector<QuotePath*> quotePaths ; 
+    void addQuotePath ( QuotePath* qp ) ; 
     
-    bool bTeleportFlag ;
-    ofVec2f getNextPathPoint( ) ; 
+    QuotePath * getQuotePathAt ( int index ) ; 
     
-    void endPath ( ) ; 
     
-    bool bFinished ;                //Finished drawing the quote
     
     
 };

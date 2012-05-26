@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		BBAB23CB13894F3D00AA2426 /* GLUT.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = BBAB23BE13894E4700AA2426 /* GLUT.framework */; };
+		D97DCBF61570832000FC84A9 /* QuotePath.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D97DCBF51570832000FC84A9 /* QuotePath.cpp */; };
 		D9BE6F46151031440066CC61 /* QuoteText.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D9BE6F45151031440066CC61 /* QuoteText.cpp */; };
 		E4328149138ABC9F0047C5CB /* openFrameworksDebug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4328148138ABC890047C5CB /* openFrameworksDebug.a */; };
 		E45BE97B0E8CC7DD009D7055 /* AGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E45BE9710E8CC7DD009D7055 /* AGL.framework */; };
@@ -60,6 +61,8 @@
 /* Begin PBXFileReference section */
 		BBAB23BE13894E4700AA2426 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = ../../../libs/glut/lib/osx/GLUT.framework; sourceTree = "<group>"; };
 		D92B70D214E6ECF3009F7702 /* Agent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Agent.h; sourceTree = "<group>"; };
+		D97DCBF415705D1C00FC84A9 /* QuotePath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuotePath.h; sourceTree = "<group>"; };
+		D97DCBF51570832000FC84A9 /* QuotePath.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QuotePath.cpp; sourceTree = "<group>"; };
 		D99983BC14F4B6860063154F /* ColorPool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorPool.h; sourceTree = "<group>"; };
 		D99983BE14F4BE850063154F /* ColorTrail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorTrail.h; sourceTree = "<group>"; };
 		D9BE6F4415102D980066CC61 /* QuoteText.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuoteText.h; sourceTree = "<group>"; };
@@ -188,6 +191,8 @@
 				D9BE6F4415102D980066CC61 /* QuoteText.h */,
 				D9BE6F45151031440066CC61 /* QuoteText.cpp */,
 				D9BE6F47151064FE0066CC61 /* AgentEvent.h */,
+				D97DCBF415705D1C00FC84A9 /* QuotePath.h */,
+				D97DCBF51570832000FC84A9 /* QuotePath.cpp */,
 			);
 			path = src;
 			sourceTree = SOURCE_ROOT;
@@ -288,6 +293,7 @@
 				E4B69E200A3A1BDC003C02F2 /* main.cpp in Sources */,
 				E4B69E210A3A1BDC003C02F2 /* testApp.cpp in Sources */,
 				D9BE6F46151031440066CC61 /* QuoteText.cpp in Sources */,
+				D97DCBF61570832000FC84A9 /* QuotePath.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

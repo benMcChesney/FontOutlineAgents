@@ -4,6 +4,7 @@
 #include "Agent.h"
 #include "ColorPool.h"
 #include "QuoteText.h"
+#include "QuotePath.h"
 
 class testApp : public ofBaseApp{
 
@@ -12,10 +13,13 @@ class testApp : public ofBaseApp{
 		void update();
 		void draw();
     
-        Agent agent ; 
+        //Agent agent ; 
+        vector<Agent*> agents ; 
     
         QuoteText quote ;
    
         ColorPool colorPool ; 
         int screenshotCount ; 
+    
+    
 };

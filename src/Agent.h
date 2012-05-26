@@ -36,6 +36,8 @@ class Agent
         ColorPool * colorPool ; 
         vector<ColorTrail> paths ; 
         ColorTrail curPath ; 
+    
+
         
         ofVec2f cartesianToPolar ( ofVec2f v ) 
         { 

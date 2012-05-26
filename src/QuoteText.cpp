@@ -15,35 +15,24 @@ void QuoteText::setup ( string fontPath , int fontSize )
     //Setup our font
     font.loadFont( fontPath , fontSize , true, true, true );
     
-    //Default parameters
-   // maxLoopIndex = 4 ; 
-    curLine = 0 ; 
-    curTextIndex = 0 ;
-    targetIndex = 1 ; 
-    nextIndex = 2 ; 
-    
-    
-    //The text is one line at a time
-    text = textLines[curLine] ; 
-    letter = text[curTextIndex] ; 
-    character = font.getCharacterAsPoints(letter);
-    bTeleportFlag = false ; 
-    bFinished = false ; 
-    
-    curTextIndex = -1 ; 
-    targetIndex = 0 ; 
-    nextIndex = 1 ; 
-    
-    bHasLooped = false ; 
-    maxLoopIndex = 5 ; 
-    
-    startNewCharacter(  ) ; 
+    // Default parameters
+    // maxLoopIndex = 4 ;     
+    // startNewCharacter(  ) ; 
 }
 
-ofPoint QuoteText::getPointByChar( int charIndex ) 
+
+void QuoteText::addQuotePath ( QuotePath* qp ) 
+{
+    
+    // vector<QuotePath*> quotePaths ; 
+    quotePaths.push_back( qp ) ; 
+}
+
+ofPoint QuoteText::getPointByChar( int charIndex , int pathIndex ) 
 {
     //Apply the character offset and the letter offset
-    ofPoint p1 = character.getOutline()[charIndex].getVertices()[targetIndex] + charTranslateOffset + letterOffset ; 
+    QuotePath * qp = quotePaths[pathIndex] ; 
+    ofPoint p1 = qp->character.getOutline()[charIndex].getVertices()[ qp->targetIndex ] + qp->charTranslateOffset + qp->letterOffset ; 
     
     return p1 ; 
 }
@@ -54,71 +43,73 @@ void QuoteText::addLine ( string line )
 }
 
 
-ofPoint QuoteText::startNewCharacter( ) 
+ofPoint QuoteText::startNewCharacter( int pathIndex ) 
 {
-    bTeleportFlag = true ; 
-    endPath( ) ; 
+    QuotePath * qp = quotePaths[pathIndex] ; 
+    
+    qp->bTeleportFlag = true ; 
+    qp->endPath( ) ; 
     
     //Move the character to the right
-    letterOffset.x += charBounds.width + 10 ; 
+    qp->letterOffset.x += qp->charBounds.width + 10 ; 
     
-    curTextIndex++ ; 
+    qp->curTextIndex++ ; 
     //cout << "1 ) curTextIndex is : " <<  curTextIndex << endl ; 
     //cout << "curLine : " << curLine << endl ; 
     //If the index has looped over all the vertices
-    if ( curTextIndex > text.size()-1 ) 
+    if ( qp->curTextIndex > qp->text.size()-1 ) 
     {
-        letterOffset.x = 0 ; 
-        curTextIndex = 0 ; 
-        curLine++  ;
+        qp->letterOffset.x = 0 ; 
+        qp->curTextIndex = 0 ; 
+        qp->curLine++  ;
         //cout << "textLines.size() " << textLines.size() << endl ; 
-        if ( curLine < textLines.size() )
+        if ( qp->curLine < qp->textLines.size() )
         {
         //    cout << "old text was : " << text << endl ; 
-            text = textLines[curLine] ; 
+            qp->text = textLines[qp->curLine] ; 
         //    cout << "newText is : " << text << endl ; 
         }
         else
         {
-            bFinished = true ; 
+            qp->bFinished = true ; 
             return ofVec3f( ) ; 
         }
         //    cout << "INVALID TEXT LINE!! : " << curLine << endl ; 
           
-        letterOffset.y += charBounds.height + 15 ;
+        qp->letterOffset.y += qp->charBounds.height + 15 ;
         
         
-        if ( curLine > textLines.size()-1 )
+        if ( qp->curLine > textLines.size()-1 )
             return ofVec3f( )  ; 
         
-        bTeleportFlag = true ; 
+        qp->bTeleportFlag = true ; 
         //We loop around to complete the contour for a few more indicies
-        curTextIndex = 0 ; 
+        qp->curTextIndex = 0 ; 
     }
     
     //cout << "2 ) curTextIndex is : " <<  curTextIndex << endl ; 
     
     //Get the current letter, if it's a space move on
-    letter = text[curTextIndex] ; 
-    if ( letter == ' ' )
-        startNewCharacter() ; 
+    qp->letter = qp->text[qp->curTextIndex] ; 
+    if ( qp->letter == ' ' )
+        startNewCharacter( pathIndex ) ; 
     //cout << "The Letter is : " << letter << endl ; 
     //First we get the outline points of the letter as a font
-    character = font.getCharacterAsPoints(letter);
-    collectAllPointsCharacter() ; 
+    qp->character = font.getCharacterAsPoints( qp->letter );
+    collectAllPointsCharacter( pathIndex ) ; 
     
-    targetIndex = 0 ; 
-    nextIndex = 0 ; 
-    ofPoint p = getNextTarget( ) ; 
+    qp->targetIndex = 0 ; 
+    qp->nextIndex = 0 ; 
+    ofPoint p = getNextTarget( pathIndex ) ; 
      
     //Calculate the bounds of the rectangle
-    charBounds = ofRectangle( 0 , 0 , 0 , 0 ) ; 
-    for(int k = 0; k <(int)character.getOutline().size(); k++)
+    ofRectangle charBounds = ofRectangle( 0 , 0 , 0 , 0 ) ; 
+    for(int k = 0; k <(int)qp->character.getOutline().size(); k++)
     {
         
-        for(int i = 0; i < (int)character.getOutline()[k].size(); i++)
+        for(int i = 0; i < (int)qp->character.getOutline()[k].size(); i++)
         {
-            ofPoint p = character.getOutline()[k].getVertices()[i] ; 
+            ofPoint p = qp->character.getOutline()[k].getVertices()[i] ; 
             if ( p.x < charBounds.x ) 
                 charBounds.x = p.x ; 
             if ( p.y < charBounds.y ) 
@@ -131,67 +122,26 @@ ofPoint QuoteText::startNewCharacter( )
     }
     
     //Format it in a coordinate space that's easy to play with
-    charBounds = normalizeRectangle( charBounds , false ) ; 
+    qp->charBounds = normalizeRectangle( charBounds , false ) ; 
     
     return p ; 
     
 }
 
-void QuoteText::collectAllPointsCharacter()
+void QuoteText::collectAllPointsCharacter( int pathIndex )
 {
-    characterPoints.clear() ; 
-    for(int k = 0; k <(int)character.getOutline().size(); k++)
+    QuotePath * qp = quotePaths[pathIndex] ; 
+    
+    qp->characterPoints.clear() ; 
+    for(int k = 0; k <(int)qp->character.getOutline().size(); k++)
     {
         
-        for(int i = 0; i < (int)character.getOutline()[k].size(); i++)
+        for(int i = 0; i < (int)qp->character.getOutline()[k].size(); i++)
         {
-            ofVec2f p = character.getOutline()[k].getVertices()[i] ; 
-            characterPoints.push_back( p ) ; 
+            ofVec2f p = qp->character.getOutline()[k].getVertices()[i] ; 
+            qp->characterPoints.push_back( p ) ; 
         }
     }
-}
-
-/*
-ofVec2f QuoteText::getNextPathPoint( ) 
-{
-    int maxIndex = characterPoints.size() - 1 ; 
-    if ( targetIndex > maxIndex ) 
-    {
-        if ( bHasLooped == false )
-        {
-            bHasLooped = true ; 
-            targetIndex = 0 ; 
-            nextIndex = 0 ; 
-            return getNextTarget() ; 
-        }
-        
-    }
-    else
-    {
-        if ( bHasLooped == true ) 
-        {
-            if ( targetIndex > maxLoopIndex ) 
-            {
-                ofVec2f p = startNewCharacter() ;
-                //ofNotifyEvent(AgentEvent::Instance()->TELEPORT_NEW_TARGET, p ) ; 
-                bTeleportFlag = true ;
-                bHasLooped = false ; 
-                return  p ; 
-
-            }
-        }
-        nextIndex = targetIndex + 1 ; 
-        if ( nextIndex > maxIndex ) 
-            nextIndex = 0 ; 
-        return getNextTarget() ; 
-    }
-}
-*/
-
-void QuoteText::endPath ( ) 
-{
-    targetIndex = 0 ; 
-    nextIndex = 1 ; 
 }
 
 ofRectangle QuoteText::normalizeRectangle ( ofRectangle rect , bool verboseLog )
@@ -207,25 +157,39 @@ ofRectangle QuoteText::normalizeRectangle ( ofRectangle rect , bool verboseLog )
     
 }
 
-ofPoint QuoteText::getNextTarget( ) 
+ofPoint QuoteText::getNextTarget( int pathIndex ) 
 {
-    int startIndex = targetIndex ; 
-    targetIndex++ ;
-    if ( targetIndex > characterPoints.size()-1 ) 
+    QuotePath * qp = quotePaths[pathIndex] ; 
+    
+    int startIndex = qp->targetIndex ; 
+    qp->targetIndex++ ;
+    if ( qp->targetIndex > qp->characterPoints.size()-1 ) 
     {
-        targetIndex = 0 ; 
-        cout << "loop over! " << endl ; 
-        return startNewCharacter() ;
+        if ( qp->bHasLooped == false ) 
+        {
+            qp->bHasLooped = true ; 
+        }
+        qp->targetIndex = 0 ; 
     }
 
-    ofPoint p1 = characterPoints[startIndex] ;
-    ofPoint p2 = characterPoints[targetIndex] ;
+    if ( qp->bHasLooped == true ) 
+    {
+        if ( qp->targetIndex >= qp->maxLoopIndex ) 
+        {
+            qp->targetIndex = 0 ; 
+            qp->bHasLooped = false ; 
+            cout << "loop over! " << endl ; 
+            return startNewCharacter( pathIndex ) ;
+        }
+    }
+    ofPoint p1 = qp->characterPoints[startIndex] ;
+    ofPoint p2 = qp->characterPoints[qp->targetIndex] ;
     //How much to space out the letters in the x on each letter and y on each new line
-    charTranslateOffset = ofVec2f( 100 , 150 ) ; 
+    qp->charTranslateOffset = ofVec2f( 100 , 150 ) ; 
    
-    float angleBetween( atan2(p2.y - p1.y , p2.x - p1.x ) ) ; 
-    ofVec2f _position = charTranslateOffset + characterPoints[targetIndex] + letterOffset  ; 
-
+    //float angleBetween( atan2(p2.y - p1.y , p2.x - p1.x ) ) ; 
+    ofVec2f _position = qp->charTranslateOffset + qp->characterPoints[qp->targetIndex] + qp->letterOffset  ; 
+/*
     if ( bTeleportFlag == true ) 
     {
         ofNotifyEvent(AgentEvent::Instance()->TELEPORT_NEW_TARGET, _position ) ; 
@@ -233,6 +197,19 @@ ofPoint QuoteText::getNextTarget( )
     }
     else
         ofNotifyEvent(AgentEvent::Instance()->NEW_AGENT_TARGET, _position ) ; 
-    
+  */  
     return _position ;
+}
+
+QuotePath* QuoteText::getQuotePathAt ( int index )
+{
+    if ( index < quotePaths.size() ) 
+    {
+        return quotePaths[ index ] ; 
+    }
+    else
+    {
+        cout << " not a valid quotePath Index : " << index << " / " << quotePaths.size() -1 << endl ; 
+        return NULL ; 
+    }
 }
