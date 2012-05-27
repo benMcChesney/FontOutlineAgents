@@ -23,17 +23,20 @@ class Agent
         ofColor color ; 
         ofColor nextColor ; 
         bool bTarget ; 
+        float targetBufferDist ;    //How close until selecting a new target
     
         float wallDistance ; 
     
-        ofVec2f target, position, velocity, force, acceleration ; 
+        //acceleration,
+        ofVec2f target, position,  force, velocity ; 
         float maxVelocity , maxForce ; 
     
     
         int colorInterpolateNum ;
         int curIndex ;
+        int pathSampling ; 
     
-        ColorPool * colorPool ; 
+        ColorPool colorPool ; 
         vector<ColorTrail> paths ; 
         ColorTrail curPath ; 
     
@@ -90,16 +93,17 @@ class Agent
     
         void setup( ofVec2f p , ofVec2f a , float _wallDistance = 1.0f )
         {
+            targetBufferDist = 10.0f ; 
             wallDistance = _wallDistance ; 
             position = p ; 
-            acceleration = a ; 
+            //acceleration = a ; 
             bTarget = false ; 
             
             position = ofVec2f ( ofGetWidth()/2 , ofGetHeight()/2 ) ; 
             //velocity = ofVec2f ( 1 ,  ofRandom( TWO_PI )  ) ;
             
             velocity = ( ofRandom(TWO_PI) , ofRandom( TWO_PI ) ) ;
-            acceleration = ofVec2f( .4 , .4 ) ; 
+            //acceleration = ofVec2f( .4 , .4 ) ; 
             
             force = ofVec2f( 0.0f , 0.0f ) ; 
             maxVelocity = ofRandom( 1, 2 )  ;
@@ -108,8 +112,8 @@ class Agent
             maxForce = 5.0f  ; 
             
             colorInterpolateNum = 10 ; 
-            nextColor = colorPool->getRandomColor() ; 
-            
+            nextColor = colorPool.getRandomColor() ; 
+            pathSampling = 4 ;
             curIndex = 0 ; 
        //     ofAddListener( AgentEvent::Instance()->NEW_AGENT_TARGET, this , &Agent::newAgentTargetHandler ) ; 
        //     ofAddListener( AgentEvent::Instance()->TELEPORT_NEW_TARGET, this , &Agent::teleportNewTargetHandler ) ; 
@@ -119,12 +123,12 @@ class Agent
         void update( ) 
         {
             float dist = ofDist ( position.x , position.y , target.x , target.y ) ; 
-            if ( dist < 10.0f ) 
+            if ( dist < targetBufferDist ) 
             {
                 bTarget = true ; 
             }
             
-            if ( ofGetFrameNum() % 4 == 0 ) 
+            if ( ofGetFrameNum() % pathSampling == 0 ) 
             {
                 curIndex++ ; 
                 ColorPoint cp ; 
@@ -134,7 +138,7 @@ class Agent
                 {
                     curIndex = 0 ; 
                     color = nextColor ; 
-                    nextColor = colorPool->getRandomColor() ; 
+                    nextColor = colorPool.getRandomColor() ; 
                 }
                 
                 float ratio = (float)curIndex / (float)colorInterpolateNum ; 
@@ -173,7 +177,7 @@ class Agent
         void seek(ofVec2f oTarget)
         {
             
-            //From Roxlu's Voids code ( www.roxlu.com ) 
+            //From Roxlu's Boids code ( www.roxlu.com ) 
             // This is how it works.
             // 1. We calculate the change in position which would bring
             // use directly to the target. This is "desired_vel". Though we don't

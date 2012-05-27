@@ -190,7 +190,7 @@ ofPoint QuoteText::getNextTarget( int pathIndex )
     qp->charTranslateOffset = ofVec2f( 100 , 150 ) ; 
    
     //float angleBetween( atan2(p2.y - p1.y , p2.x - p1.x ) ) ; 
-    cout << "qp->characterPoints.size() " << qp->characterPoints.size() << endl; 
+    //cout << "qp->characterPoints.size() " << qp->characterPoints.size() << endl; 
     ofVec2f _position = qp->charTranslateOffset + qp->characterPoints[qp->targetIndex] + qp->letterOffset  ; 
 /*
     if ( bTeleportFlag == true ) 

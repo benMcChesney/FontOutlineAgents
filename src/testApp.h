@@ -5,6 +5,7 @@
 #include "ColorPool.h"
 #include "QuoteText.h"
 #include "QuotePath.h"
+#include "ofxUI.h"
 
 class testApp : public ofBaseApp{
 
@@ -18,6 +19,15 @@ class testApp : public ofBaseApp{
     
         QuoteText quote ;
         ColorPool colorPool ; 
+    
+        ofxUICanvas *gui;   
+        void setupGUI( ) ; 
+        void guiEvent(ofxUIEventArgs &e) ; 
+    
+        float a_maxSpeed ; 
+        float a_maxForce ; 
+        float a_targetBuffer ; 
+        float a_pathSampling ; 
     
     
 };
