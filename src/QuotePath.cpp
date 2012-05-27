@@ -21,10 +21,11 @@ void QuotePath::setup( )
     text = textLines[curLine] ; 
     letter = text[curTextIndex] ; 
     character = font.getCharacterAsPoints(letter);
+    collectAllPointsCharacter( ) ;
     curTextIndex = -1 ; 
     targetIndex = 0 ; 
     nextIndex = 1 ; 
-    
+    collectAllPointsCharacter( ) ;
     bTeleportFlag = false ; 
     bFinished = false ; 
     
@@ -32,6 +33,20 @@ void QuotePath::setup( )
     maxLoopIndex = 15 ; 
     
 
+}
+
+void QuotePath::collectAllPointsCharacter( )
+{   
+    characterPoints.clear() ; 
+    for(int k = 0; k <(int)character.getOutline().size(); k++)
+    {
+        
+        for(int i = 0; i < (int)character.getOutline()[k].size(); i++)
+        {
+            ofVec2f p = character.getOutline()[k].getVertices()[i] ; 
+            characterPoints.push_back( p ) ; 
+        }
+    }
 }
 
 void QuotePath::endPath ( ) 

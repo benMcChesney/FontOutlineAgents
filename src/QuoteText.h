@@ -32,10 +32,10 @@ class QuoteText
     vector<string> textLines ;      //Text line by line
     ofTrueTypeFont font ;           //Font
     
-    void collectAllPointsCharacter( int pathIndex )  ;
+    
     
     vector<QuotePath*> quotePaths ; 
-    void addQuotePath ( QuotePath* qp ) ; 
+    void createQuotePath ( ) ; 
     
     QuotePath * getQuotePathAt ( int index ) ; 
     

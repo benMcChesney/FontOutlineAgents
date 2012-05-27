@@ -44,7 +44,7 @@ class QuotePath
         bool bFinished ;                //Finished drawing the quote
 
         void endPath ( )  ; 
-    
+        void collectAllPointsCharacter( )  ;
         
 };
 

@@ -35,14 +35,14 @@ void testApp::setup()
         agent->setup( ofVec2f ( ofGetWidth()/2 , ofGetHeight()/2 ) , ofVec2f( 0.3f , 0 ) , 20.0f ) ; 
         agent->color = colorPool.getRandomColor() ;
             
+        quote.createQuotePath( ) ; 
+        
         ofPoint p1 = quote.getPointByChar ( 0 , i ) ; 
         agent->startNewPath() ; 
         agent->position = p1 ; 
         agent->target = p1 ; 
         
-        QuotePath * qp = new QuotePath( ) ; 
-        qp->setup( ) ;
-        quote.addQuotePath( qp ) ; 
+       
         
         
         agents.push_back( agent ) ; 
@@ -70,13 +70,13 @@ void testApp::update()
         if ( (*a)->bTarget == true ) 
         {
             ofPoint _position = quote.getNextTarget( count ) ; 
-            QuotePath * qp = quote.getQuotePathAt( 0 ) ; 
+            QuotePath * qp = quote.getQuotePathAt( count ) ; 
            // if ( qp 
-            if ( quote.bTeleportFlag == true ) 
+            if ( qp->bTeleportFlag == true ) 
             {
                 //cout << "SHOULD BE TELEPORTING!!!" << endl ; 
                 (*a)->position = _position ; 
-                quote.bTeleportFlag = false ; 
+                qp->bTeleportFlag = false ; 
                 (*a)->startNewPath() ; 
             }
             

@@ -21,9 +21,12 @@ void QuoteText::setup ( string fontPath , int fontSize )
 }
 
 
-void QuoteText::addQuotePath ( QuotePath* qp ) 
+void QuoteText::createQuotePath ( ) 
 {
-    
+    QuotePath * qp = new QuotePath( ) ; 
+    qp->textLines = textLines ; 
+    qp->setup( ) ;
+
     // vector<QuotePath*> quotePaths ; 
     quotePaths.push_back( qp ) ; 
 }
@@ -31,7 +34,12 @@ void QuoteText::addQuotePath ( QuotePath* qp )
 ofPoint QuoteText::getPointByChar( int charIndex , int pathIndex ) 
 {
     //Apply the character offset and the letter offset
-    QuotePath * qp = quotePaths[pathIndex] ; 
+    QuotePath * qp = getQuotePathAt ( pathIndex ) ; 
+    if ( qp == NULL ) 
+    {
+        return ofVec2f( ) ; 
+    }
+    //quotePaths[pathIndex] ; 
     ofPoint p1 = qp->character.getOutline()[charIndex].getVertices()[ qp->targetIndex ] + qp->charTranslateOffset + qp->letterOffset ; 
     
     return p1 ; 
@@ -96,7 +104,8 @@ ofPoint QuoteText::startNewCharacter( int pathIndex )
     //cout << "The Letter is : " << letter << endl ; 
     //First we get the outline points of the letter as a font
     qp->character = font.getCharacterAsPoints( qp->letter );
-    collectAllPointsCharacter( pathIndex ) ; 
+    qp->collectAllPointsCharacter() ; 
+    //..collectAllPointsCharacter( pathIndex ) ; 
     
     qp->targetIndex = 0 ; 
     qp->nextIndex = 0 ; 
@@ -128,21 +137,7 @@ ofPoint QuoteText::startNewCharacter( int pathIndex )
     
 }
 
-void QuoteText::collectAllPointsCharacter( int pathIndex )
-{
-    QuotePath * qp = quotePaths[pathIndex] ; 
-    
-    qp->characterPoints.clear() ; 
-    for(int k = 0; k <(int)qp->character.getOutline().size(); k++)
-    {
-        
-        for(int i = 0; i < (int)qp->character.getOutline()[k].size(); i++)
-        {
-            ofVec2f p = qp->character.getOutline()[k].getVertices()[i] ; 
-            qp->characterPoints.push_back( p ) ; 
-        }
-    }
-}
+
 
 ofRectangle QuoteText::normalizeRectangle ( ofRectangle rect , bool verboseLog )
 {
@@ -159,7 +154,9 @@ ofRectangle QuoteText::normalizeRectangle ( ofRectangle rect , bool verboseLog )
 
 ofPoint QuoteText::getNextTarget( int pathIndex ) 
 {
-    QuotePath * qp = quotePaths[pathIndex] ; 
+    QuotePath * qp = getQuotePathAt ( pathIndex ) ; 
+    if ( qp == NULL ) 
+        return ofPoint( ) ; 
     
     int startIndex = qp->targetIndex ; 
     qp->targetIndex++ ;
@@ -188,6 +185,7 @@ ofPoint QuoteText::getNextTarget( int pathIndex )
     qp->charTranslateOffset = ofVec2f( 100 , 150 ) ; 
    
     //float angleBetween( atan2(p2.y - p1.y , p2.x - p1.x ) ) ; 
+    cout << "qp->characterPoints.size() " << qp->characterPoints.size() << endl; 
     ofVec2f _position = qp->charTranslateOffset + qp->characterPoints[qp->targetIndex] + qp->letterOffset  ; 
 /*
     if ( bTeleportFlag == true ) 
