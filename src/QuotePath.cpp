@@ -20,7 +20,7 @@ void QuotePath::setup( )
     //The text is one line at a time
     text = textLines[curLine] ; 
     letter = text[curTextIndex] ; 
-    character = font.getCharacterAsPoints(letter);
+    character = font->getCharacterAsPoints(letter);
     collectAllPointsCharacter( ) ;
     curTextIndex = -1 ; 
     targetIndex = 0 ; 

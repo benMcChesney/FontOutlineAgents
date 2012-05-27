@@ -13,11 +13,7 @@
 void QuoteText::setup ( string fontPath , int fontSize ) 
 {
     //Setup our font
-    font.loadFont( fontPath , fontSize , true, true, true );
-    
-    // Default parameters
-    // maxLoopIndex = 4 ;     
-    // startNewCharacter(  ) ; 
+    font.loadFont( fontPath , fontSize, true , true , true ) ; 
 }
 
 
@@ -25,6 +21,7 @@ void QuoteText::createQuotePath ( )
 {
     QuotePath * qp = new QuotePath( ) ; 
     qp->textLines = textLines ; 
+    qp->font = &font ; 
     qp->setup( ) ;
 
     // vector<QuotePath*> quotePaths ; 
@@ -37,11 +34,19 @@ ofPoint QuoteText::getPointByChar( int charIndex , int pathIndex )
     QuotePath * qp = getQuotePathAt ( pathIndex ) ; 
     if ( qp == NULL ) 
     {
+        cout << "getPointByChar(" << charIndex << " , " << pathIndex << "failed " << endl ;
         return ofVec2f( ) ; 
     }
     //quotePaths[pathIndex] ; 
+   // cout << "quotePath is not NULL!" << endl ;
+    //cout << "charIndex : " << charIndex << endl ;
+   // cout << "qp->targetIndex" << qp->targetIndex << endl ; 
+    //qp->collectAllPointsCharacter() ; 
+   // ofPoint p1 = qp->characterPoints[charIndex] ; 
+    //vector<ofPoint> pts = qp->character.getOutline()[charIndex].getVertices() ;
+    //cout << "pts.size() " << endl ;
     ofPoint p1 = qp->character.getOutline()[charIndex].getVertices()[ qp->targetIndex ] + qp->charTranslateOffset + qp->letterOffset ; 
-    
+    //cout << "p1 is : " << p1.x << " , " << p1.y << endl ; 
     return p1 ; 
 }
 

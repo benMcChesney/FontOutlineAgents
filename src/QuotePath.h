@@ -24,7 +24,7 @@ class QuotePath
         char letter;                    //current character
         
         vector<string> textLines ;      //Text line by line
-        ofTrueTypeFont font ;           //Font
+        ofTrueTypeFont *font ;           //Font
         
         ofTTFCharacter character ;
         ofVec2f charTranslateOffset ;   //offset for all the characters from 0 , 0

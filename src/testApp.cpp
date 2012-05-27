@@ -3,7 +3,7 @@
 //--------------------------------------------------------------
 void testApp::setup()
 {
-   
+    ofSetLogLevel(OF_LOG_VERBOSE) ; 
     ofBackground( 255 , 255 , 255 ) ; 
     ofSetFrameRate( 60 ) ; 
     ofSetVerticalSync( true ) ; 
@@ -21,10 +21,7 @@ void testApp::setup()
     quote.addLine(  "OVERLORDS") ; 
     quote.setup( "Batang.ttf" , 60 ) ; 
     
-    //For recording movies
-    screenshotCount = 0 ; 
-
-    int numAgents = 1 ; 
+    int numAgents = 5 ; 
     for ( int i = 0 ; i < numAgents ; i++ ) 
     {
         
@@ -36,7 +33,7 @@ void testApp::setup()
         agent->color = colorPool.getRandomColor() ;
             
         quote.createQuotePath( ) ; 
-        
+        cout << "making agent : " << i << endl ; 
         ofPoint p1 = quote.getPointByChar ( 0 , i ) ; 
         agent->startNewPath() ; 
         agent->position = p1 ; 
@@ -58,6 +55,7 @@ void testApp::update()
 {
    // if ( quote.bFinished ) 
    //     return ; 
+    //return ; 
     
     int count = 0 ; 
     vector<Agent*>::iterator a ; 
@@ -108,6 +106,15 @@ void testApp::update()
 //--------------------------------------------------------------
 void testApp::draw()
 {       
+    /*
+    ofSetColor( 15 , 15 , 15 ) ; 
+    font.drawString( "STRING" ,  150 , 150 ) ; 
+    ofEnableSmoothing() ; 
+    ofNoFill() ; 
+    font.drawStringAsShapes( "STRING" ,  150 , 300 ) ; 
+    ofDisableSmoothing() ; 
+   // return ; */
+    
     //Call the agent draw() ! Nice and simple
     vector<Agent*>::iterator a ; 
     for ( a = agents.begin() ; a != agents.end() ; a++ )

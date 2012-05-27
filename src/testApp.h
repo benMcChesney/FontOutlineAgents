@@ -17,9 +17,7 @@ class testApp : public ofBaseApp{
         vector<Agent*> agents ; 
     
         QuoteText quote ;
-   
         ColorPool colorPool ; 
-        int screenshotCount ; 
     
     
 };
