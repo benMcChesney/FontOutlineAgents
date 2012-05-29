@@ -16,6 +16,7 @@ struct ColorPoint
 {
     ofColor color ; 
     ofVec2f position ; 
+    float radius ; 
 };
 
 class ColorTrail

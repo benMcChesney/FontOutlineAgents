@@ -10,10 +10,14 @@
 
 #include "QuoteText.h"
 
-void QuoteText::setup ( string fontPath , int fontSize ) 
+void QuoteText::setup ( string _fontPath , int _fontSize ) 
 {
+    fontPath = _fontPath ; 
+    fontSize = _fontSize ; 
     //Setup our font
     font.loadFont( fontPath , fontSize, true , true , true ) ; 
+    charTranslateOffset = ofVec2f( 100 , 150 ) ;
+    
 }
 
 
@@ -45,7 +49,7 @@ ofPoint QuoteText::getPointByChar( int charIndex , int pathIndex )
    // ofPoint p1 = qp->characterPoints[charIndex] ; 
     //vector<ofPoint> pts = qp->character.getOutline()[charIndex].getVertices() ;
     //cout << "pts.size() " << endl ;
-    ofPoint p1 = qp->character.getOutline()[charIndex].getVertices()[ qp->targetIndex ] + qp->charTranslateOffset + qp->letterOffset ; 
+    ofPoint p1 = qp->character.getOutline()[charIndex].getVertices()[ qp->targetIndex ] + qp->letterOffset ; 
     //cout << "p1 is : " << p1.x << " , " << p1.y << endl ; 
     return p1 ; 
 }
@@ -163,6 +167,9 @@ ofPoint QuoteText::getNextTarget( int pathIndex )
     if ( qp == NULL ) 
         return ofPoint( ) ; 
     
+    if ( qp->bFinished == true ) 
+        return ofPoint( ); 
+    
     int startIndex = qp->targetIndex ; 
     qp->targetIndex++ ;
     if ( qp->targetIndex > qp->characterPoints.size()-1 ) 
@@ -187,11 +194,11 @@ ofPoint QuoteText::getNextTarget( int pathIndex )
     ofPoint p1 = qp->characterPoints[startIndex] ;
     ofPoint p2 = qp->characterPoints[qp->targetIndex] ;
     //How much to space out the letters in the x on each letter and y on each new line
-    qp->charTranslateOffset = ofVec2f( 100 , 150 ) ; 
+    
    
     //float angleBetween( atan2(p2.y - p1.y , p2.x - p1.x ) ) ; 
     //cout << "qp->characterPoints.size() " << qp->characterPoints.size() << endl; 
-    ofVec2f _position = qp->charTranslateOffset + qp->characterPoints[qp->targetIndex] + qp->letterOffset  ; 
+    ofVec2f _position =  qp->characterPoints[qp->targetIndex] + qp->letterOffset  ; 
 /*
     if ( bTeleportFlag == true ) 
     {
@@ -215,4 +222,14 @@ QuotePath* QuoteText::getQuotePathAt ( int index )
         cout << " not a valid quotePath Index : " << index << " / " << quotePaths.size() -1 << endl ; 
         return NULL ; 
     }
+}
+
+void QuoteText::resetQuotePaths()
+{
+    quotePaths.clear() ; 
+}
+
+void QuoteText::clearQuotes ( )
+{
+    textLines.clear() ; 
 }

@@ -14,6 +14,8 @@ class testApp : public ofBaseApp{
 		void update();
 		void draw();
     
+    
+        bool bRunAgents ; 
         //Agent agent ; 
         vector<Agent*> agents ; 
     
@@ -27,7 +29,28 @@ class testApp : public ofBaseApp{
         float a_maxSpeed ; 
         float a_maxForce ; 
         float a_targetBuffer ; 
-        float a_pathSampling ; 
+        float a_pathSampling ;
+        float a_numAgents ; 
+    
+        void exportPDF( ) ;
+        void exportPNG( ) ; 
+    
+        void keyPressed( int key ) ;
+        void createNewAgent( ) ; 
+    
+        void resetAgents( ) ; 
+    
+        void saveProjectFile( ) ;
+        void openProjectFile( ) ; 
+    
+        ofxXmlSettings projectXml ; 
+    
+        float a_rOffsetMaxSpeed ; 
+        float a_rOffsetMaxTurn ; 
+    
+        ofTrueTypeFont instructionsFont ; 
+    
+        ofEasyCam cam ; 
     
     
 };

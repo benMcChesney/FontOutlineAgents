@@ -35,25 +35,11 @@ class Agent
         int colorInterpolateNum ;
         int curIndex ;
         int pathSampling ; 
+        bool bFinished ; 
     
         ColorPool colorPool ; 
         vector<ColorTrail> paths ; 
         ColorTrail curPath ; 
-    
-
-        
-        ofVec2f cartesianToPolar ( ofVec2f v ) 
-        { 
-            cout << "v: " << v.x <<","<<v.y<<endl ; 
-            float x = v.x ; 
-            float y = v.y ; 
-            float radius= sqrt( x * x + y * y );
-            float angle= atan( x / y ) ;
-            ofVec2f v2 = ofVec2f ( radius , angle ) ; 
-            cout << "v2: " << v2.x <<","<<v2.y<<endl ; 
-            return v2 ; 
-            
-        }
     
     /*
      ofEvents<ofVec2f> NEW_AGENT_TARGET ;
@@ -66,16 +52,6 @@ class Agent
             curPath.clear() ; 
         }   
         
-        ofVec2f polarToCartesian ( ofVec2f v ) 
-        {
-            float r = v.x ;
-            float a = v.y ; 
-            //float x = r * cos( a );
-            //float y = r * sin( a );
-            ofVec2f v2 = ofVec2f ( r * sin( a ) , r * cos( a ) ) ; 
-            return v2 ;    
-        }
-    
         void newAgentTargetHandler ( ofVec2f &args ) 
         {
             setTarget ( args ) ; 
@@ -115,6 +91,8 @@ class Agent
             nextColor = colorPool.getRandomColor() ; 
             pathSampling = 4 ;
             curIndex = 0 ; 
+            
+            bFinished = false ; 
        //     ofAddListener( AgentEvent::Instance()->NEW_AGENT_TARGET, this , &Agent::newAgentTargetHandler ) ; 
        //     ofAddListener( AgentEvent::Instance()->TELEPORT_NEW_TARGET, this , &Agent::teleportNewTargetHandler ) ; 
             
@@ -122,6 +100,8 @@ class Agent
     
         void update( ) 
         {
+            if ( bFinished )
+                return ; 
             float dist = ofDist ( position.x , position.y , target.x , target.y ) ; 
             if ( dist < targetBufferDist ) 
             {
@@ -144,7 +124,9 @@ class Agent
                 float ratio = (float)curIndex / (float)colorInterpolateNum ; 
                 ofColor lerp = color.lerp( nextColor , ratio ) ;
                 cp.color = lerp ; 
+                cp.color.a = ofRandom( 255.0f * .7 , 255.0f * 1.0f ) ; 
                 cp.position = position ; 
+                cp.radius =  ofRandom ( 0.25 , 4 ) ; //4 + sin( ofGetElapsedTimef() ) * 1 ; 
                 curPath.addPoint( cp ) ; //.push_back( cp ) ; 
             }
             force.limit(maxForce);
@@ -206,24 +188,28 @@ class Agent
             bTarget = false ; 
         }
     
-        void draw( )
+        void draw( bool bDrawAgent = true )
         {
-            ofSetLineWidth( 5.0f ) ; 
-            ofPushMatrix() ; 
-                ofTranslate( position.x , position.y , 0 ) ; 
-            
-                float arrow_len = 14;
-                ofVec2f arrow_end = ( velocity.normalized() * arrow_len );
-                ofFill();
-            
-                ofSetColor(color.r , color.g, color.b );
-                ofLine( 0, 0 , arrow_end.x, arrow_end.y );
-            
-                ofSetColor ( 255 , 255 , 255 ) ; 
-                ofCircle ( 0 , 0 , 4 ) ; 
-            ofPopMatrix() ; 
+            if ( bDrawAgent ) 
+            {
+                ofSetLineWidth( 5.0f ) ; 
+                ofPushMatrix() ; 
+                    ofTranslate( position.x , position.y , 0 ) ; 
+                
+                    float arrow_len = 14;
+                    ofVec2f arrow_end = ( velocity.normalized() * arrow_len );
+                    ofFill();
+                
+                    ofSetColor(color.r , color.g, color.b );
+                    ofLine( 0, 0 , arrow_end.x, arrow_end.y );
+                
+                    ofSetColor ( 255 , 255 , 255 ) ; 
+                    ofCircle ( 0 , 0 , 4 ) ; 
+                ofPopMatrix() ; 
+            }
             ofSetLineWidth( 2.0f ) ; 
             
+            //ofRectMode( OF_RECTMODE_CENTER ) ; 
             ofPushMatrix() ;
             if ( paths.size() > 0 ) 
             {
@@ -234,8 +220,23 @@ class Agent
                     {
                         for ( int i = 0 ; i < path.size()-1 ; i++ ) 
                         {
+                            //ofPushMatrix( ) ;
+                            
+                            /*
+                                ofTranslate( path[i].position.x , path[i].position.y ) ; 
+
+                                ofCircle(  path[i].position , 2 ) ; 
+                                
+                                ofRotateZ( 90 ) ; 
+                                ofLine( 0 , 0 , 0 , ofNoise( i ) * 20.0f ) ; */
                             ofSetColor ( path[i].color ) ; 
-                            ofLine( path[i].position.x , path[i].position.y , path[i+1].position.x , path[i+1].position.y ) ; 
+                            ofCircle(  path[i].position ,path[i].radius  ) ; 
+                            //ofLine( path[i].position.x , path[i].position.y , path[i+1].position.x , path[i+1].position.y ) ; 
+                            
+                           // ofPopMatrix() ; 
+                            //ofCircle(  path[i].position , 2 ) ; 
+                            //ofRect( 0 , 0 , 2 , 2 ) ; 
+                            
                         }
                     }
                 }
@@ -247,10 +248,15 @@ class Agent
                 for ( int i = 0 ; i < cpts.size()-1 ; i++ ) 
                 {
                     ofSetColor ( cpts[i].color ) ; 
-                    ofLine( cpts[i].position.x , cpts[i].position.y , cpts[i+1].position.x , cpts[i+1].position.y ) ; 
+                    //ofCircle(  cpts[i].position , 2 ) ; 
+                    //ofLine( cpts[i].position.x , cpts[i].position.y , cpts[i+1].position.x , cpts[i+1].position.y ) ; 
+                    ofCircle(  cpts[i].position , cpts[i].radius ) ; 
+                    //ofRect( 0 , 0 , 2 , 4 ) ;
                 }
             }
             ofPopMatrix() ; 
+            
+           // ofRectMode( OF_RECTMODE_CORNER ) ; 
         }
     
 };

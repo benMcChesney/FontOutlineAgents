@@ -26,7 +26,7 @@ void QuotePath::setup( )
     targetIndex = 0 ; 
     nextIndex = 1 ; 
     collectAllPointsCharacter( ) ;
-    bTeleportFlag = false ; 
+    bTeleportFlag = true ; 
     bFinished = false ; 
     
     bHasLooped = false ; 
@@ -54,3 +54,5 @@ void QuotePath::endPath ( )
     targetIndex = 0 ; 
     nextIndex = 1 ;
 }
+
+

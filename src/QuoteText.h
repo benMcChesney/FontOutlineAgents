@@ -31,7 +31,8 @@ class QuoteText
  
     vector<string> textLines ;      //Text line by line
     ofTrueTypeFont font ;           //Font
-    
+    string fontPath ; 
+    int fontSize ; 
     
     
     vector<QuotePath*> quotePaths ; 
@@ -39,7 +40,12 @@ class QuoteText
     
     QuotePath * getQuotePathAt ( int index ) ; 
     
+    void resetQuotePaths() ; 
     
+    ofVec2f charTranslateOffset ;   //offset for all the characters from 0 , 0 
+    
+    void clearQuotes ( ) ; 
+
     
     
 };

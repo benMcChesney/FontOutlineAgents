@@ -27,8 +27,7 @@ class QuotePath
         ofTrueTypeFont *font ;           //Font
         
         ofTTFCharacter character ;
-        ofVec2f charTranslateOffset ;   //offset for all the characters from 0 , 0
-        ofRectangle charBounds ;        //Bounds of the current character ( 0 , 0 , width , height ) 
+                ofRectangle charBounds ;        //Bounds of the current character ( 0 , 0 , width , height ) 
         string text ;                   //current line text
         
         int targetIndex ;               //Target for the next index
@@ -45,6 +44,8 @@ class QuotePath
 
         void endPath ( )  ; 
         void collectAllPointsCharacter( )  ;
+    
+        
         
 };
 
