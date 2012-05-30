@@ -20,6 +20,7 @@ class QuoteText
         
     QuoteText ( ) { }
     
+    void init ( ) ; 
     void setup ( string fontPath , int fontSize ) ;
     void addLine ( string line ) ;                  //add line
     

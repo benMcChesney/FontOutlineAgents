@@ -18,6 +18,7 @@ void QuotePath::setup( )
     
     
     //The text is one line at a time
+    cout << "textLines.size() " << textLines.size() << endl ; 
     text = textLines[curLine] ; 
     letter = text[curTextIndex] ; 
     character = font->getCharacterAsPoints(letter);

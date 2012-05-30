@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		BBAB23CB13894F3D00AA2426 /* GLUT.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = BBAB23BE13894E4700AA2426 /* GLUT.framework */; };
+		D9170B171575CEE400D67B45 /* Tween.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D9170AEB1575CEE400D67B45 /* Tween.cpp */; };
+		D9170B181575CEE400D67B45 /* Tweenzor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D9170AF01575CEE400D67B45 /* Tweenzor.cpp */; };
 		D97DCBF61570832000FC84A9 /* QuotePath.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D97DCBF51570832000FC84A9 /* QuotePath.cpp */; };
 		D98118E21572C8BB00CED893 /* tinyxml.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D98118DB1572C8BA00CED893 /* tinyxml.cpp */; };
 		D98118E31572C8BB00CED893 /* tinyxmlerror.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D98118DD1572C8BA00CED893 /* tinyxmlerror.cpp */; };
@@ -64,6 +66,16 @@
 
 /* Begin PBXFileReference section */
 		BBAB23BE13894E4700AA2426 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = ../../../libs/glut/lib/osx/GLUT.framework; sourceTree = "<group>"; };
+		D9170AE61575CBB800D67B45 /* HitRectImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HitRectImage.h; sourceTree = "<group>"; };
+		D9170AE81575CEE400D67B45 /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
+		D9170AEA1575CEE400D67B45 /* ofxTweenzor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxTweenzor.h; sourceTree = "<group>"; };
+		D9170AEB1575CEE400D67B45 /* Tween.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Tween.cpp; sourceTree = "<group>"; };
+		D9170AEC1575CEE400D67B45 /* Tween.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tween.h; sourceTree = "<group>"; };
+		D9170AED1575CEE400D67B45 /* TweenEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TweenEvent.h; sourceTree = "<group>"; };
+		D9170AEE1575CEE400D67B45 /* TweenFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TweenFunctions.h; sourceTree = "<group>"; };
+		D9170AEF1575CEE400D67B45 /* TweenSelector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TweenSelector.h; sourceTree = "<group>"; };
+		D9170AF01575CEE400D67B45 /* Tweenzor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Tweenzor.cpp; sourceTree = "<group>"; };
+		D9170AF11575CEE400D67B45 /* Tweenzor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tweenzor.h; sourceTree = "<group>"; };
 		D92B70D214E6ECF3009F7702 /* Agent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Agent.h; sourceTree = "<group>"; };
 		D97DCBF415705D1C00FC84A9 /* QuotePath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuotePath.h; sourceTree = "<group>"; };
 		D97DCBF51570832000FC84A9 /* QuotePath.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QuotePath.cpp; sourceTree = "<group>"; };
@@ -165,6 +177,7 @@
 		BB4B014C10F69532006C3DED /* addons */ = {
 			isa = PBXGroup;
 			children = (
+				D9170AE71575CEE400D67B45 /* ofxTweenzor */,
 				D98118E61572CD7800CED893 /* ofxUI */,
 				D98118D81572C8B900CED893 /* ofxXmlSettings */,
 			);
@@ -196,6 +209,31 @@
 				BBAB23BE13894E4700AA2426 /* GLUT.framework */,
 			);
 			name = "3rd party frameworks";
+			sourceTree = "<group>";
+		};
+		D9170AE71575CEE400D67B45 /* ofxTweenzor */ = {
+			isa = PBXGroup;
+			children = (
+				D9170AE81575CEE400D67B45 /* README */,
+				D9170AE91575CEE400D67B45 /* src */,
+			);
+			name = ofxTweenzor;
+			path = ../../../addons/ofxTweenzor;
+			sourceTree = "<group>";
+		};
+		D9170AE91575CEE400D67B45 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				D9170AEA1575CEE400D67B45 /* ofxTweenzor.h */,
+				D9170AEB1575CEE400D67B45 /* Tween.cpp */,
+				D9170AEC1575CEE400D67B45 /* Tween.h */,
+				D9170AED1575CEE400D67B45 /* TweenEvent.h */,
+				D9170AEE1575CEE400D67B45 /* TweenFunctions.h */,
+				D9170AEF1575CEE400D67B45 /* TweenSelector.h */,
+				D9170AF01575CEE400D67B45 /* Tweenzor.cpp */,
+				D9170AF11575CEE400D67B45 /* Tweenzor.h */,
+			);
+			path = src;
 			sourceTree = "<group>";
 		};
 		D98118D81572C8B900CED893 /* ofxXmlSettings */ = {
@@ -325,6 +363,7 @@
 				D9BE6F47151064FE0066CC61 /* AgentEvent.h */,
 				D97DCBF415705D1C00FC84A9 /* QuotePath.h */,
 				D97DCBF51570832000FC84A9 /* QuotePath.cpp */,
+				D9170AE61575CBB800D67B45 /* HitRectImage.h */,
 			);
 			path = src;
 			sourceTree = SOURCE_ROOT;
@@ -430,6 +469,8 @@
 				D98118E31572C8BB00CED893 /* tinyxmlerror.cpp in Sources */,
 				D98118E41572C8BB00CED893 /* tinyxmlparser.cpp in Sources */,
 				D98118E51572C8BB00CED893 /* ofxXmlSettings.cpp in Sources */,
+				D9170B171575CEE400D67B45 /* Tween.cpp in Sources */,
+				D9170B181575CEE400D67B45 /* Tweenzor.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

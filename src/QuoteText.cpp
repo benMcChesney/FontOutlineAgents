@@ -10,16 +10,20 @@
 
 #include "QuoteText.h"
 
+void QuoteText::init ( ) 
+{
+    font.loadFont( fontPath , fontSize, true , true , true ) ; 
+}
+
 void QuoteText::setup ( string _fontPath , int _fontSize ) 
 {
     fontPath = _fontPath ; 
     fontSize = _fontSize ; 
     //Setup our font
     font.loadFont( fontPath , fontSize, true , true , true ) ; 
-    charTranslateOffset = ofVec2f( 100 , 150 ) ;
-    
-}
+    //charTranslateOffset = ofVec2f( 100 , 150 ) ;
 
+}
 
 void QuoteText::createQuotePath ( ) 
 {

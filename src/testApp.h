@@ -6,6 +6,8 @@
 #include "QuoteText.h"
 #include "QuotePath.h"
 #include "ofxUI.h"
+#include "HitRectImage.h"
+#include "ofxTweenzor.h"
 
 class testApp : public ofBaseApp{
 
@@ -33,7 +35,6 @@ class testApp : public ofBaseApp{
         float a_numAgents ; 
     
         void exportPDF( ) ;
-        void exportPNG( ) ; 
     
         void keyPressed( int key ) ;
         void createNewAgent( ) ; 
@@ -49,8 +50,26 @@ class testApp : public ofBaseApp{
         float a_rOffsetMaxTurn ; 
     
         ofTrueTypeFont instructionsFont ; 
+        float splashPageAlpha ; 
     
-        ofEasyCam cam ; 
+        HitRectImage newProjectBtn ; 
+        HitRectImage loadProjectBtn ;
+        HitRectImage loadFontBtn ;
+        HitRectImage addLineBtn ;
+        HitRectImage finishSetupBtn ;
+    
+        void mousePressed ( int x , int y , int button ) ; 
+        void mouseDragged ( int x , int y , int button ) ; 
+        void mouseReleased( int x , int y , int button ) ; 
+    
+        float newProjectAlpha ; 
+        void initProject ( ) ;
+    
+        float canvasAlpha ; 
+        int fontSize ;
+    
+        string newTextLine ;
+        float ySpacing ;
     
     
 };
