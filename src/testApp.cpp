@@ -23,9 +23,6 @@ void testApp::setup()
     colorPool.addColor( ofColor( 89 , 25 , 2 ) ) ; 
     
     //Add our quote in line by line
-    quote.addLine( "WHAT CHA UP TOO ? " ) ;
-    quote.addLine( "NOTHING" ) ;
-    quote.addLine( "OKAY" ) ;
     quote.setup( "Batang.ttf" , 60 ) ; 
     
     //void addWordBlock ( string word , ofPoint position , int fontSize ) ; 
@@ -123,28 +120,22 @@ void testApp::update()
 //--------------------------------------------------------------
 void testApp::draw()
 {      
-    ofSetColor( 215 , canvasAlpha ) ; 
+    ofSetColor( 215 , 215 , 215 ) ; 
     ofRect( 0 , 0 , ofGetWidth() , ofGetHeight() ) ; 
         
-    ofPushMatrix() ;
-        ofTranslate( quote.charTranslateOffset.x , quote.charTranslateOffset.y , 0 ) ; 
-            
-        //Call the agent draw() ! Nice and simple
-        vector<Agent*>::iterator a ; 
-        for ( a = agents.begin() ; a != agents.end() ; a++ )
-        {
-            (*a)->draw() ; 
-        }
-    ofPopMatrix() ; 
-    
-    if ( bDebugDraw ) 
-    {
-        quote.debugDraw( ) ; 
-    }
-
-    
     //newProjectBook.draw( ) ; 
     quote.drawWordBlocks( ) ; 
+    
+    //Call the agent draw() ! Nice and simple
+    for ( int a = 0 ; a < agents.size() ; a++ )
+    {
+        ofPushMatrix() ;
+            int wordIndex = quote.getQuotePathAt( a )->curLine ; 
+            agents[a]->draw() ; 
+        ofPopMatrix() ; 
+    }
+    
+   
 }
 
 
@@ -170,12 +161,6 @@ void testApp::guiEvent(ofxUIEventArgs &e)
         a_numAgents =(int) ((ofxUISlider *) e.widget)->getScaledValue(); 
         resetAgents( ) ; 
     }
-    
-    if ( name == "CHAR TRANSLATE X" ) 
-        quote.charTranslateOffset.x = ((ofxUISlider *) e.widget)->getScaledValue(); 
-    
-    if ( name == "CHAR TRANSLATE Y" )
-        quote.charTranslateOffset.y = ((ofxUISlider *) e.widget)->getScaledValue(); 
     
     if ( name == "MAX SPEED R OFFSET" ) 
         a_rOffsetMaxSpeed = ((ofxUISlider *) e.widget)->getScaledValue(); 
@@ -238,7 +223,9 @@ void testApp::exportPDF( )
         ofBeginSaveScreenAsPDF( _fileName ) ; 
         ofSetColor( 255 , 255 , 255 , 0 ) ; 
         ofRect( 0 , 0, ofGetWidth() , ofGetHeight() ) ; 
-        ofTranslate( quote.charTranslateOffset.x , quote.charTranslateOffset.y ) ; 
+        //ofTranslate( quote.charTranslateOffset.x , quote.charTranslateOffset.y ) ; 
+     //   int wordIndex = quote.getQuotePathAt( i )->curLine ; 
+     //   ofTranslate( quote.wordBlocks[ wordIndex ]->translate.x , quote.wordBlocks[ wordIndex ]->translate.y , 0 ) ; 
         //ofSetColor( 0 , 0 , 0 ) ; 
         //ofRect( 0 , 0, ofGetWidth() , ofGetHeight() ) ; 
         agents[i]->draw( false ) ; 
@@ -250,7 +237,7 @@ void testApp::exportPDF( )
     ofBeginSaveScreenAsPDF( combinedName ) ; 
     ofSetColor( 255 , 255 , 255 , 0 ) ; 
     ofRect( 0 , 0, ofGetWidth() , ofGetHeight() ) ;
-    ofTranslate( quote.charTranslateOffset.x , quote.charTranslateOffset.y ) ; 
+    //ofTranslate( quote.charTranslateOffset.x , quote.charTranslateOffset.y ) ; 
 
     for ( int i = 0 ; i < agents.size() ; i++ ) 
     {
@@ -279,13 +266,10 @@ void testApp::setupGUI ( )
     gui->addWidgetDown(new ofxUISlider( sliderLength , 15 , 0.0, 5.0f, a_maxForce, "MAX FORCE"));
     gui->addWidgetRight(new ofxUISlider( sliderLength , 15 , 0.0f, 4.0f, a_rOffsetMaxTurn , "MAX FORCE R OFFSET" )) ; 
     gui->addWidgetRight(new ofxUILabel("SPACE - play/pause , S - save project", OFX_UI_FONT_LARGE));   
-    gui->addWidgetDown(new ofxUISlider( sliderLength , 15 , 0.0, 25.0f, a_targetBuffer, "BUFFER DIST")); 
+    gui->addWidgetDown(new ofxUISlider( sliderLength , 15 , 0.0, 50.0f, a_targetBuffer, "BUFFER DIST")); 
     gui->addWidgetDown(new ofxUISlider( sliderLength , 15 , 1 , 14 , a_pathSampling, "PATH SAMPLING")); 
     gui->addWidgetDown(new ofxUISlider( sliderLength , 15 , 1 , 125 , a_numAgents, "NUM AGENTS")); 
-    gui->addWidgetRight(new ofxUISlider( sliderLength , 15 , 0.0f , ofGetWidth()  , quote.charTranslateOffset.x , "CHAR TRANSLATE X")); 
-    gui->addWidgetRight(new ofxUISlider( sliderLength , 15 , 0.0f , ofGetHeight() , quote.charTranslateOffset.y , "CHAR TRANSLATE Y")); 
-    
-    
+  
     vector<string> hnames; hnames.push_back("OPEN"); hnames.push_back("FRAME"); hnames.push_back("WORKS");
 	gui->addWidgetDown(new ofxUIRadio( sliderLength , sliderLength , "HORIZONTAL RADIO", hnames, OFX_UI_ORIENTATION_HORIZONTAL));     
     vector<string> vnames;
@@ -328,9 +312,9 @@ void testApp::saveProjectFile( )
     projectXml.setValue( "fontPath"  , quote.fontPath ) ; 
     projectXml.setValue( "fontSize" , quote.fontSize ) ; 
     
-    for ( int i = 0 ; i < quote.textLines.size() ; i++ ) 
+    for ( int i = 0 ; i < quote.wordBlocks.size() ; i++ ) 
     {
-        projectXml.setValue( "textLine" , quote.textLines[i] , i ) ; 
+        projectXml.setValue( "textLine" , quote.wordBlocks[i]->word , i ) ; 
     }
     
     projectXml.setValue ( "MAX SPEED" , a_maxSpeed ) ; 
@@ -340,9 +324,6 @@ void testApp::saveProjectFile( )
     projectXml.setValue ( "BUFFER DIST" , a_targetBuffer ) ; 
     projectXml.setValue ( "PATH SAMPLING" , a_pathSampling ) ; 
     projectXml.setValue ( "NUM AGENTS" , a_numAgents ) ; 
-    projectXml.setValue ( "CHAR TRANSLATE X" , quote.charTranslateOffset.x ) ; 
-    projectXml.setValue ( "CHAR TRANSLATE Y" , quote.charTranslateOffset.y ) ; 
-    
     projectXml.saveFile( path ) ; 
     
 }
@@ -358,13 +339,16 @@ void testApp::openProjectFile( )
     quote.clearQuotes() ; 
     
     int numTagLines = projectXml.getNumTags( "textLine" ) ; 
+    
+    int fontSize = projectXml.getValue( "fontSize" , 12 ) ; 
     for ( int i = 0 ; i < numTagLines ; i++ ) 
     {
-        quote.addLine( projectXml.getValue( "textLine", "NO TEXT" , i ) ) ; 
+        //quote.addLine( projectXml.getValue( "textLine", "NO TEXT" , i ) ) ; 
+        quote.addWordBlock( projectXml.getValue( "textLine", "NO TEXT" , i ) , ofPoint ( 0 , 0 ) , 0 ) ;   
     }
     
     quote.setup( projectXml.getValue( "fontPath", "noFont" ) ,   
-                 projectXml.getValue( "fontSize" , 12 ) ) ; 
+                 fontSize ) ; 
     
     a_maxSpeed = projectXml.getValue ( "MAX SPEED" , a_maxSpeed , a_maxSpeed ) ; 
     a_rOffsetMaxSpeed = projectXml.getValue ( "MAX SPEED R OFFSET" , a_rOffsetMaxSpeed , a_rOffsetMaxSpeed ) ; 
@@ -373,9 +357,7 @@ void testApp::openProjectFile( )
     a_targetBuffer = projectXml.getValue ( "BUFFER DIST" , a_targetBuffer , a_targetBuffer ) ; 
     a_pathSampling = projectXml.getValue ( "PATH SAMPLING" , a_pathSampling , a_pathSampling ) ; 
     a_numAgents = projectXml.getValue ( "NUM AGENTS" , a_numAgents , a_numAgents ) ; 
-    quote.charTranslateOffset.x = projectXml.getValue ( "CHAR TRANSLATE X" , quote.charTranslateOffset.x , quote.charTranslateOffset.x ) ; 
-    quote.charTranslateOffset.y = projectXml.getValue ( "CHAR TRANSLATE Y" , quote.charTranslateOffset.y , quote.charTranslateOffset.y ) ; 
-    
+   
     bRunAgents = false ; 
 }
 

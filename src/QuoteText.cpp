@@ -29,6 +29,11 @@ void QuoteText::setup ( string _fontPath , int _fontSize )
 void QuoteText::createQuotePath ( ) 
 {
     QuotePath * qp = new QuotePath( ) ; 
+    vector<string> textLines ; 
+    for ( int i = 0 ; i < wordBlocks.size() ; i++ ) 
+    {
+        textLines.push_back( wordBlocks[ i ]->word ) ; 
+    }
     qp->textLines = textLines ; 
     qp->font = &font ; 
     qp->setup( ) ;
@@ -65,16 +70,11 @@ ofPoint QuoteText::getPointByChar( int charIndex , int pathIndex )
    // ofPoint p1 = qp->characterPoints[charIndex] ; 
     //vector<ofPoint> pts = qp->character.getOutline()[charIndex].getVertices() ;
     //cout << "pts.size() " << endl ;
+  
     ofPoint p1 = qp->character.getOutline()[charIndex].getVertices()[ qp->targetIndex ] + qp->letterOffset ; 
     //cout << "p1 is : " << p1.x << " , " << p1.y << endl ; 
     return p1 ; 
 }
-
-void QuoteText::addLine ( string line ) 
-{
-    textLines.push_back( line ) ; 
-}
-
 
 ofPoint QuoteText::startNewCharacter( int pathIndex ) 
 {
@@ -84,7 +84,10 @@ ofPoint QuoteText::startNewCharacter( int pathIndex )
     qp->endPath( ) ; 
     
     //Move the character to the right
-    qp->letterOffset.x += qp->charBounds.width + 10 ; 
+      string soFar = qp->text.substr( 0 , qp->curTextIndex ) ; 
+    ofRectangle soFarBounds = qp->font->getStringBoundingBox( soFar, 0 , 0 ) ;
+    qp->letterOffset.x += qp->charBounds.width + 10 ; ; //qp->font->getStringBoundingBox( ofToString(qp->text[qp->curTextIndex]) , 0 , 0 ).width ; 
+    //qp->charBounds.width + 10 ; 
     
     qp->curTextIndex++ ; 
     //cout << "1 ) curTextIndex is : " <<  curTextIndex << endl ; 
@@ -99,7 +102,8 @@ ofPoint QuoteText::startNewCharacter( int pathIndex )
         if ( qp->curLine < qp->textLines.size() )
         {
         //    cout << "old text was : " << text << endl ; 
-            qp->text = textLines[qp->curLine] ; 
+            qp->text = wordBlocks[qp->curLine]->word ; 
+            //qp->letterOffset = wordBlocks[qp->curLine]->translate ; 
         //    cout << "newText is : " << text << endl ; 
         }
         else
@@ -109,10 +113,10 @@ ofPoint QuoteText::startNewCharacter( int pathIndex )
         }
         //    cout << "INVALID TEXT LINE!! : " << curLine << endl ; 
           
-        qp->letterOffset.y += qp->charBounds.height + 15 ;
+        //qp->letterOffset.y += qp->charBounds.height + 15 ;
         
         
-        if ( qp->curLine > textLines.size()-1 )
+        if ( qp->curLine > wordBlocks.size() - 1 )
             return ofVec3f( )  ; 
         
         qp->bTeleportFlag = true ; 
@@ -158,7 +162,7 @@ ofPoint QuoteText::startNewCharacter( int pathIndex )
     //Format it in a coordinate space that's easy to play with
     qp->charBounds = normalizeRectangle( charBounds , false ) ; 
     
-    return p ; 
+    return p ; //+ wordBlocks[ qp->curLine ]->translate ; 
     
 }
 
@@ -204,7 +208,7 @@ ofPoint QuoteText::getNextTarget( int pathIndex )
             qp->targetIndex = 0 ; 
             qp->bHasLooped = false ; 
             cout << "loop over! " << endl ; 
-            return startNewCharacter( pathIndex ) ;
+            return startNewCharacter( pathIndex ) ; 
         }
     }
     ofPoint p1 = qp->characterPoints[startIndex] ;
@@ -214,7 +218,7 @@ ofPoint QuoteText::getNextTarget( int pathIndex )
    
     //float angleBetween( atan2(p2.y - p1.y , p2.x - p1.x ) ) ; 
     //cout << "qp->characterPoints.size() " << qp->characterPoints.size() << endl; 
-    ofVec2f _position =  qp->characterPoints[qp->targetIndex] + qp->letterOffset  ; 
+    ofVec2f _position =  qp->characterPoints[qp->targetIndex]  + qp->letterOffset  +  wordBlocks[qp->curLine]->translate  ; 
 /*
     if ( bTeleportFlag == true ) 
     {
@@ -280,27 +284,9 @@ void QuoteText::drawWordBlocks()
         wordBlocks[i]->draw( ) ; 
     }
 }
-void QuoteText::debugDraw()
-{
-    
-    for ( int i = 0 ; i < textLines.size() ; i++ ) 
-    {
-        cout << "debug drawwin! " << i << endl ;
-        ofSetColor( 255 , 255 , 255 , 125 ) ; 
-        string cText = textLines[ i ] ; 
-        
-        ofRectangle b = font.getStringBoundingBox( cText, charTranslateOffset.x , charTranslateOffset.y ) ; 
-        float lineHeight = b.height * i ; 
-        font.drawStringAsShapes(cText, charTranslateOffset.x , charTranslateOffset.y + lineHeight ) ; 
-    }
-    
-}
+
 void QuoteText::resetQuotePaths()
 {
     quotePaths.clear() ; 
 }
 
-void QuoteText::clearQuotes ( )
-{
-    textLines.clear() ; 
-}

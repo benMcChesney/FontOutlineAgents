@@ -1,47 +1,37 @@
 <Widget>
     <Kind>4</Kind>
     <Name>MAX SPEED</Name>
-    <Value>5.120000</Value>
+    <Value>7.200000</Value>
 </Widget>
 <Widget>
     <Kind>4</Kind>
     <Name>MAX SPEED R OFFSET</Name>
-    <Value>2.906667</Value>
+    <Value>1.573333</Value>
 </Widget>
 <Widget>
     <Kind>4</Kind>
     <Name>MAX FORCE</Name>
-    <Value>2.866667</Value>
+    <Value>2.733333</Value>
 </Widget>
 <Widget>
     <Kind>4</Kind>
     <Name>MAX FORCE R OFFSET</Name>
-    <Value>0.613333</Value>
+    <Value>0.453333</Value>
 </Widget>
 <Widget>
     <Kind>4</Kind>
     <Name>BUFFER DIST</Name>
-    <Value>25.000000</Value>
+    <Value>31.666666</Value>
 </Widget>
 <Widget>
     <Kind>4</Kind>
     <Name>PATH SAMPLING</Name>
-    <Value>4.293333</Value>
+    <Value>3.426667</Value>
 </Widget>
 <Widget>
     <Kind>4</Kind>
     <Name>NUM AGENTS</Name>
-    <Value>125.000000</Value>
-</Widget>
-<Widget>
-    <Kind>4</Kind>
-    <Name>CHAR TRANSLATE X</Name>
-    <Value>150.186661</Value>
-</Widget>
-<Widget>
-    <Kind>4</Kind>
-    <Name>CHAR TRANSLATE Y</Name>
-    <Value>256.000000</Value>
+    <Value>25.800001</Value>
 </Widget>
 <Widget>
     <Kind>2</Kind>

@@ -16,9 +16,8 @@ void QuotePath::setup( )
     targetIndex = 1 ; 
     nextIndex = 2 ; 
     
-    
     //The text is one line at a time
-    cout << "textLines.size() " << textLines.size() << endl ; 
+    //cout << "textLines.size() " << textLines.size() << endl ; 
     text = textLines[curLine] ; 
     letter = text[curTextIndex] ; 
     character = font->getCharacterAsPoints(letter);
@@ -33,7 +32,6 @@ void QuotePath::setup( )
     bHasLooped = false ; 
     maxLoopIndex = 15 ; 
     
-
 }
 
 void QuotePath::collectAllPointsCharacter( )

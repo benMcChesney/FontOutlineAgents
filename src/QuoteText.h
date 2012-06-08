@@ -23,19 +23,15 @@ class QuoteText
     
     void init ( ) ; 
     void setup ( string fontPath , int fontSize ) ;
-    void addLine ( string line ) ;                  //add line
     
     ofRectangle normalizeRectangle ( ofRectangle rect ,  bool verboseLog = false ) ;
-    
     ofPoint getNextTarget ( int pathIndex ) ; 
     ofPoint startNewCharacter( int pathIndex ) ;
     ofPoint getPointByChar( int charIndex , int pathIndex) ;       //Get x , y of a character
  
-    vector<string> textLines ;      //Text line by line
     ofTrueTypeFont font ;           //Font
     string fontPath ; 
     float fontSize ; 
-    
     
     vector<QuotePath*> quotePaths ; 
     void createQuotePath ( ) ; 
@@ -43,12 +39,7 @@ class QuoteText
     QuotePath * getQuotePathAt ( int index ) ; 
     
     void resetQuotePaths() ; 
-    
-    ofVec2f charTranslateOffset ;   //offset for all the characters from 0 , 0 
-    
     void clearQuotes ( ) ; 
-    
-    void debugDraw( ) ; 
 
     void addWordBlock ( string word , ofPoint position , int fontSize ) ; 
     vector<WordBlock*> wordBlocks ;
