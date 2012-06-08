@@ -6,7 +6,7 @@ void testApp::setup()
 {
     bRunAgents = false ; 
     
-    instructionsFont.loadFont("GUI/NewMedia Fett.ttf", 16 ) ; 
+    
     
     ofSetLogLevel( OF_LOG_VERBOSE ) ; 
     ofBackground( 0 ) ; 
@@ -14,6 +14,7 @@ void testApp::setup()
     ofSetVerticalSync( true ) ; 
     
     Tweenzor::init( ) ; 
+    colorPicker.setColorRadius( 1.0 );
     
     //This is just an easy way to grab a color from a color palette
     colorPool.addColor( ofColor( 242 , 202 , 82 ) ) ; 
@@ -22,27 +23,55 @@ void testApp::setup()
     colorPool.addColor( ofColor( 89 , 25 , 2 ) ) ; 
     
     //Add our quote in line by line
-    quote.addLine( "TESTING" ) ;
-    quote.addLine( "NOW TESTING" ) ;
+    quote.addLine( "WHAT CHA UP TOO ? " ) ;
+    quote.addLine( "NOTHING" ) ;
+    quote.addLine( "OKAY" ) ;
     quote.setup( "Batang.ttf" , 60 ) ; 
+    
+    //void addWordBlock ( string word , ofPoint position , int fontSize ) ; 
+    float padding = 50 ; 
+    quote.addWordBlock( "WORD1", ofPoint( ofRandom( ofGetWidth() ) , ofRandom( padding , ofGetHeight() - padding ) )  , quote.fontSize ) ;
+    quote.addWordBlock( "WORD2", ofPoint( ofRandom( ofGetWidth() ) , ofRandom( padding , ofGetHeight() - padding ) )  , quote.fontSize ) ;
+    quote.addWordBlock( "WORD3", ofPoint( ofRandom( ofGetWidth() ) , ofRandom( padding , ofGetHeight() - padding ) )  , quote.fontSize ) ;
     setupGUI( ) ; 
-    splashPageAlpha = 255.0f ; 
-    newProjectAlpha = 0.0f ; 
-    canvasAlpha = 0.0f ; 
+    
+    canvasAlpha = 255.0f ; 
     
     ofPoint center = ofPoint ( ofGetWidth() / 2 , ofGetHeight() / 2 ) ; 
-    newProjectBtn.setup( "GUI/new_button.png" ,center.x , center.y - 75 , true )  ; 
-    loadProjectBtn.setup( "GUI/load_button.png" ,center.x , center.y + 75 , true )  ;
-    loadFontBtn.setup ( "GUI/load_font_button.png" , center.x - 150 , center.y - 175 , true ) ;
-    loadFontBtn.hitRect.width *= 0.5f ; 
-    loadFontBtn.hitRect.height *= 0.5f ; 
+
+  
     
-    addLineBtn.setup( "GUI/add_text_line.png" ,center.x - 240 , center.y + 35 , true )  ;  
-    
-    finishSetupBtn.setup( "GUI/finish_setup_button.png" ,center.x , center.y + 300 , true )  ;   
+    //agentTypes.push_back("ribbon" ) ; 
+    //agentTypes.push_back("circles" ) ;
+    //agentTypes.push_back("triangle" ) ; 
     
     ofEnableAlphaBlending() ; 
     
+    setupProjectBook( ) ;
+   // initProject( ) ; 
+    
+    bDebugDraw = false ; 
+    
+}
+
+void testApp::setupProjectBook( )
+{
+    newProjectBook.setup ( ) ; 
+    
+    SplashPage * page1 = new SplashPage() ; 
+    page1->setup( ) ; 
+    
+    CorePage * page2 = new SetupPage() ; 
+    page2->setup( ) ; 
+    page2->translation.x = ofGetWidth() * 1.0 ; 
+    
+    CorePage * page3 = new CorePage() ; 
+    page3->setup( ) ; 
+    page3->translation.x = ofGetWidth() * 2.0 ; 
+    
+    newProjectBook.addPage( page1 ) ; 
+    newProjectBook.addPage( page2 ) ; 
+    newProjectBook.addPage( page3 ) ; 
 }
 
 
@@ -87,109 +116,35 @@ void testApp::update()
         }
         count++ ; 
     }
+    
+    colorPicker.update();
 }
  
 //--------------------------------------------------------------
 void testApp::draw()
 {      
-    if ( splashPageAlpha > 0.0f ) 
-    {
-        ofSetColor( 0 , 0 , 0, splashPageAlpha ) ; 
-        ofRect( 0 , 0, ofGetWidth() , ofGetHeight() ) ;
+    ofSetColor( 215 , canvasAlpha ) ; 
+    ofRect( 0 , 0 , ofGetWidth() , ofGetHeight() ) ; 
         
-        ofSetColor ( 255 , 255 , 255 , splashPageAlpha ) ; 
-        newProjectBtn.draw( ) ; 
-        loadProjectBtn.draw( ) ; 
-    }
-    
-    if ( newProjectAlpha > 0.0f ) 
-    {
-        ofSetColor ( 255 , 255 , 255 , newProjectAlpha ) ; 
-        ofRect( 0 , 0 , ofGetWidth() , ofGetHeight() ) ; 
-        
-        ofPoint textStart = ofPoint ( loadFontBtn.hitRect.x + 250 , loadFontBtn.hitRect.y + 20 ) ; 
-        
-        ofColor titleBack = ofColor ( 225 , 225 , 225 ) ; 
-        ofColor titleText = ofColor ( 65 , 65 , 65 ) ; 
-        
-        ofColor pathBack = ofColor ( 255 , 255 , 255 ) ; 
-        ofColor pathText = ofColor( 20 , 20 , 20 ) ; 
-        
-        //Draw Font PATH Title
-        ofSetColor( titleBack , newProjectAlpha ) ;
-        ofRect( instructionsFont.getStringBoundingBox( "FONT PATH: " , textStart.x , textStart.y ) ) ; 
-        ofSetColor( titleText , newProjectAlpha ) ; 
-        instructionsFont.drawString( "FONT PATH: " , textStart.x , textStart.y ) ; 
-        
-        //Draw Font PATH value
-        ofSetColor( pathBack , newProjectAlpha * .25 ) ;
-        ofRect( instructionsFont.getStringBoundingBox( quote.fontPath , textStart.x , textStart.y + 40 ) ) ; 
-        ofSetColor( pathText , newProjectAlpha ) ; 
-        instructionsFont.drawString( quote.fontPath , textStart.x , textStart.y + 40 ) ;
-        
-        //Draw Font Size TITLE
-        ofSetColor( titleBack , newProjectAlpha ) ;
-        ofRect( instructionsFont.getStringBoundingBox( "FONT SIZE: " , textStart.x , textStart.y + 140 ) ) ; 
-
-        ofSetColor( titleText , newProjectAlpha ) ; 
-        instructionsFont.drawString( "FONT SIZE \n( right / left ) : " , textStart.x , textStart.y + 140 ) ; 
-               
-        //Draw Font Size VALUE
-        ofSetColor( pathBack , newProjectAlpha * .25 ) ;
-        ofRect( instructionsFont.getStringBoundingBox( "FONT SIZE: " , textStart.x , textStart.y + 200 ) ) ; 
-
-        ofSetColor( pathText , newProjectAlpha ) ; 
-        instructionsFont.drawString( ofToString( quote.fontSize ) , textStart.x , textStart.y + 200 ) ; 
-        
-        textStart.y = addLineBtn.hitRect.y + 35  ; 
-        ofSetColor ( 255 , 255 , 255 , newProjectAlpha ) ; 
-        loadFontBtn.draw( ) ;
-        fontSize = quote.fontSize ;
-        
-        int numLines = quote.textLines.size() ; 
-        cout << "numLines " << numLines << endl ; 
-        ySpacing  = 20.0f ; 
-        float totalHeight = numLines * ySpacing ;
-        
-        ofPushMatrix( ) ;
-            //ofTranslate( 0 , totalHeight ) ; 
-            addLineBtn.draw( )  ;
-        ofPopMatrix( ) ; 
-        
-        for ( int i = 0 ; i < numLines ; i++ ) 
-        {
-            ofSetColor( 20 , 20 , 20 ) ;
-            cout << "line : " << i << " is : " << quote.textLines[i] << endl ; 
-            instructionsFont.drawString( quote.textLines[i] , addLineBtn.hitRect.x + addLineBtn.hitRect.width + 50 ,  textStart.y + (i) * ySpacing ); 
-        }
-        
-        ofSetColor( 255 , newProjectAlpha ) ; 
-        finishSetupBtn.draw( )  ;
-        
-        ofSetColor ( pathText , newProjectAlpha ) ; 
-        instructionsFont.drawString( newTextLine , addLineBtn.hitRect.x + addLineBtn.hitRect.width + 50 ,  textStart.y + totalHeight ) ; 
-    }
-    
-    if ( canvasAlpha > 0.0f ) 
-    {
-        ofSetColor( 215 , canvasAlpha ) ; 
-        ofRect( 0 , 0 , ofGetWidth() , ofGetHeight() ) ; 
-        
-        ofPushMatrix() ;
-        
-            ofTranslate( quote.charTranslateOffset.x , quote.charTranslateOffset.y , 0 ) ; 
+    ofPushMatrix() ;
+        ofTranslate( quote.charTranslateOffset.x , quote.charTranslateOffset.y , 0 ) ; 
             
-            //Call the agent draw() ! Nice and simple
-            vector<Agent*>::iterator a ; 
-            for ( a = agents.begin() ; a != agents.end() ; a++ )
-            {
-                (*a)->draw() ; 
-            }
-        
-        ofPopMatrix() ; 
-
-    }
+        //Call the agent draw() ! Nice and simple
+        vector<Agent*>::iterator a ; 
+        for ( a = agents.begin() ; a != agents.end() ; a++ )
+        {
+            (*a)->draw() ; 
+        }
+    ofPopMatrix() ; 
     
+    if ( bDebugDraw ) 
+    {
+        quote.debugDraw( ) ; 
+    }
+
+    
+    //newProjectBook.draw( ) ; 
+    quote.drawWordBlocks( ) ; 
 }
 
 
@@ -228,7 +183,7 @@ void testApp::guiEvent(ofxUIEventArgs &e)
     if ( name == "MAX FORCE R OFFSET"  ) 
         a_rOffsetMaxTurn = ((ofxUISlider *) e.widget)->getScaledValue(); 
     
-
+   
     gui->saveSettings("GUI/settings.xml") ; 
     
     vector<Agent*>::iterator a ; 
@@ -246,7 +201,7 @@ void testApp::createNewAgent()
 {
     int index = agents.size() ; 
     //Create our agent 
-    Agent* agent = new Agent() ; 
+    Agent* agent = new RibbonAgent() ; 
     agent->colorPool.addColor( colorPool.getRandomColor() ) ; 
     agent->colorPool.addColor( colorPool.getRandomColor() ) ; 
     
@@ -330,9 +285,20 @@ void testApp::setupGUI ( )
     gui->addWidgetRight(new ofxUISlider( sliderLength , 15 , 0.0f , ofGetWidth()  , quote.charTranslateOffset.x , "CHAR TRANSLATE X")); 
     gui->addWidgetRight(new ofxUISlider( sliderLength , 15 , 0.0f , ofGetHeight() , quote.charTranslateOffset.y , "CHAR TRANSLATE Y")); 
     
+    
+    vector<string> hnames; hnames.push_back("OPEN"); hnames.push_back("FRAME"); hnames.push_back("WORKS");
+	gui->addWidgetDown(new ofxUIRadio( sliderLength , sliderLength , "HORIZONTAL RADIO", hnames, OFX_UI_ORIENTATION_HORIZONTAL));     
+    vector<string> vnames;
+    vnames.push_back("ROCKS");
+    vnames.push_back("MY");
+    vnames.push_back("SOCKS");
+    
+    ofxUIRadio *radio = (ofxUIRadio *) gui->addWidgetDown(new ofxUIRadio(sliderLength, sliderLength, "VERTICAL RADIO", vnames, OFX_UI_ORIENTATION_VERTICAL)); 
+    radio->activateToggle("SOCKS"); 
+    
     ofAddListener(gui->newGUIEvent,this,&testApp::guiEvent);
     gui->loadSettings( "GUI/settings.xml" ) ; 
-    gui->toggleVisible() ; 
+   // gui->toggleVisible() ; 
 }
 
 void testApp::resetAgents() 
@@ -350,9 +316,7 @@ void testApp::resetAgents()
 
 void testApp::saveProjectFile( ) 
 {
-    ofFileDialogResult saveResult = ofSystemSaveDialog( "myProject" , "Project Name?" ) ; 
-    
-
+    ofFileDialogResult saveResult = ofSystemSaveDialog( "myProject" , "Project Name?" ) ;
     string path = saveResult.getPath() ; //
     
     int index = path.find( ".xml" ) ; 
@@ -368,22 +332,6 @@ void testApp::saveProjectFile( )
     {
         projectXml.setValue( "textLine" , quote.textLines[i] , i ) ; 
     }
-    
-    //gui = new ofxUICanvas( 0 , ofGetHeight() - canvasHeight , ofGetWidth() , canvasHeight );
-    //gui->addWidgetDown(new ofxUILabel("SLIDERS", OFX_UI_FONT_LARGE));             
-    /*
-    gui->addWidgetDown(new ofxUISlider( sliderLength , 15 , 0.0, 12.0f, a_maxSpeed, "MAX SPEED")); 
-    gui->addWidgetRight(new ofxUISlider( sliderLength , 15 , 0.0f, 4.0f, a_rOffsetMaxSpeed , "MAX SPEED R OFFSET" )) ;
-    gui->addWidgetRight(new ofxUILabel("R - reset , P - export PDF ", OFX_UI_FONT_LARGE));   
-    gui->addWidgetDown(new ofxUISlider( sliderLength , 15 , 0.0, 5.0f, a_maxForce, "MAX FORCE"));
-    gui->addWidgetRight(new ofxUISlider( sliderLength , 15 , 0.0f, 4.0f, a_rOffsetMaxTurn , "MAX FORCE R OFFSET" )) ; 
-    gui->addWidgetRight(new ofxUILabel("SPACE - play/pause , S - save project", OFX_UI_FONT_LARGE));   
-    gui->addWidgetDown(new ofxUISlider( sliderLength , 15 , 0.0, 25.0f, a_targetBuffer, "BUFFER DIST")); 
-    gui->addWidgetDown(new ofxUISlider( sliderLength , 15 , 1 , 14 , a_pathSampling, "PATH SAMPLING")); 
-    gui->addWidgetDown(new ofxUISlider( sliderLength , 15 , 1 , 125 , a_numAgents, "NUM AGENTS")); 
-    gui->addWidgetRight(new ofxUISlider( sliderLength , 15 , 0.0f , ofGetWidth()  , quote.charTranslateOffset.x , "CHAR TRANSLATE X")); 
-    gui->addWidgetRight(new ofxUISlider( sliderLength , 15 , 0.0f , ofGetHeight() , quote.charTranslateOffset.y , "CHAR TRANSLATE Y")); 
-    */
     
     projectXml.setValue ( "MAX SPEED" , a_maxSpeed ) ; 
     projectXml.setValue ( "MAX SPEED R OFFSET" , a_rOffsetMaxSpeed ) ; 
@@ -433,61 +381,8 @@ void testApp::openProjectFile( )
 
 void testApp::mousePressed ( int x , int y , int button )
 {
-    if ( splashPageAlpha > 0.0f ) 
-    {
-        if ( newProjectBtn.hitTest( x , y ) == true ) 
-        {
-            Tweenzor::add( &splashPageAlpha , splashPageAlpha , 0.0f , 0.0f , 0.75f , EASE_OUT_QUAD ) ;
-            Tweenzor::add( &newProjectAlpha , newProjectAlpha , 255.0f , 0.0f , 0.75f , EASE_OUT_QUAD ) ;
-            cout << " NEW PROJECT!! " << endl ; 
-            initProject() ; 
-            
-        }
-        if ( loadProjectBtn.hitTest( x , y ) == true ) 
-        {
-            cout << " OPENING PROJECT!" << endl ;
-            Tweenzor::add( &splashPageAlpha , splashPageAlpha  , 0.0f , 0.0f , 0.75f , EASE_OUT_QUAD ) ; 
-            Tweenzor::add( &newProjectAlpha , newProjectAlpha , 255.0f , 0.0f , 0.75f , EASE_OUT_QUAD ) ;
-            openProjectFile() ;   
-        }
-    }
-    
-    if ( newProjectAlpha > 0.0f ) 
-    {
-        
-        if ( loadFontBtn.hitTest( x , y ) == true )
-        {
-            ofFileDialogResult ttfResult = ofSystemLoadDialog( "Open any TTF or OTF font" ) ; 
-            string path = ttfResult.getPath() ; 
-            int ttfIndex = path.find( ".ttf" ) ;
-            int otfIndex = path.find( ".otf" ) ; 
-            
-            if ( ttfIndex > 0 || otfIndex > 0 ) 
-            {
-                cout << "valid ttf or otf file" << endl ; 
-                int lastIndex = path.find_last_of("/") ; 
-                string shortName = path.substr( lastIndex+1 ) ; 
-                quote.fontPath = shortName ; //ofToDataPath( path )  ; 
-                
-            }
-        }
-        
-        if ( addLineBtn.hitTest( x , y ) == true ) 
-        {
-            quote.addLine( newTextLine ) ; 
-            newTextLine = "blank" ; 
-            //Tweenzor::add( &addLineBtn.hitRect.y , addLineBtn.hitRect.y , addLineBtn.hitRect.y + ySpacing , 0.0f , 0.5f , EASE_OUT_QUAD ) ; 
-        }
-        
-        if ( finishSetupBtn.hitTest( x , y ) )
-        {
-            quote.init ( ) ; 
-            resetAgents() ; 
-            Tweenzor::add( &newProjectAlpha , newProjectAlpha  , 0.0f , 0.0f , 0.5f , EASE_OUT_QUAD ) ; 
-            Tweenzor::add( &canvasAlpha , canvasAlpha , 255.0f , 0.5f , 0.5f , EASE_OUT_QUAD ) ;
-            gui->setVisible( true ) ; 
-        }
-    }
+    //newProjectBook.input( x , y ) ; 
+    quote.inputDown ( x , y ) ; 
     
 }
 
@@ -502,12 +397,12 @@ void testApp::initProject ( )
 
 void testApp::mouseDragged ( int x , int y , int button ) 
 {
-    
+    quote.inputMove ( x , y ) ;
 }
 
 void testApp::mouseReleased( int x , int y , int button ) 
 {
-    
+    quote.inputUp ( x , y ) ;
 }
 
 void testApp::keyPressed( int key )
@@ -541,41 +436,15 @@ void testApp::keyPressed( int key )
             case ' ':
                 bRunAgents = !bRunAgents ; 
                 break ; 
+                
+            case 'd':
+            case 'D':
+                bDebugDraw = !bDebugDraw ; 
+                break ; 
         }
     }
     
-    if ( newProjectAlpha > 0.0f ) 
-    {
-                    
-        //bNewTextSizeInit
-        
-        switch ( key ) 
-        {
-            //right
-            case 356 :
-                if ( fontSize > 0 ) 
-                    fontSize-- ; 
-                break ; 
-                //left
-            case 358 :
-                fontSize += 1 ; 
-                break ; 
-                           
-                        
-            case 127 : 
-                //st = myString.substr(0, myString.size()-1);
-                if ( newTextLine.size() > 0 ) 
-                    newTextLine = newTextLine.substr( 0 , newTextLine.size()-1 ) ; 
-                break ; 
-
-        }
-        
-        if ( key != 127 && newTextLine.size() < 40 )
-            newTextLine += key ; 
-        
-        
-        
+  
         quote.fontSize = fontSize ; 
-    }
         
 }

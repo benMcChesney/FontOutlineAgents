@@ -19,6 +19,7 @@ void QuoteText::setup ( string _fontPath , int _fontSize )
 {
     fontPath = _fontPath ; 
     fontSize = _fontSize ; 
+    cout << "fontSize : " << fontSize << endl ; 
     //Setup our font
     font.loadFont( fontPath , fontSize, true , true , true ) ; 
     //charTranslateOffset = ofVec2f( 100 , 150 ) ;
@@ -35,6 +36,17 @@ void QuoteText::createQuotePath ( )
     // vector<QuotePath*> quotePaths ; 
     quotePaths.push_back( qp ) ; 
 }
+
+void QuoteText::addWordBlock ( string word , ofPoint position , int _fontSize )
+{
+    WordBlock * wb = new WordBlock() ; 
+    wb->setup( fontPath , _fontSize , word , wordBlocks.size() , position ) ; 
+    wordBlocks.push_back( wb ) ; 
+    
+              //void setup ( string _fontPath , float _fontSize , string _word , int _wordIndex ) 
+}
+
+//vector<WordBlock*> wordBlocks ;
 
 ofPoint QuoteText::getPointByChar( int charIndex , int pathIndex ) 
 {
@@ -215,6 +227,39 @@ ofPoint QuoteText::getNextTarget( int pathIndex )
     return _position ;
 }
 
+void QuoteText::inputDown ( float x , float y )
+{
+    for ( int b = 0 ; b < wordBlocks.size() ; b++ ) 
+    {
+        if ( wordBlocks[ b ]->hitTest( x , y ) == true ) 
+        {
+            wordBlocks[ b ]->startDrag( x , y ) ; 
+        }
+    }
+}
+
+void QuoteText::inputMove ( float x , float y ) 
+{
+    for ( int b = 0 ; b < wordBlocks.size() ; b++ ) 
+    {
+        if ( wordBlocks[ b ]->bDragging ) 
+        {
+            wordBlocks[ b ]->updateDrag( x , y ) ; 
+        }
+    }
+}
+
+void QuoteText::inputUp ( float x , float y ) 
+{
+    for ( int b = 0 ; b < wordBlocks.size() ; b++ ) 
+    {
+        if ( wordBlocks[ b ]->bDragging ) 
+        {
+            wordBlocks[ b ]->endDrag() ; 
+        }
+    }
+}
+
 QuotePath* QuoteText::getQuotePathAt ( int index )
 {
     if ( index < quotePaths.size() ) 
@@ -228,6 +273,28 @@ QuotePath* QuoteText::getQuotePathAt ( int index )
     }
 }
 
+void QuoteText::drawWordBlocks()
+{
+    for ( int i = 0 ; i < wordBlocks.size() ; i++ ) 
+    {
+        wordBlocks[i]->draw( ) ; 
+    }
+}
+void QuoteText::debugDraw()
+{
+    
+    for ( int i = 0 ; i < textLines.size() ; i++ ) 
+    {
+        cout << "debug drawwin! " << i << endl ;
+        ofSetColor( 255 , 255 , 255 , 125 ) ; 
+        string cText = textLines[ i ] ; 
+        
+        ofRectangle b = font.getStringBoundingBox( cText, charTranslateOffset.x , charTranslateOffset.y ) ; 
+        float lineHeight = b.height * i ; 
+        font.drawStringAsShapes(cText, charTranslateOffset.x , charTranslateOffset.y + lineHeight ) ; 
+    }
+    
+}
 void QuoteText::resetQuotePaths()
 {
     quotePaths.clear() ; 

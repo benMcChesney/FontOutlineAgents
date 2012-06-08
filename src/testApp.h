@@ -8,6 +8,13 @@
 #include "ofxUI.h"
 #include "HitRectImage.h"
 #include "ofxTweenzor.h"
+#include "RibbonAgent.h"
+#include "ofxColorPicker.h"
+#include "Book.h"
+#include "CorePage.h"
+#include "SplashPage.h"
+#include "SetupPage.h"
+#include "WordBlock.h"
 
 class testApp : public ofBaseApp{
 
@@ -24,7 +31,9 @@ class testApp : public ofBaseApp{
         QuoteText quote ;
         ColorPool colorPool ; 
     
-        ofxUICanvas *gui;   
+        ofxUIDropDownList *ddl; 
+        ofxUICanvas *gui;  
+    
         void setupGUI( ) ; 
         void guiEvent(ofxUIEventArgs &e) ; 
     
@@ -49,20 +58,13 @@ class testApp : public ofBaseApp{
         float a_rOffsetMaxSpeed ; 
         float a_rOffsetMaxTurn ; 
     
-        ofTrueTypeFont instructionsFont ; 
-        float splashPageAlpha ; 
-    
-        HitRectImage newProjectBtn ; 
-        HitRectImage loadProjectBtn ;
-        HitRectImage loadFontBtn ;
-        HitRectImage addLineBtn ;
-        HitRectImage finishSetupBtn ;
+        
     
         void mousePressed ( int x , int y , int button ) ; 
         void mouseDragged ( int x , int y , int button ) ; 
         void mouseReleased( int x , int y , int button ) ; 
     
-        float newProjectAlpha ; 
+        
         void initProject ( ) ;
     
         float canvasAlpha ; 
@@ -70,6 +72,16 @@ class testApp : public ofBaseApp{
     
         string newTextLine ;
         float ySpacing ;
+    
+        ofxColorPicker	colorPicker ;
+    
+        Book newProjectBook ;
+        void setupProjectBook ( ) ;
+    
+        bool bDebugDraw ;
+        //vector<string> agentTypes ;
+        //int agentType ;
+    
     
     
 };

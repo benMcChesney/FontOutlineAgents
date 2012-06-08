@@ -12,6 +12,7 @@
 #include "ofMain.h"
 #include "QuotePath.h"
 #include "AgentEvent.h"
+#include "WordBlock.h"
 
 
 class QuoteText
@@ -33,7 +34,7 @@ class QuoteText
     vector<string> textLines ;      //Text line by line
     ofTrueTypeFont font ;           //Font
     string fontPath ; 
-    int fontSize ; 
+    float fontSize ; 
     
     
     vector<QuotePath*> quotePaths ; 
@@ -46,9 +47,17 @@ class QuoteText
     ofVec2f charTranslateOffset ;   //offset for all the characters from 0 , 0 
     
     void clearQuotes ( ) ; 
+    
+    void debugDraw( ) ; 
 
+    void addWordBlock ( string word , ofPoint position , int fontSize ) ; 
+    vector<WordBlock*> wordBlocks ;
     
+    void drawWordBlocks ( ) ; 
     
+    void inputDown ( float x , float y ) ;
+    void inputMove ( float x , float y ) ;
+    void inputUp ( float x , float y ) ;
 };
 
 
