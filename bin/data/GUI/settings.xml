@@ -6,7 +6,7 @@
 <Widget>
     <Kind>4</Kind>
     <Name>MAX SPEED R OFFSET</Name>
-    <Value>1.573333</Value>
+    <Value>1.480000</Value>
 </Widget>
 <Widget>
     <Kind>4</Kind>
@@ -34,32 +34,22 @@
     <Value>25.800001</Value>
 </Widget>
 <Widget>
-    <Kind>2</Kind>
-    <Name>OPEN</Name>
-    <Value>0</Value>
+    <Kind>4</Kind>
+    <Name>NEW FONT SIZE</Name>
+    <Value>56.799999</Value>
 </Widget>
 <Widget>
     <Kind>2</Kind>
-    <Name>FRAME</Name>
-    <Value>0</Value>
-</Widget>
-<Widget>
-    <Kind>2</Kind>
-    <Name>WORKS</Name>
+    <Name>LINES</Name>
     <Value>1</Value>
 </Widget>
 <Widget>
     <Kind>2</Kind>
-    <Name>ROCKS</Name>
+    <Name>CIRCLES</Name>
     <Value>0</Value>
 </Widget>
 <Widget>
     <Kind>2</Kind>
-    <Name>MY</Name>
+    <Name>RECTANGLES</Name>
     <Value>0</Value>
-</Widget>
-<Widget>
-    <Kind>2</Kind>
-    <Name>SOCKS</Name>
-    <Value>1</Value>
 </Widget>

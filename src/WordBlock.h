@@ -29,6 +29,7 @@ class WordBlock
         ofPoint dragOffset ; 
         bool bDragging ; 
 
+        bool bEditable ;
     
         void setup ( string _fontPath , float _fontSize , string _word , int _wordIndex , ofPoint _translate ) 
         {
@@ -43,6 +44,7 @@ class WordBlock
             
             bDragging = false ; 
             dragOffset = ofPoint ( 0 , 0 ) ; 
+            bEditable = false ; 
         }
     
         void startDrag ( float x , float y ) 
@@ -60,6 +62,12 @@ class WordBlock
         {
             bDragging = false ; 
             dragOffset = ofPoint ( ) ; 
+        }
+    
+        void update ( ) 
+        {
+            bounds = font.getStringBoundingBox( word , 0 , 0 ) ; 
+            //bounds = font.getStringBoundingBox( word , 0 , 0 ) ; 
         }
     
         void draw ( ) 

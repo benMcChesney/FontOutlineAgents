@@ -41,8 +41,10 @@ class QuoteText
     void resetQuotePaths() ; 
     void clearQuotes ( ) ; 
 
-    void addWordBlock ( string word , ofPoint position , int fontSize ) ; 
+    void addWordBlock ( string word , ofPoint position , int fontSize , bool bEditable = false ) ; 
     vector<WordBlock*> wordBlocks ;
+    
+    WordBlock * * getLastWordBlockRef( ) ;
     
     void drawWordBlocks ( ) ; 
     

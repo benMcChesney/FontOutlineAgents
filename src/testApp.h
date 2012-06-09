@@ -10,10 +10,6 @@
 #include "ofxTweenzor.h"
 #include "RibbonAgent.h"
 #include "ofxColorPicker.h"
-#include "Book.h"
-#include "CorePage.h"
-#include "SplashPage.h"
-#include "SetupPage.h"
 #include "WordBlock.h"
 
 class testApp : public ofBaseApp{
@@ -64,7 +60,7 @@ class testApp : public ofBaseApp{
         void mouseDragged ( int x , int y , int button ) ; 
         void mouseReleased( int x , int y , int button ) ; 
     
-        
+        void createNewWordBlock ( ) ; 
         void initProject ( ) ;
     
         float canvasAlpha ; 
@@ -74,11 +70,11 @@ class testApp : public ofBaseApp{
         float ySpacing ;
     
         ofxColorPicker	colorPicker ;
-    
-        Book newProjectBook ;
-        void setupProjectBook ( ) ;
-    
         bool bDebugDraw ;
+    
+        float newFontSize ; 
+    
+        void updateNewWordBlock ( string _word , float _fontSize ) ; 
         //vector<string> agentTypes ;
         //int agentType ;
     

@@ -43,35 +43,14 @@ void testApp::setup()
     //agentTypes.push_back("triangle" ) ; 
     
     ofEnableAlphaBlending() ; 
-    
-    setupProjectBook( ) ;
-   // initProject( ) ; 
-    
     bDebugDraw = false ; 
     
 }
 
-void testApp::setupProjectBook( )
+void testApp::createNewWordBlock() 
 {
-    newProjectBook.setup ( ) ; 
-    
-    SplashPage * page1 = new SplashPage() ; 
-    page1->setup( ) ; 
-    
-    CorePage * page2 = new SetupPage() ; 
-    page2->setup( ) ; 
-    page2->translation.x = ofGetWidth() * 1.0 ; 
-    
-    CorePage * page3 = new CorePage() ; 
-    page3->setup( ) ; 
-    page3->translation.x = ofGetWidth() * 2.0 ; 
-    
-    newProjectBook.addPage( page1 ) ; 
-    newProjectBook.addPage( page2 ) ; 
-    newProjectBook.addPage( page3 ) ; 
+    quote.addWordBlock( "" , ofPoint( ofGetWidth() / 2 , ofGetHeight() / 2 ) , newFontSize , true ) ; 
 }
-
-
 //--------------------------------------------------------------
 void testApp::update()
 {
@@ -168,6 +147,20 @@ void testApp::guiEvent(ofxUIEventArgs &e)
     if ( name == "MAX FORCE R OFFSET"  ) 
         a_rOffsetMaxTurn = ((ofxUISlider *) e.widget)->getScaledValue(); 
     
+    if ( name == "TRAIL TYPES" ) 
+    {
+       // ((ofxUIRadio * ) e.widget)->ge
+    }
+    
+    if ( name == "NEW FONT SIZE" ) 
+    {
+        newFontSize = ((ofxUISlider *) e.widget)->getScaledValue() ;
+    }
+    //newFontSize
+    /*
+     vector<string> hnames; hnames.push_back("LINES"); hnames.push_back("CIRCLES"); hnames.push_back("RECTANGLES");
+     gui->addWidgetDown(new ofxUIRadio( radioSize , radioSize , "TRAIL TYPES", hnames, OFX_UI_ORIENTATION_HORIZONTAL));  
+     */
    
     gui->saveSettings("GUI/settings.xml") ; 
     
@@ -178,8 +171,18 @@ void testApp::guiEvent(ofxUIEventArgs &e)
         (*a)->maxForce = a_maxForce  + ofRandom( -a_rOffsetMaxTurn , a_rOffsetMaxTurn ) ; 
         (*a)->targetBufferDist = a_targetBuffer ; 
         (*a)->pathSampling = a_pathSampling ; 
-        
     }
+}
+
+void testApp::updateNewWordBlock ( string _word , float _fontSize ) 
+{
+    WordBlock * wb = quote.getLastWordBlockRef() ; 
+    if ( wb == NULL ) 
+        return ; 
+    
+    wb->word = _word ; 
+    wb->fontSize = _fontSize ; 
+    wb->update( ) ; 
 }
 
 void testApp::createNewAgent()
@@ -256,29 +259,35 @@ void testApp::exportPDF( )
 void testApp::setupGUI ( ) 
 {
     float canvasHeight = 250 ;
-    float sliderLength = 150 ;
+    float sliderLength = 100 ;
     float padding = 15 ; 
     gui = new ofxUICanvas( 0 , ofGetHeight() - canvasHeight , ofGetWidth() , canvasHeight );
-    //gui->addWidgetDown(new ofxUILabel("SLIDERS", OFX_UI_FONT_LARGE));             
+    //gui->addWidgetDown(new ofxUILabel("SLIDERS", OFX_UI_FONT_LARGE));         
+    gui->addWidgetRight(new ofxUILabel("SPACE - play/pause , S - save project", OFX_UI_FONT_LARGE));  
+    gui->addWidgetRight(new ofxUILabel("R - reset , P - export PDF , N - New Word Box", OFX_UI_FONT_LARGE));   
+
     gui->addWidgetDown(new ofxUISlider( sliderLength , 15 , 0.0, 12.0f, a_maxSpeed, "MAX SPEED")); 
     gui->addWidgetRight(new ofxUISlider( sliderLength , 15 , 0.0f, 4.0f, a_rOffsetMaxSpeed , "MAX SPEED R OFFSET" )) ;
-    gui->addWidgetRight(new ofxUILabel("R - reset , P - export PDF ", OFX_UI_FONT_LARGE));   
-    gui->addWidgetDown(new ofxUISlider( sliderLength , 15 , 0.0, 5.0f, a_maxForce, "MAX FORCE"));
+    gui->addWidgetRight(new ofxUISlider( sliderLength , 15 , 0.0, 5.0f, a_maxForce, "MAX FORCE"));
     gui->addWidgetRight(new ofxUISlider( sliderLength , 15 , 0.0f, 4.0f, a_rOffsetMaxTurn , "MAX FORCE R OFFSET" )) ; 
-    gui->addWidgetRight(new ofxUILabel("SPACE - play/pause , S - save project", OFX_UI_FONT_LARGE));   
+    
     gui->addWidgetDown(new ofxUISlider( sliderLength , 15 , 0.0, 50.0f, a_targetBuffer, "BUFFER DIST")); 
-    gui->addWidgetDown(new ofxUISlider( sliderLength , 15 , 1 , 14 , a_pathSampling, "PATH SAMPLING")); 
-    gui->addWidgetDown(new ofxUISlider( sliderLength , 15 , 1 , 125 , a_numAgents, "NUM AGENTS")); 
-  
-    vector<string> hnames; hnames.push_back("OPEN"); hnames.push_back("FRAME"); hnames.push_back("WORKS");
-	gui->addWidgetDown(new ofxUIRadio( sliderLength , sliderLength , "HORIZONTAL RADIO", hnames, OFX_UI_ORIENTATION_HORIZONTAL));     
-    vector<string> vnames;
+    gui->addWidgetRight(new ofxUISlider( sliderLength , 15 , 1 , 14 , a_pathSampling, "PATH SAMPLING")); 
+    gui->addWidgetRight(new ofxUISlider( sliderLength , 15 , 1 , 125 , a_numAgents, "NUM AGENTS")); 
+    gui->addWidgetRight(new ofxUISlider( sliderLength , 15 , 1 , 125 , newFontSize, "NEW FONT SIZE" ));
+    
+    //newFontSize
+    float radioSize = 45 ; 
+    vector<string> hnames; hnames.push_back("LINES"); hnames.push_back("CIRCLES"); hnames.push_back("RECTANGLES");
+	gui->addWidgetDown(new ofxUIRadio( radioSize , radioSize , "TRAIL TYPES", hnames, OFX_UI_ORIENTATION_HORIZONTAL));     
+    //vector<string> vnames;
+    /*
     vnames.push_back("ROCKS");
     vnames.push_back("MY");
     vnames.push_back("SOCKS");
     
     ofxUIRadio *radio = (ofxUIRadio *) gui->addWidgetDown(new ofxUIRadio(sliderLength, sliderLength, "VERTICAL RADIO", vnames, OFX_UI_ORIENTATION_VERTICAL)); 
-    radio->activateToggle("SOCKS"); 
+    radio->activateToggle("SOCKS"); */
     
     ofAddListener(gui->newGUIEvent,this,&testApp::guiEvent);
     gui->loadSettings( "GUI/settings.xml" ) ; 
@@ -390,43 +399,74 @@ void testApp::mouseReleased( int x , int y , int button )
 void testApp::keyPressed( int key )
 {
     cout << "key : " << key << endl ; 
-    if ( canvasAlpha > 0.0f ) 
-    {
-        
-        switch ( key ) 
+ //   if ( canvasAlpha > 0.0f ) 
+ //   {
+        WordBlock * wb = quote.getLastWordBlockRef( ) ; 
+        if ( wb == NULL ) 
         {
-            case 'p':
-            case 'P':
-                exportPDF() ; 
-                break ; 
-                
-            case 'r':
-            case 'R':
-                resetAgents() ; 
-                break ; 
-                
-            case 's':
-            case 'S':
-                saveProjectFile( ) ; 
-                break ; 
-                
-            case 'o':
-            case 'O':
-            //    openProjectFile( ) ; 
-                break ; 
-                
-            case ' ':
-                bRunAgents = !bRunAgents ; 
-                break ; 
-                
-            case 'd':
-            case 'D':
-                bDebugDraw = !bDebugDraw ; 
-                break ; 
+            switch ( key ) 
+            {
+                case 'p':
+                case 'P':
+                    exportPDF() ; 
+                    break ; 
+                    
+                case 'r':
+                case 'R':
+                    resetAgents() ; 
+                    break ; 
+                    
+                case 's':
+                case 'S':
+                    saveProjectFile( ) ; 
+                    break ; 
+                    
+                case 'o':
+                case 'O':
+                //    openProjectFile( ) ; 
+                    break ; 
+                    
+                case ' ':
+                    bRunAgents = !bRunAgents ; 
+                    break ; 
+                    
+                case 'd':
+                case 'D':
+                    bDebugDraw = !bDebugDraw ; 
+                    break ; 
+
+                case 110:
+                    cout << "new WordBlock" << endl ; 
+                    createNewWordBlock() ; 
+                    break ; 
+                    
+                case 13 :
+                    cout << "end typing wordBlock" << endl ; 
+                    break ; 
+            }
         }
-    }
-    
-  
-        quote.fontSize = fontSize ; 
+        else
+        {
+            if ( key == 13 ) 
+            {
+                wb->bEditable = false ;
+                return ; 
+            }
+            
+            else if ( key == 127 ) 
+            {
+                string word = wb->word ; 
+                if ( word.size() > 0 ) 
+                {
+                    string word1 = word.substr( 0 , word.size()-1 ) ; 
+                    word = word1 ; 
+                }
+                wb->word = word ; 
+                return ; 
+            }
+
+            wb->word += key ; 
+        }
+  //  }
         
 }
