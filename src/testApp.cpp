@@ -27,8 +27,8 @@ void testApp::setup()
     
     //void addWordBlock ( string word , ofPoint position , int fontSize ) ; 
     float padding = 50 ; 
-    quote.addWordBlock( "WORD1", ofPoint( ofRandom( ofGetWidth() ) , ofRandom( padding , ofGetHeight() - padding ) )  , quote.fontSize ) ;
-    quote.addWordBlock( "WORD2", ofPoint( ofRandom( ofGetWidth() ) , ofRandom( padding , ofGetHeight() - padding ) )  , quote.fontSize ) ;
+   // quote.addWordBlock( "WORD1", ofPoint( ofRandom( ofGetWidth() ) , ofRandom( padding , ofGetHeight() - padding ) )  , quote.fontSize ) ;
+   // quote.addWordBlock( "WORD2", ofPoint( ofRandom( ofGetWidth() ) , ofRandom( padding , ofGetHeight() - padding ) )  , quote.fontSize ) ;
     quote.addWordBlock( "WORD3", ofPoint( ofRandom( ofGetWidth() ) , ofRandom( padding , ofGetHeight() - padding ) )  , quote.fontSize ) ;
     setupGUI( ) ; 
     
@@ -178,11 +178,14 @@ void testApp::updateNewWordBlock ( string _word , float _fontSize )
 {
     WordBlock * wb = quote.getLastWordBlockRef() ; 
     if ( wb == NULL ) 
+    {
+        cout << "word block is NULL " << endl ; 
         return ; 
+    }
     
     wb->word = _word ; 
     wb->fontSize = _fontSize ; 
-    wb->update( ) ; 
+    wb->updateWord( ) ; 
 }
 
 void testApp::createNewAgent()
@@ -462,10 +465,14 @@ void testApp::keyPressed( int key )
                     word = word1 ; 
                 }
                 wb->word = word ; 
+                updateNewWordBlock( wb->word , newFontSize ) ; 
                 return ; 
             }
 
             wb->word += key ; 
+            //void testApp::updateNewWordBlock ( string _word , float _fontSize ) 
+            updateNewWordBlock( wb->word , newFontSize ) ; 
+                               
         }
   //  }
         

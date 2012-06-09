@@ -44,7 +44,7 @@ class QuoteText
     void addWordBlock ( string word , ofPoint position , int fontSize , bool bEditable = false ) ; 
     vector<WordBlock*> wordBlocks ;
     
-    WordBlock * * getLastWordBlockRef( ) ;
+    WordBlock * getLastWordBlockRef( ) ;
     
     void drawWordBlocks ( ) ; 
     

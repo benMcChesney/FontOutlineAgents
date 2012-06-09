@@ -53,10 +53,10 @@ void QuoteText::addWordBlock ( string word , ofPoint position , int _fontSize , 
 }
 
 
-WordBlock * * QuoteText::getLastWordBlockRef( ) 
+WordBlock * QuoteText::getLastWordBlockRef( ) 
 {
-    WordBlock * * wb = &wordBlocks[ wordBlocks.size() -1 ] ; 
-    if ( (*wb)->bEditable == true ) 
+    WordBlock * wb = wordBlocks[ wordBlocks.size() -1 ] ; 
+    if ( wb->bEditable == true ) 
         return wb ;
     else
         return NULL ; 

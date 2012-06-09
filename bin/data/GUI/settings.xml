@@ -1,7 +1,7 @@
 <Widget>
     <Kind>4</Kind>
     <Name>MAX SPEED</Name>
-    <Value>7.200000</Value>
+    <Value>6.120000</Value>
 </Widget>
 <Widget>
     <Kind>4</Kind>
@@ -11,22 +11,22 @@
 <Widget>
     <Kind>4</Kind>
     <Name>MAX FORCE</Name>
-    <Value>2.733333</Value>
+    <Value>3.650000</Value>
 </Widget>
 <Widget>
     <Kind>4</Kind>
     <Name>MAX FORCE R OFFSET</Name>
-    <Value>0.453333</Value>
+    <Value>0.480000</Value>
 </Widget>
 <Widget>
     <Kind>4</Kind>
     <Name>BUFFER DIST</Name>
-    <Value>31.666666</Value>
+    <Value>16.000000</Value>
 </Widget>
 <Widget>
     <Kind>4</Kind>
     <Name>PATH SAMPLING</Name>
-    <Value>3.426667</Value>
+    <Value>1.650000</Value>
 </Widget>
 <Widget>
     <Kind>4</Kind>
@@ -36,17 +36,17 @@
 <Widget>
     <Kind>4</Kind>
     <Name>NEW FONT SIZE</Name>
-    <Value>56.799999</Value>
+    <Value>30.760000</Value>
 </Widget>
 <Widget>
     <Kind>2</Kind>
     <Name>LINES</Name>
-    <Value>1</Value>
+    <Value>0</Value>
 </Widget>
 <Widget>
     <Kind>2</Kind>
     <Name>CIRCLES</Name>
-    <Value>0</Value>
+    <Value>1</Value>
 </Widget>
 <Widget>
     <Kind>2</Kind>

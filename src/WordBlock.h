@@ -64,9 +64,12 @@ class WordBlock
             dragOffset = ofPoint ( ) ; 
         }
     
-        void update ( ) 
+        void updateWord ( ) 
         {
+            font.loadFont( fontPath , fontSize , true , true , true ) ;
             bounds = font.getStringBoundingBox( word , 0 , 0 ) ; 
+            cout << "bounds : w " << bounds.width << " , " << bounds.height << endl ; 
+//            bounds = font.getStringBoundingBox( word , 0 , 0 ) ; 
             //bounds = font.getStringBoundingBox( word , 0 , 0 ) ; 
         }
     
