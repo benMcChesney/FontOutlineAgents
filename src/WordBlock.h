@@ -31,6 +31,9 @@ class WordBlock
 
         bool bEditable ;
     
+        float lastDrag ;
+        float doubleClickDelay ;
+    
         void setup ( string _fontPath , float _fontSize , string _word , int _wordIndex , ofPoint _translate ) 
         {
             translate = _translate ; 
@@ -45,12 +48,26 @@ class WordBlock
             bDragging = false ; 
             dragOffset = ofPoint ( 0 , 0 ) ; 
             bEditable = false ; 
+            
+            lastDrag = -2 ; 
+            doubleClickDelay = 0.4f ; 
         }
     
         void startDrag ( float x , float y ) 
         {
             bDragging = true ; 
             dragOffset = ofPoint ( translate.x - x , translate.y - y ) ; 
+            
+            float nowTime = ofGetElapsedTimef() ; 
+            if ( lastDrag > 0 ) 
+            { 
+                cout << "now: " << nowTime << " is < " << lastDrag + doubleClickDelay << endl ; 
+                if ( nowTime < ( lastDrag + doubleClickDelay ) ) 
+                {
+                    bEditable = !bEditable ; 
+                }
+            }
+            lastDrag = nowTime ;
         }
     
         void updateDrag ( float x , float y ) 
@@ -62,13 +79,14 @@ class WordBlock
         {
             bDragging = false ; 
             dragOffset = ofPoint ( ) ; 
+            lastDrag = -2 ; 
         }
     
         void updateWord ( ) 
         {
             font.loadFont( fontPath , fontSize , true , true , true ) ;
             bounds = font.getStringBoundingBox( word , 0 , 0 ) ; 
-            cout << "bounds : w " << bounds.width << " , " << bounds.height << endl ; 
+            //cout << "bounds : w " << bounds.width << " , " << bounds.height << endl ; 
 //            bounds = font.getStringBoundingBox( word , 0 , 0 ) ; 
             //bounds = font.getStringBoundingBox( word , 0 , 0 ) ; 
         }
@@ -76,8 +94,17 @@ class WordBlock
         void draw ( ) 
         {
             ofPushStyle() ; 
-            ofSetColor ( 115 , 115 , 115 ) ; 
             ofSetRectMode( OF_RECTMODE_CORNER ) ; 
+            
+            if ( bEditable == true ) 
+            {
+                ofSetColor( 255 , 15 , 15 ) ; 
+                float padding = 10 ; 
+                ofRect( translate.x - padding , translate.y - padding - bounds.height , bounds.width + padding * 2 , bounds.height + padding * 2 ) ;  
+            }
+            
+            ofSetColor ( 115 , 115 , 115 ) ; 
+            
             ofRect( translate.x , translate.y - bounds.height , bounds.width , bounds.height  )  ; 
             ofSetColor( 255 , 255 , 255 ) ; 
             font.drawString( word , translate.x , translate.y ) ; 

@@ -51,6 +51,9 @@ class QuoteText
     void inputDown ( float x , float y ) ;
     void inputMove ( float x , float y ) ;
     void inputUp ( float x , float y ) ;
+    
+    void editWordBlockAt ( float x , float y ) ;
+    void removeWordBlockAt ( float x , float y ) ;
 };
 
 

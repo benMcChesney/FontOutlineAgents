@@ -114,8 +114,12 @@ ofPoint QuoteText::startNewCharacter( int pathIndex )
         //cout << "textLines.size() " << textLines.size() << endl ; 
         if ( qp->curLine < qp->textLines.size() )
         {
+            WordBlock * wb = wordBlocks[qp->curLine] ; 
         //    cout << "old text was : " << text << endl ; 
-            qp->text = wordBlocks[qp->curLine]->word ; 
+            qp->text = wb->word ; 
+            //cout << " fontPath : " << wb->fontPath << " , fontSize : " << wb->fontSize << endl ; 
+            //qp->font->loadFont( wb->fontPath, wb->fontSize , true , true , true )  ; 
+           // qp->collectAllPointsCharacter() ; 
             //qp->letterOffset = wordBlocks[qp->curLine]->translate ; 
         //    cout << "newText is : " << text << endl ; 
         }
@@ -220,7 +224,7 @@ ofPoint QuoteText::getNextTarget( int pathIndex )
         {
             qp->targetIndex = 0 ; 
             qp->bHasLooped = false ; 
-            cout << "loop over! " << endl ; 
+           // cout << "loop over! " << endl ; 
             return startNewCharacter( pathIndex ) ; 
         }
     }

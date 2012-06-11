@@ -75,8 +75,8 @@ class testApp : public ofBaseApp{
         float newFontSize ; 
     
         void updateNewWordBlock ( string _word , float _fontSize ) ; 
-        //vector<string> agentTypes ;
-        //int agentType ;
+        void editWordBlockAt ( float x , float y ) ;
+        void removeWordBlockAt ( float x , float y ) ;
     
     
     
