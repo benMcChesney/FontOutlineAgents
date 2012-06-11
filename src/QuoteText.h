@@ -18,40 +18,40 @@
 class QuoteText
 {
     public :
-        
+
     QuoteText ( ) { }
-    
-    void init ( ) ; 
+
+    void init ( ) ;
     void setup ( string fontPath , int fontSize ) ;
-    
+
     ofRectangle normalizeRectangle ( ofRectangle rect ,  bool verboseLog = false ) ;
-    ofPoint getNextTarget ( int pathIndex ) ; 
+    ofPoint getNextTarget ( int pathIndex ) ;
     ofPoint startNewCharacter( int pathIndex ) ;
     ofPoint getPointByChar( int charIndex , int pathIndex) ;       //Get x , y of a character
- 
-    ofTrueTypeFont font ;           //Font
-    string fontPath ; 
-    float fontSize ; 
-    
-    vector<QuotePath*> quotePaths ; 
-    void createQuotePath ( ) ; 
-    
-    QuotePath * getQuotePathAt ( int index ) ; 
-    
-    void resetQuotePaths() ; 
-    void clearQuotes ( ) ; 
 
-    void addWordBlock ( string word , ofPoint position , int fontSize , bool bEditable = false ) ; 
+    ofTrueTypeFont font ;           //Font
+    string fontPath ;
+    float fontSize ;
+
+    vector<QuotePath*> quotePaths ;
+    void createQuotePath ( ) ;
+
+    QuotePath * getQuotePathAt ( int index ) ;
+
+    void resetQuotePaths() ;
+    void clearWordBlocks ( ) ;
+
+    void addWordBlock ( string word , ofPoint position , int fontSize , bool bEditable = false ) ;
     vector<WordBlock*> wordBlocks ;
-    
-    WordBlock * getLastWordBlockRef( ) ;
-    
-    void drawWordBlocks ( ) ; 
-    
+
+    WordBlock * getEditableBlock( ) ;
+
+    void drawWordBlocks ( ) ;
+
     void inputDown ( float x , float y ) ;
     void inputMove ( float x , float y ) ;
     void inputUp ( float x , float y ) ;
-    
+
     void editWordBlockAt ( float x , float y ) ;
     void removeWordBlockAt ( float x , float y ) ;
 };
