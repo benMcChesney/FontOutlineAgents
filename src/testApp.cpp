@@ -29,7 +29,7 @@ void testApp::setup()
     float padding = 50 ;
    // quote.addWordBlock( "WORD1", ofPoint( ofRandom( ofGetWidth() ) , ofRandom( padding , ofGetHeight() - padding ) )  , quote.fontSize ) ;
    // quote.addWordBlock( "WORD2", ofPoint( ofRandom( ofGetWidth() ) , ofRandom( padding , ofGetHeight() - padding ) )  , quote.fontSize ) ;
-    quote.addWordBlock( "WORD3", ofPoint( ofRandom( ofGetWidth() ) , ofRandom( padding , ofGetHeight() - padding ) )  , quote.fontSize ) ;
+    //quote.addWordBlock( "WORD3", ofPoint( ofRandom( ofGetWidth() ) , ofRandom( padding , ofGetHeight() - padding ) )  , quote.fontSize ) ;
     setupGUI( ) ;
 
     canvasAlpha = 255.0f ;
@@ -57,7 +57,7 @@ void testApp::update()
 {
     Tweenzor::update( ofGetElapsedTimeMillis() ) ;
 
-    if ( !bRunAgents )
+    if ( !bRunAgents || quote.bReadyToStart == false )
         return ;
 
     int count = 0 ;
@@ -300,6 +300,8 @@ void testApp::setupGUI ( )
 
 void testApp::resetAgents()
 {
+    if ( !quote.bReadyToStart )
+        return ;
     quote.resetQuotePaths( ) ;
     agents.clear() ;
 
@@ -352,25 +354,54 @@ void testApp::saveProjectFile( )
 
 void testApp::openProjectFile( )
 {
+
+    cout << "open Dialgoue!" << endl ;
     ofFileDialogResult loadResult = ofSystemLoadDialog(  "Open Project XML" ) ;
 
+
     string path = loadResult.getPath() ; //
+    cout << "end result XML path!" << endl ;
 
     projectXml.loadFile( path ) ;
 
    // quote.clearQuotes() ;
 
-    int numTagLines = projectXml.getNumTags( "textLine" ) ;
 
+    string fontPath = projectXml.getValue ( "fontPath" , "noPath" ) ;
+    quote.fontPath = fontPath ;
     int fontSize = projectXml.getValue( "fontSize" , 12 ) ;
+    int numWordBlocks = projectXml.getNumTags( "wordBlock" ) ;
+    quote.clearWordBlocks() ;
+    quote.setup( fontPath ,
+                 fontSize ) ;
+
+     for ( int i = 0 ; i < numWordBlocks ; i++ )
+    {
+        //int tagNum = projectXml.addTag( "wordBlock" ) ;
+        //WordBlock * wb = quote.wordBlocks[i] ;
+        projectXml.pushTag( "wordBlock" , i ) ;
+        ofPoint translate = ofPoint( projectXml.getValue( "translateX" , 0 ) , projectXml.getValue( "translateY" , 0 ) ) ;
+        //void QuoteText::addWordBlock ( string word , ofPoint position , int _fontSize , bool _bEditable  )
+        quote.addWordBlock( projectXml.getValue( "text" , "noText" ) , translate , fontSize ) ;
+        //projectXml.setValue( "text" , wb->word ) ;
+        //projectXml.setValue( "fontSize" , wb->fontSize ) ;
+        //projectXml.setValue( "fontPath" , wb->fontPath ) ;
+        //projectXml.setValue( "translateX" , wb->translate.x ) ;
+        //projectXml.setValue( "translateY" , wb->translate.y ) ;
+        //projectXml.setValue( "wordBlock" , quote.wordBlocks[i]->word , i ) ;
+        projectXml.popTag( ) ;
+    }
+
+/*
     for ( int i = 0 ; i < numTagLines ; i++ )
     {
         //quote.addLine( projectXml.getValue( "textLine", "NO TEXT" , i ) ) ;
         quote.addWordBlock( projectXml.getValue( "textLine", "NO TEXT" , i ) , ofPoint ( 0 , 0 ) , 0 ) ;
-    }
+    }*/
 
-    quote.setup( projectXml.getValue( "fontPath", "noFont" ) ,
-                 fontSize ) ;
+    cout << "fontPath : " << fontPath << endl ;
+   // return ;
+
 
     a_maxSpeed = projectXml.getValue ( "MAX SPEED" , a_maxSpeed , a_maxSpeed ) ;
     a_rOffsetMaxSpeed = projectXml.getValue ( "MAX SPEED R OFFSET" , a_rOffsetMaxSpeed , a_rOffsetMaxSpeed ) ;
@@ -438,7 +469,7 @@ void testApp::keyPressed( int key )
 
                 case 'o':
                 case 'O':
-                //    openProjectFile( ) ;
+                    openProjectFile( ) ;
                     break ;
 
                 case ' ':

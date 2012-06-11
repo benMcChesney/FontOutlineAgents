@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_project_file>
 	<FileVersion major="1" minor="6" />
 	<Project>
@@ -6,7 +6,7 @@
 		<Option makefile="makefile" />
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
-		<Option virtualFolders="addons\;src\;" />
+		<Option virtualFolders="addons\;src\;addons\ofxTweenzor\;addons\ofxTweenzor\src\;addons\ofxUI\;addons\ofxUI\src\;addons\ofxXmlSettings\;addons\ofxXmlSettings\src\;addons\ofxXmlSettings\libs\;" />
 		<Build>
 			<Target title="release">
 				<Option output="bin\$(PROJECT_NAME)" prefix_auto="1" extension_auto="1" />
@@ -68,6 +68,10 @@
 			<Add directory="..\..\..\libs\tess2\include" />
 			<Add directory="..\..\..\libs\cairo\include\cairo" />
 			<Add directory="src" />
+			<Add directory="..\..\..\addons\ofxUI\src" />
+			<Add directory="..\..\..\addons\ofxTweenzor\src" />
+			<Add directory="..\..\..\addons\ofxXmlSettings\src" />
+			<Add directory="..\..\..\addons\ofxXmlSettings\libs" />
 		</Compiler>
 		<Linker>
 			<Add library="..\..\..\libs\FreeImage\lib\win_cb\FreeImage.lib" />
@@ -106,10 +110,117 @@
 			<Add library="Comdlg32" />
 		</Linker>
 		<ExtraCommands>
-			<Add after="xcopy /e /i /y &quot;$(PROJECT_DIR)..\..\..\export\win_cb\*.dll&quot;  &quot;$(PROJECT_DIR)bin&quot;" />
-			<Add after="cmd /c if not exist &quot;$(PROJECT_DIR)bin/data&quot; mkdir &quot;$(PROJECT_DIR)bin/data&quot;" />
+			<Add after='xcopy /e /i /y &quot;$(PROJECT_DIR)..\..\..\export\win_cb\*.dll&quot;  &quot;$(PROJECT_DIR)bin&quot;' />
+			<Add after='cmd /c if not exist &quot;$(PROJECT_DIR)bin/data&quot; mkdir &quot;$(PROJECT_DIR)bin/data&quot;' />
 			<Mode after="always" />
 		</ExtraCommands>
+		<Unit filename="..\..\..\addons\ofxTweenzor\src\Tween.cpp" />
+		<Unit filename="..\..\..\addons\ofxTweenzor\src\Tween.h" />
+		<Unit filename="..\..\..\addons\ofxTweenzor\src\TweenEvent.h" />
+		<Unit filename="..\..\..\addons\ofxTweenzor\src\TweenFunctions.h" />
+		<Unit filename="..\..\..\addons\ofxTweenzor\src\TweenSelector.h" />
+		<Unit filename="..\..\..\addons\ofxTweenzor\src\Tweenzor.cpp" />
+		<Unit filename="..\..\..\addons\ofxTweenzor\src\Tweenzor.h" />
+		<Unit filename="..\..\..\addons\ofxTweenzor\src\ofxTweenzor.h" />
+		<Unit filename="..\..\..\addons\ofxUI\src\ofxUI.h" />
+		<Unit filename="..\..\..\addons\ofxUI\src\ofxUI2DPad.h" />
+		<Unit filename="..\..\..\addons\ofxUI\src\ofxUIBiLabelSlider.h" />
+		<Unit filename="..\..\..\addons\ofxUI\src\ofxUIButton.h" />
+		<Unit filename="..\..\..\addons\ofxUI\src\ofxUICanvas.h" />
+		<Unit filename="..\..\..\addons\ofxUI\src\ofxUICircleSlider.h" />
+		<Unit filename="..\..\..\addons\ofxUI\src\ofxUICustomImageButton.h" />
+		<Unit filename="..\..\..\addons\ofxUI\src\ofxUIDropDownList.h" />
+		<Unit filename="..\..\..\addons\ofxUI\src\ofxUIEventArgs.h" />
+		<Unit filename="..\..\..\addons\ofxUI\src\ofxUIFPS.h" />
+		<Unit filename="..\..\..\addons\ofxUI\src\ofxUIFPSSlider.h" />
+		<Unit filename="..\..\..\addons\ofxUI\src\ofxUIImage.h" />
+		<Unit filename="..\..\..\addons\ofxUI\src\ofxUIImageButton.h" />
+		<Unit filename="..\..\..\addons\ofxUI\src\ofxUIImageSampler.h" />
+		<Unit filename="..\..\..\addons\ofxUI\src\ofxUIImageSlider.h" />
+		<Unit filename="..\..\..\addons\ofxUI\src\ofxUIImageToggle.h" />
+		<Unit filename="..\..\..\addons\ofxUI\src\ofxUILabel.h" />
+		<Unit filename="..\..\..\addons\ofxUI\src\ofxUILabelButton.h" />
+		<Unit filename="..\..\..\addons\ofxUI\src\ofxUILabelToggle.h" />
+		<Unit filename="..\..\..\addons\ofxUI\src\ofxUIMinimalSlider.h" />
+		<Unit filename="..\..\..\addons\ofxUI\src\ofxUIMovingGraph.h" />
+		<Unit filename="..\..\..\addons\ofxUI\src\ofxUIMultiImageButton.h" />
+		<Unit filename="..\..\..\addons\ofxUI\src\ofxUIMultiImageSlider.h" />
+		<Unit filename="..\..\..\addons\ofxUI\src\ofxUIMultiImageToggle.h" />
+		<Unit filename="..\..\..\addons\ofxUI\src\ofxUINumberDialer.h" />
+		<Unit filename="..\..\..\addons\ofxUI\src\ofxUIRadio.h" />
+		<Unit filename="..\..\..\addons\ofxUI\src\ofxUIRangeSlider.h" />
+		<Unit filename="..\..\..\addons\ofxUI\src\ofxUIRectangle.h" />
+		<Unit filename="..\..\..\addons\ofxUI\src\ofxUIRotarySlider.h" />
+		<Unit filename="..\..\..\addons\ofxUI\src\ofxUIScrollableCanvas.h" />
+		<Unit filename="..\..\..\addons\ofxUI\src\ofxUISlider.h" />
+		<Unit filename="..\..\..\addons\ofxUI\src\ofxUISpacer.h" />
+		<Unit filename="..\..\..\addons\ofxUI\src\ofxUISpectrum.h" />
+		<Unit filename="..\..\..\addons\ofxUI\src\ofxUITextInput.h" />
+		<Unit filename="..\..\..\addons\ofxUI\src\ofxUIToggle.h" />
+		<Unit filename="..\..\..\addons\ofxUI\src\ofxUIToggleMatrix.h" />
+		<Unit filename="..\..\..\addons\ofxUI\src\ofxUIWaveform.h" />
+		<Unit filename="..\..\..\addons\ofxUI\src\ofxUIWidget.h" />
+		<Unit filename="..\..\..\addons\ofxUI\src\ofxUIWidgetWithLabel.h" />
+		<Unit filename="..\..\..\addons\ofxXmlSettings\libs\tinyxml.cpp" />
+		<Unit filename="..\..\..\addons\ofxXmlSettings\libs\tinyxml.h" />
+		<Unit filename="..\..\..\addons\ofxXmlSettings\libs\tinyxmlerror.cpp" />
+		<Unit filename="..\..\..\addons\ofxXmlSettings\libs\tinyxmlparser.cpp" />
+		<Unit filename="..\..\..\addons\ofxXmlSettings\src\ofxXmlSettings.cpp" />
+		<Unit filename="..\..\..\addons\ofxXmlSettings\src\ofxXmlSettings.h" />
+		<Unit filename="src\Agent.cpp">
+			<Option virtualFolder="src\" />
+		</Unit>
+		<Unit filename="src\Agent.h">
+			<Option virtualFolder="src\" />
+		</Unit>
+		<Unit filename="src\AgentEvent.h">
+			<Option virtualFolder="src\" />
+		</Unit>
+		<Unit filename="src\Book.h">
+			<Option virtualFolder="src\" />
+		</Unit>
+		<Unit filename="src\CircleButton.h">
+			<Option virtualFolder="src\" />
+		</Unit>
+		<Unit filename="src\ColorPool.h">
+			<Option virtualFolder="src\" />
+		</Unit>
+		<Unit filename="src\ColorTrail.h">
+			<Option virtualFolder="src\" />
+		</Unit>
+		<Unit filename="src\CoreInteractiveBlock.h">
+			<Option virtualFolder="src\" />
+		</Unit>
+		<Unit filename="src\CorePage.h">
+			<Option virtualFolder="src\" />
+		</Unit>
+		<Unit filename="src\HitRectImage.h">
+			<Option virtualFolder="src\" />
+		</Unit>
+		<Unit filename="src\QuotePath.cpp">
+			<Option virtualFolder="src\" />
+		</Unit>
+		<Unit filename="src\QuotePath.h">
+			<Option virtualFolder="src\" />
+		</Unit>
+		<Unit filename="src\QuoteText.cpp">
+			<Option virtualFolder="src\" />
+		</Unit>
+		<Unit filename="src\QuoteText.h">
+			<Option virtualFolder="src\" />
+		</Unit>
+		<Unit filename="src\RibbonAgent.h">
+			<Option virtualFolder="src\" />
+		</Unit>
+		<Unit filename="src\SetupPage.h">
+			<Option virtualFolder="src\" />
+		</Unit>
+		<Unit filename="src\SplashPage.h">
+			<Option virtualFolder="src\" />
+		</Unit>
+		<Unit filename="src\WordBlock.h">
+			<Option virtualFolder="src\" />
+		</Unit>
 		<Unit filename="src\main.cpp">
 			<Option virtualFolder="src" />
 		</Unit>

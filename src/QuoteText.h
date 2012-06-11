@@ -54,6 +54,8 @@ class QuoteText
 
     void editWordBlockAt ( float x , float y ) ;
     void removeWordBlockAt ( float x , float y ) ;
+
+    bool bReadyToStart ;
 };
 
 

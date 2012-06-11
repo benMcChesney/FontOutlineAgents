@@ -22,6 +22,7 @@ void QuoteText::setup ( string _fontPath , int _fontSize )
     cout << "fontSize : " << fontSize << endl ;
     //Setup our font
     font.loadFont( fontPath , fontSize, true , true , true ) ;
+    bReadyToStart = false ;
     //charTranslateOffset = ofVec2f( 100 , 150 ) ;
 
 }
@@ -45,10 +46,14 @@ void QuoteText::createQuotePath ( )
 void QuoteText::addWordBlock ( string word , ofPoint position , int _fontSize , bool _bEditable  )
 {
     WordBlock * wb = new WordBlock() ;
+    cout << "fontPath! : " <<  fontPath << endl ;
+    cout << " word : " << word << " - position : " << position.x << " , " << position.y << endl ;
     wb->setup( fontPath , _fontSize , word , wordBlocks.size() , position ) ;
     wb->bEditable = _bEditable ;
     wordBlocks.push_back( wb ) ;
 
+    wb->updateWord( ) ;
+    bReadyToStart = true ;
               //void setup ( string _fontPath , float _fontSize , string _word , int _wordIndex )
 }
 
@@ -302,6 +307,7 @@ QuotePath* QuoteText::getQuotePathAt ( int index )
 
 void QuoteText::drawWordBlocks()
 {
+    cout << "number of wordBlocks! " << wordBlocks.size() << endl ;
     for ( int i = 0 ; i < wordBlocks.size() ; i++ )
     {
         wordBlocks[i]->draw( ) ;

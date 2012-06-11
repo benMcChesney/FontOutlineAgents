@@ -1224,7 +1224,7 @@
 	"ofEvents.h"
 	"ofMain.h"
 
-1339378343 c:\users\ben\documents\of_v0071_win_cb\apps\github_benmcchesney\fontoutlineagents\src\quotetext.h
+1339384505 c:\users\ben\documents\of_v0071_win_cb\apps\github_benmcchesney\fontoutlineagents\src\quotetext.h
 	"ofMain.h"
 	"QuotePath.h"
 	"AgentEvent.h"
@@ -1233,7 +1233,7 @@
 1339375838 c:\users\ben\documents\of_v0071_win_cb\apps\github_benmcchesney\fontoutlineagents\src\quotepath.h
 	"ofMain.h"
 
-1339375838 c:\users\ben\documents\of_v0071_win_cb\apps\github_benmcchesney\fontoutlineagents\src\wordblock.h
+1339386034 c:\users\ben\documents\of_v0071_win_cb\apps\github_benmcchesney\fontoutlineagents\src\wordblock.h
 	"ofMain.h"
 
 1338395672 c:\users\ben\documents\of_v0071_win_cb\addons\ofxui\src\ofxui.h
@@ -1422,7 +1422,7 @@
 	"ofPoint.h"
 	"ofTypes.h"
 
-1339379434 source:c:\users\ben\documents\of_v0071_win_cb\apps\github_benmcchesney\fontoutlineagents\src\testapp.cpp
+1339386139 source:c:\users\ben\documents\of_v0071_win_cb\apps\github_benmcchesney\fontoutlineagents\src\testapp.cpp
 	"testApp.h"
 
 1339375838 source:c:\users\ben\documents\of_v0071_win_cb\apps\github_benmcchesney\fontoutlineagents\src\agent.cpp
@@ -1432,7 +1432,7 @@
 	"QuotePath.h"
 	<iostream>
 
-1339378487 source:c:\users\ben\documents\of_v0071_win_cb\apps\github_benmcchesney\fontoutlineagents\src\quotetext.cpp
+1339385918 source:c:\users\ben\documents\of_v0071_win_cb\apps\github_benmcchesney\fontoutlineagents\src\quotetext.cpp
 	<iostream>
 	"QuoteText.h"
 
