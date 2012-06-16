@@ -1,28 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_layout_file>
 	<ActiveTarget name="release" />
-	<File name="src\QuotePath.cpp" open="1" top="0" tabpos="5">
-		<Cursor position="672" topLine="8" />
-	</File>
-	<File name="src\QuotePath.h" open="0" top="0" tabpos="0">
-		<Cursor position="1363" topLine="16" />
-	</File>
-	<File name="src\QuoteText.cpp" open="1" top="0" tabpos="4">
-		<Cursor position="1582" topLine="39" />
-	</File>
-	<File name="src\QuoteText.h" open="1" top="0" tabpos="3">
-		<Cursor position="1432" topLine="28" />
-	</File>
-	<File name="src\WordBlock.h" open="1" top="0" tabpos="7">
-		<Cursor position="3054" topLine="80" />
-	</File>
-	<File name="src\main.cpp" open="1" top="0" tabpos="6">
+	<File name="src\main.cpp" open="1" top="0" tabpos="3">
 		<Cursor position="221" topLine="0" />
 	</File>
-	<File name="src\testApp.cpp" open="1" top="1" tabpos="2">
+	<File name="src\testApp.cpp" open="1" top="0" tabpos="2">
 		<Cursor position="2013" topLine="66" />
 	</File>
-	<File name="src\testApp.h" open="1" top="0" tabpos="1">
-		<Cursor position="1607" topLine="48" />
+	<File name="src\testApp.h" open="1" top="1" tabpos="1">
+		<Cursor position="1508" topLine="0" />
 	</File>
 </CodeBlocks_layout_file>
