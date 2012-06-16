@@ -9,49 +9,54 @@
 #include "QuotePath.h"
 #include <iostream>
 
-void QuotePath::setup( ) 
+void QuotePath::setup( )
 {
-    curLine = 0 ; 
+    curLine = 0 ;
     curTextIndex = 0 ;
-    targetIndex = 1 ; 
-    nextIndex = 2 ; 
-    
+    targetIndex = 1 ;
+    nextIndex = 2 ;
+
     //The text is one line at a time
-    //cout << "textLines.size() " << textLines.size() << endl ; 
-    text = textLines[curLine] ; 
-    letter = text[curTextIndex] ; 
+    //cout << "textLines.size() " << textLines.size() << endl ;
+    text = textLines[curLine] ;
+    letter = text[curTextIndex] ;
     character = font->getCharacterAsPoints(letter);
     collectAllPointsCharacter( ) ;
-    curTextIndex = -1 ; 
-    targetIndex = 0 ; 
-    nextIndex = 1 ; 
+    curTextIndex = -1 ;
+    targetIndex = 0 ;
+    nextIndex = 1 ;
     collectAllPointsCharacter( ) ;
-    bTeleportFlag = true ; 
-    bFinished = false ; 
-    
-    bHasLooped = false ; 
-    maxLoopIndex = 15 ; 
-    
+    bTeleportFlag = true ;
+    bFinished = false ;
+
+    bHasLooped = false ;
+    maxLoopIndex = 15 ;
+
 }
 
 void QuotePath::collectAllPointsCharacter( )
-{   
-    characterPoints.clear() ; 
+{
+    characterPoints.clear() ;
     for(int k = 0; k <(int)character.getOutline().size(); k++)
     {
-        
+
         for(int i = 0; i < (int)character.getOutline()[k].size(); i++)
         {
-            ofVec2f p = character.getOutline()[k].getVertices()[i] ; 
-            characterPoints.push_back( p ) ; 
+            ofVec2f p = character.getOutline()[k].getVertices()[i] ;
+            characterPoints.push_back( p ) ;
         }
     }
 }
 
-void QuotePath::endPath ( ) 
+void QuotePath::endPath ( )
 {
-    targetIndex = 0 ; 
+    targetIndex = 0 ;
     nextIndex = 1 ;
+}
+
+void QuotePath::updateCharacter( )
+{
+    character = font->getCharacterAsPoints( letter );
 }
 
 

@@ -10,18 +10,14 @@
 
 #include "QuoteText.h"
 
-void QuoteText::init ( )
+void QuoteText::setup ( )
 {
-    font.loadFont( fontPath , fontSize, true , true , true ) ;
-}
-
-void QuoteText::setup ( string _fontPath , int _fontSize )
-{
-    fontPath = _fontPath ;
-    fontSize = _fontSize ;
-    cout << "fontSize : " << fontSize << endl ;
+   // fontPath = _fontPath ;
+   // fontSize = _fontSize ;
+   // cout << "fontSize : " << fontSize << endl ;
     //Setup our font
-    font.loadFont( fontPath , fontSize, true , true , true ) ;
+   // cout << "QuotePath::setup() loading fontPath : " << fontPath << endl ;
+   // font.loadFont( fontPath , fontSize, true , true , true ) ;
     bReadyToStart = false ;
     //charTranslateOffset = ofVec2f( 100 , 150 ) ;
 
@@ -36,17 +32,17 @@ void QuoteText::createQuotePath ( )
         textLines.push_back( wordBlocks[ i ]->word ) ;
     }
     qp->textLines = textLines ;
-    qp->font = &font ;
+//    qp->font = &font ;
     qp->setup( ) ;
 
     // vector<QuotePath*> quotePaths ;
     quotePaths.push_back( qp ) ;
 }
 
-void QuoteText::addWordBlock ( string word , ofPoint position , int _fontSize , bool _bEditable  )
+void QuoteText::addWordBlock ( string word , string fontPath , ofPoint position , int _fontSize , bool _bEditable  )
 {
     WordBlock * wb = new WordBlock() ;
-    cout << "fontPath! : " <<  fontPath << endl ;
+//    cout << "fontPath! : " <<  fontPath << endl ;
     cout << " word : " << word << " - position : " << position.x << " , " << position.y << endl ;
     wb->setup( fontPath , _fontSize , word , wordBlocks.size() , position ) ;
     wb->bEditable = _bEditable ;
@@ -157,7 +153,7 @@ ofPoint QuoteText::startNewCharacter( int pathIndex )
         startNewCharacter( pathIndex ) ;
     //cout << "The Letter is : " << letter << endl ;
     //First we get the outline points of the letter as a font
-    qp->character = font.getCharacterAsPoints( qp->letter );
+    qp->updateCharacter() ;
     qp->collectAllPointsCharacter() ;
     //..collectAllPointsCharacter( pathIndex ) ;
 
@@ -307,10 +303,10 @@ QuotePath* QuoteText::getQuotePathAt ( int index )
 
 void QuoteText::drawWordBlocks()
 {
-    cout << "number of wordBlocks! " << wordBlocks.size() << endl ;
+   // cout << "number of wordBlocks! " << wordBlocks.size() << endl ;
     for ( int i = 0 ; i < wordBlocks.size() ; i++ )
     {
-        wordBlocks[i]->draw( ) ;
+       // wordBlocks[i]->draw( ) ;
     }
 }
 

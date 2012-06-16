@@ -2633,7 +2633,7 @@
 	"testApp.h"
 	"ofAppGlutWindow.h"
 
-1339874189 c:\users\ben\documents\of_v0071_win_cb_release\apps\github\fontagentoutlines\src\testapp.h
+1339877417 c:\users\ben\documents\of_v0071_win_cb_release\apps\github\fontagentoutlines\src\testapp.h
 	"ofMain.h"
 	"Agent.h"
 	"ColorPool.h"
@@ -2644,6 +2644,7 @@
 	"ofxTweenzor.h"
 	"RibbonAgent.h"
 	"WordBlock.h"
+	"FontPool.h"
 
 1339866140 c:\users\ben\documents\of_v0071_win_cb_release\apps\github\fontagentoutlines\src\agent.h
 	"ofMain.h"
@@ -2661,13 +2662,13 @@
 	"ofEvents.h"
 	"ofMain.h"
 
-1339866140 c:\users\ben\documents\of_v0071_win_cb_release\apps\github\fontagentoutlines\src\quotetext.h
+1339875737 c:\users\ben\documents\of_v0071_win_cb_release\apps\github\fontagentoutlines\src\quotetext.h
 	"ofMain.h"
 	"QuotePath.h"
 	"AgentEvent.h"
 	"WordBlock.h"
 
-1339866140 c:\users\ben\documents\of_v0071_win_cb_release\apps\github\fontagentoutlines\src\quotepath.h
+1339875568 c:\users\ben\documents\of_v0071_win_cb_release\apps\github\fontagentoutlines\src\quotepath.h
 	"ofMain.h"
 
 1339866140 c:\users\ben\documents\of_v0071_win_cb_release\apps\github\fontagentoutlines\src\wordblock.h
@@ -2859,17 +2860,23 @@
 	"ofPoint.h"
 	"ofTypes.h"
 
-1339866140 source:c:\users\ben\documents\of_v0071_win_cb_release\apps\github\fontagentoutlines\src\testapp.cpp
+1339878976 source:c:\users\ben\documents\of_v0071_win_cb_release\apps\github\fontagentoutlines\src\testapp.cpp
 	"testApp.h"
 
 1339866140 source:c:\users\ben\documents\of_v0071_win_cb_release\apps\github\fontagentoutlines\src\agent.cpp
 	"Agent.h"
 
-1339866140 source:c:\users\ben\documents\of_v0071_win_cb_release\apps\github\fontagentoutlines\src\quotepath.cpp
+1339875605 source:c:\users\ben\documents\of_v0071_win_cb_release\apps\github\fontagentoutlines\src\quotepath.cpp
 	"QuotePath.h"
 	<iostream>
 
-1339866140 source:c:\users\ben\documents\of_v0071_win_cb_release\apps\github\fontagentoutlines\src\quotetext.cpp
+1339875743 source:c:\users\ben\documents\of_v0071_win_cb_release\apps\github\fontagentoutlines\src\quotetext.cpp
 	<iostream>
 	"QuoteText.h"
+
+1339879121 c:\users\ben\documents\of_v0071_win_cb_release\apps\github\fontagentoutlines\src\fontpool.h
+	"ofMain.h"
+	"FontData.h"
+
+1339879132 c:\users\ben\documents\of_v0071_win_cb_release\apps\github\fontagentoutlines\src\fontdata.h
 

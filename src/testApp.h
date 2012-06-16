@@ -11,6 +11,7 @@
 #include "RibbonAgent.h"
 //s#include "ofxColorPicker.h"
 #include "WordBlock.h"
+#include "FontPool.h"
 
 class testApp : public ofBaseApp{
 
@@ -53,7 +54,6 @@ class testApp : public ofBaseApp{
 
         float a_rOffsetMaxSpeed ;
         float a_rOffsetMaxTurn ;
-
 
         void mousePressed ( int x , int y , int button ) ;
         void mouseDragged ( int x , int y , int button ) ;

@@ -20,18 +20,16 @@ class QuoteText
     public :
 
     QuoteText ( ) { }
-
-    void init ( ) ;
-    void setup ( string fontPath , int fontSize ) ;
+    void setup ( ) ;
 
     ofRectangle normalizeRectangle ( ofRectangle rect ,  bool verboseLog = false ) ;
     ofPoint getNextTarget ( int pathIndex ) ;
     ofPoint startNewCharacter( int pathIndex ) ;
     ofPoint getPointByChar( int charIndex , int pathIndex) ;       //Get x , y of a character
 
-    ofTrueTypeFont font ;           //Font
-    string fontPath ;
-    float fontSize ;
+  //  ofTrueTypeFont font ;           //Font
+  //  string fontPath ;
+  //  float fontSize ;
 
     vector<QuotePath*> quotePaths ;
     void createQuotePath ( ) ;
@@ -41,7 +39,7 @@ class QuoteText
     void resetQuotePaths() ;
     void clearWordBlocks ( ) ;
 
-    void addWordBlock ( string word , ofPoint position , int fontSize , bool bEditable = false ) ;
+    void addWordBlock ( string word ,  string fontPath , ofPoint position , int fontSize , bool bEditable = false ) ;
     vector<WordBlock*> wordBlocks ;
 
     WordBlock * getEditableBlock( ) ;
@@ -56,6 +54,8 @@ class QuoteText
     void removeWordBlockAt ( float x , float y ) ;
 
     bool bReadyToStart ;
+
+    //Default
 };
 
 

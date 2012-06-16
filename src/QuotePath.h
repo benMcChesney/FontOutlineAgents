@@ -13,41 +13,45 @@
 
 class QuotePath
 {
-    public : 
-        QuotePath( ) { } 
-        
+    public :
+        QuotePath( ) { }
+
         void setup ( ) ;
-    
+
         //have to track their own indicies inside characters
         int curLine ;                   //current line
         int curTextIndex ;              //current character index
         char letter;                    //current character
-        
+
         vector<string> textLines ;      //Text line by line
-        
+
         ofTrueTypeFont *font ;           //Font
-        
+
         ofTTFCharacter character ;
-        ofRectangle charBounds ;        //Bounds of the current character ( 0 , 0 , width , height ) 
+        ofRectangle charBounds ;        //Bounds of the current character ( 0 , 0 , width , height )
         string text ;                   //current line text
-        
+
         int targetIndex ;               //Target for the next index
         int nextIndex ;                 //next index
         ofVec3f letterOffset ;          //offset for drawing the current letter
-        
+
         bool bHasLooped ;                //for repeating over contour points to fully close shapes
         int maxLoopIndex ;
-    
+
         vector<ofVec2f> characterPoints ; //x , y of each character point
-    
+
         bool bTeleportFlag ;
         bool bFinished ;                //Finished drawing the quote
 
-        void endPath ( )  ; 
+        void endPath ( )  ;
         void collectAllPointsCharacter( )  ;
-    
-        
-        
+
+        void updateCharacter()  ;
+        //qp->font->getCharacterAsPoints( qp->letter );
+
+
+
+
 };
 
 

@@ -6,7 +6,8 @@ void testApp::setup()
 {
     bRunAgents = false ;
 
-
+    FontPool::Instance()->addFont( "Batang.ttf" , "BATANG" ) ;
+    FontPool::Instance()->addFont( "CooperBlack.ttf" , "COOPER_BLACK" ) ;
 
     ofSetLogLevel( OF_LOG_VERBOSE ) ;
     ofBackground( 0 ) ;
@@ -23,7 +24,7 @@ void testApp::setup()
     colorPool.addColor( ofColor( 89 , 25 , 2 ) ) ;
 
     //Add our quote in line by line
-    quote.setup( "Batang.ttf" , 60 ) ;
+    quote.setup( ) ;
 
     //void addWordBlock ( string word , ofPoint position , int fontSize ) ;
     float padding = 50 ;
@@ -49,7 +50,8 @@ void testApp::setup()
 
 void testApp::createNewWordBlock()
 {
-    quote.addWordBlock( "" , ofPoint( ofGetWidth() / 2 , ofGetHeight() / 2 ) , newFontSize , true ) ;
+    string batangPath = ofToDataPath( "Batang.ttf" ) ;
+    quote.addWordBlock( "" , batangPath , ofPoint( ofGetWidth() / 2 , ofGetHeight() / 2 ) , newFontSize , true ) ;
 }
 
 //--------------------------------------------------------------
@@ -324,8 +326,8 @@ void testApp::saveProjectFile( )
     else
         path += ".xml" ;
 
-    projectXml.setValue( "fontPath"  , quote.fontPath ) ;
-    projectXml.setValue( "fontSize" , quote.fontSize ) ;
+//    projectXml.setValue( "fontPath"  , quote.fontPath ) ;
+//    projectXml.setValue( "fontSize" , quote.fontSize ) ;
 
     for ( int i = 0 ; i < quote.wordBlocks.size() ; i++ )
     {
@@ -367,13 +369,14 @@ void testApp::openProjectFile( )
    // quote.clearQuotes() ;
 
 
-    string fontPath = projectXml.getValue ( "fontPath" , "noPath" ) ;
-    quote.fontPath = fontPath ;
-    int fontSize = projectXml.getValue( "fontSize" , 12 ) ;
+ //   string fontPath = projectXml.getValue ( "fontPath" , "noPath" ) ;
+ //   quote.fontPath = ofToDataPath( fontPath ) ;
+ //   cout << "fontPath is : " << fontPath << endl ;
+//    int fontSize = projectXml.getValue( "fontSize" , 12 ) ;
     int numWordBlocks = projectXml.getNumTags( "wordBlock" ) ;
+
     quote.clearWordBlocks() ;
-    quote.setup( fontPath ,
-                 fontSize ) ;
+    quote.setup( ) ;
 
      for ( int i = 0 ; i < numWordBlocks ; i++ )
     {
@@ -382,7 +385,15 @@ void testApp::openProjectFile( )
         projectXml.pushTag( "wordBlock" , i ) ;
         ofPoint translate = ofPoint( projectXml.getValue( "translateX" , 0 ) , projectXml.getValue( "translateY" , 0 ) ) ;
         //void QuoteText::addWordBlock ( string word , ofPoint position , int _fontSize , bool _bEditable  )
-        quote.addWordBlock( projectXml.getValue( "text" , "noText" ) , translate , fontSize ) ;
+        string text =  projectXml.getValue( "text" , "noText" ) ;
+        cout << "text is : " << text << endl ;
+
+        string fontPath = "../" + projectXml.getValue( "fontPath" , "noFont" ) ;
+        cout << "fontPath is ::" << fontPath << endl ;
+        float fontSize = projectXml.getValue( "fontSize" , 15.0f ) ;
+        FontData fontData = FontPool::Instance()->getFontDataByName( fontPath ) ;
+        cout << "filePath: " << fontData.filePath << endl ;
+        quote.addWordBlock( text , fontData.filePath , translate , fontSize ) ;
         //projectXml.setValue( "text" , wb->word ) ;
         //projectXml.setValue( "fontSize" , wb->fontSize ) ;
         //projectXml.setValue( "fontPath" , wb->fontPath ) ;
@@ -399,7 +410,7 @@ void testApp::openProjectFile( )
         quote.addWordBlock( projectXml.getValue( "textLine", "NO TEXT" , i ) , ofPoint ( 0 , 0 ) , 0 ) ;
     }*/
 
-    cout << "fontPath : " << fontPath << endl ;
+   // cout << "fontPath : " << fontPath << endl ;
    // return ;
 
 
@@ -520,14 +531,14 @@ void testApp::keyPressed( int key )
                     word = word1 ;
                 }
                 wb->word = word ;
-                updateNewWordBlock( wb->word , quote.fontSize ) ;
+                updateNewWordBlock( wb->word , newFontSize ) ;
                 //updateNewWordBlock( wb->word , newFontSize ) ;
                 return ;
             }
 
             wb->word += key ;
             //void testApp::updateNewWordBlock ( string _word , float _fontSize )
-            updateNewWordBlock( wb->word , quote.fontSize ) ;
+            updateNewWordBlock( wb->word , newFontSize ) ;
 
         }
   //  }
