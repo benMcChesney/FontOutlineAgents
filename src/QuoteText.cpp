@@ -74,10 +74,6 @@ WordBlock * QuoteText::getEditableBlock( )
     return NULL ;
 }
 
-//addWordBlock
-
-//vector<WordBlock*> wordBlocks ;
-
 ofPoint QuoteText::getPointByChar( int charIndex , int pathIndex )
 {
     //Apply the character offset and the letter offset
@@ -87,17 +83,8 @@ ofPoint QuoteText::getPointByChar( int charIndex , int pathIndex )
         cout << "getPointByChar(" << charIndex << " , " << pathIndex << "failed " << endl ;
         return ofVec2f( ) ;
     }
-    //quotePaths[pathIndex] ;
-   // cout << "quotePath is not NULL!" << endl ;
-    //cout << "charIndex : " << charIndex << endl ;
-   // cout << "qp->targetIndex" << qp->targetIndex << endl ;
-    //qp->collectAllPointsCharacter() ;
-   // ofPoint p1 = qp->characterPoints[charIndex] ;
-    //vector<ofPoint> pts = qp->character.getOutline()[charIndex].getVertices() ;
-    //cout << "pts.size() " << endl ;
 
     ofPoint p1 = qp->character.getOutline()[charIndex].getVertices()[ qp->targetIndex ] + qp->letterOffset ;
-    //cout << "p1 is : " << p1.x << " , " << p1.y << endl ;
     return p1 ;
 }
 
@@ -109,24 +96,20 @@ ofPoint QuoteText::startNewCharacter( int pathIndex )
     qp->endPath( ) ;
 
     //Move the character to the right
-      string soFar = qp->text.substr( 0 , qp->curTextIndex ) ;
-    ofRectangle soFarBounds = qp->font->getStringBoundingBox( soFar, 0 , 0 ) ;
-    qp->letterOffset.x += qp->charBounds.width + 10 ; ; //qp->font->getStringBoundingBox( ofToString(qp->text[qp->curTextIndex]) , 0 , 0 ).width ;
-    //qp->charBounds.width + 10 ;
-
+    string soFar = qp->text.substr( 0 , qp->curTextIndex ) ;
+   // ofRectangle soFarBounds = wordBlocks[ qp->curWord ]->font.getStringBoundingBox( soFar, 0 , 0 ) ;
+    qp->letterOffset.x += qp->charBounds.width ;
     qp->curTextIndex++ ;
-    //cout << "1 ) curTextIndex is : " <<  curTextIndex << endl ;
-    //cout << "curLine : " << curLine << endl ;
+
     //If the index has looped over all the vertices
     if ( qp->curTextIndex > qp->text.size()-1 )
     {
         qp->letterOffset.x = 0 ;
         qp->curTextIndex = 0 ;
-        qp->curLine++  ;
-        //cout << "textLines.size() " << textLines.size() << endl ;
-        if ( qp->curLine < qp->textLines.size() )
+        qp->curWord++  ;
+        if ( qp->curWord < qp->textLines.size() )
         {
-            WordBlock * wb = wordBlocks[qp->curLine] ;
+            WordBlock * wb = wordBlocks[qp->curWord] ;
             qp->text = wb->word ;
 
             qp->setFont( &wb->font ) ;
@@ -136,12 +119,7 @@ ofPoint QuoteText::startNewCharacter( int pathIndex )
             qp->bFinished = true ;
             return ofVec3f( ) ;
         }
-        //    cout << "INVALID TEXT LINE!! : " << curLine << endl ;
-
-        //qp->letterOffset.y += qp->charBounds.height + 15 ;
-
-
-        if ( qp->curLine > wordBlocks.size() - 1 )
+        if ( qp->curWord > wordBlocks.size() - 1 )
             return ofVec3f( )  ;
 
         qp->bTeleportFlag = true ;
@@ -243,7 +221,7 @@ ofPoint QuoteText::getNextTarget( int pathIndex )
 
     //float angleBetween( atan2(p2.y - p1.y , p2.x - p1.x ) ) ;
     //cout << "qp->characterPoints.size() " << qp->characterPoints.size() << endl;
-    ofVec2f _position =  qp->characterPoints[qp->targetIndex]  + qp->letterOffset  +  wordBlocks[qp->curLine]->translate  ;
+    ofVec2f _position =  qp->characterPoints[qp->targetIndex]  + qp->letterOffset  +  wordBlocks[qp->curWord]->translate  ;
 /*
     if ( bTeleportFlag == true )
     {

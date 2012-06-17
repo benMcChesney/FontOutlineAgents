@@ -119,7 +119,7 @@ void testApp::draw()
     for ( int a = 0 ; a < agents.size() ; a++ )
     {
         ofPushMatrix() ;
-            int wordIndex = quote.getQuotePathAt( a )->curLine ;
+            int wordIndex = quote.getQuotePathAt( a )->curWord ;
             agents[a]->draw() ;
         ofPopMatrix() ;
     }
@@ -277,7 +277,7 @@ void testApp::setupGUI ( )
     gui = new ofxUICanvas( 0 , ofGetHeight() - canvasHeight , ofGetWidth() , canvasHeight );
     //gui->addWidgetDown(new ofxUILabel("SLIDERS", OFX_UI_FONT_LARGE));
     gui->addWidgetRight(new ofxUILabel("SPACE - play/pause , S - save project", OFX_UI_FONT_LARGE));
-    gui->addWidgetRight(new ofxUILabel("R - reset , P - export PDF , N - New Word Box , E - Edit Word , BACKSPACE - Delete Word", OFX_UI_FONT_MEDIUM ));
+    gui->addWidgetRight(new ofxUILabel("R - reset , P - export PDF , N - New Word Box , E - Edit Word , ENTER - Finish Edit , BACKSPACE - Delete Word", OFX_UI_FONT_MEDIUM ));
 
     gui->addWidgetDown(new ofxUISlider( sliderLength , 15 , 0.0, 12.0f, a_maxSpeed, "MAX SPEED"));
     gui->addWidgetRight(new ofxUISlider( sliderLength , 15 , 0.0f, 4.0f, a_rOffsetMaxSpeed , "MAX SPEED R OFFSET" )) ;

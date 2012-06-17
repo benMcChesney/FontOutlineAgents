@@ -21,7 +21,7 @@ class QuotePath
         void setFont( ofTrueTypeFont * _font ) ;
 
         //have to track their own indicies inside characters
-        int curLine ;                   //current line
+        int curWord ;                   //current line
         int curTextIndex ;              //current character index
         char letter;                    //current character
 

@@ -11,14 +11,14 @@
 
 void QuotePath::setup( ofTrueTypeFont * _font )
 {
-    curLine = 0 ;
+    curWord = 0 ;
     curTextIndex = 0 ;
     targetIndex = 1 ;
     nextIndex = 2 ;
 
     //The text is one line at a time
     //cout << "textLines.size() " << textLines.size() << endl ;
-    text = textLines[curLine] ;
+    text = textLines[curWord] ;
     letter = text[curTextIndex] ;
     setFont( _font ) ;
     /*
