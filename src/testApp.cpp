@@ -6,8 +6,8 @@ void testApp::setup()
 {
     bRunAgents = false ;
 
-    FontPool::Instance()->addFont( "Batang.ttf" , "BATANG" ) ;
-    FontPool::Instance()->addFont( "CooperBlack.ttf" , "COOPER_BLACK" ) ;
+    //FontPool::Instance()->addFont( "Batang.ttf" , "BATANG" ) ;
+    //FontPool::Instance()->addFont( "CooperBlack.ttf" , "COOPER_BLACK" ) ;
 
     ofSetLogLevel( OF_LOG_VERBOSE ) ;
     ofBackground( 0 ) ;
@@ -60,7 +60,11 @@ void testApp::update()
     Tweenzor::update( ofGetElapsedTimeMillis() ) ;
 
     if ( !bRunAgents || quote.bReadyToStart == false )
+    {
+        //cout << "not ready to run!" << endl ;
         return ;
+    }
+
 
     int count = 0 ;
     vector<Agent*>::iterator a ;
@@ -104,6 +108,9 @@ void testApp::draw()
 {
     ofSetColor( 215 , 215 , 215 ) ;
     ofRect( 0 , 0 , ofGetWidth() , ofGetHeight() ) ;
+
+    ofSetColor( 15 , 15 , 15)  ;
+    ofDrawBitmapString( "FPS " + ofToString( ofGetFrameRate() ) , 25 , 25 ) ;
 
     //newProjectBook.draw( ) ;
     quote.drawWordBlocks( ) ;
@@ -380,39 +387,15 @@ void testApp::openProjectFile( )
 
      for ( int i = 0 ; i < numWordBlocks ; i++ )
     {
-        //int tagNum = projectXml.addTag( "wordBlock" ) ;
-        //WordBlock * wb = quote.wordBlocks[i] ;
         projectXml.pushTag( "wordBlock" , i ) ;
         ofPoint translate = ofPoint( projectXml.getValue( "translateX" , 0 ) , projectXml.getValue( "translateY" , 0 ) ) ;
-        //void QuoteText::addWordBlock ( string word , ofPoint position , int _fontSize , bool _bEditable  )
-        string text =  projectXml.getValue( "text" , "noText" ) ;
-        cout << "text is : " << text << endl ;
-
+        string text =   projectXml.getValue( "text" , "noText" ) ;
         string fontPath = "../" + projectXml.getValue( "fontPath" , "noFont" ) ;
-        cout << "fontPath is ::" << fontPath << endl ;
-        float fontSize = projectXml.getValue( "fontSize" , 15.0f ) ;
-        FontData fontData = FontPool::Instance()->getFontDataByName( fontPath ) ;
-        cout << "filePath: " << fontData.filePath << endl ;
-        quote.addWordBlock( text , fontData.filePath , translate , fontSize ) ;
-        //projectXml.setValue( "text" , wb->word ) ;
-        //projectXml.setValue( "fontSize" , wb->fontSize ) ;
-        //projectXml.setValue( "fontPath" , wb->fontPath ) ;
-        //projectXml.setValue( "translateX" , wb->translate.x ) ;
-        //projectXml.setValue( "translateY" , wb->translate.y ) ;
-        //projectXml.setValue( "wordBlock" , quote.wordBlocks[i]->word , i ) ;
+        float fontSize = projectXml.getValue ( "fontSize" , 18 ) ;
+
+        quote.addWordBlock( text , fontPath , translate , fontSize ) ;
         projectXml.popTag( ) ;
     }
-
-/*
-    for ( int i = 0 ; i < numTagLines ; i++ )
-    {
-        //quote.addLine( projectXml.getValue( "textLine", "NO TEXT" , i ) ) ;
-        quote.addWordBlock( projectXml.getValue( "textLine", "NO TEXT" , i ) , ofPoint ( 0 , 0 ) , 0 ) ;
-    }*/
-
-   // cout << "fontPath : " << fontPath << endl ;
-   // return ;
-
 
     a_maxSpeed = projectXml.getValue ( "MAX SPEED" , a_maxSpeed , a_maxSpeed ) ;
     a_rOffsetMaxSpeed = projectXml.getValue ( "MAX SPEED R OFFSET" , a_rOffsetMaxSpeed , a_rOffsetMaxSpeed ) ;
@@ -422,7 +405,8 @@ void testApp::openProjectFile( )
     a_pathSampling = projectXml.getValue ( "PATH SAMPLING" , a_pathSampling , a_pathSampling ) ;
     a_numAgents = projectXml.getValue ( "NUM AGENTS" , a_numAgents , a_numAgents ) ;
 
-    bRunAgents = false ;
+    resetAgents( ) ;
+    quote.bReadyToStart = true ;
 }
 
 void testApp::mousePressed ( int x , int y , int button )
@@ -432,13 +416,10 @@ void testApp::mousePressed ( int x , int y , int button )
 
 }
 
-
 void testApp::initProject ( )
 {
    // quote.clearQuotes() ;
    // newTextLine = "BLANK" ;
-
-
 }
 
 void testApp::mouseDragged ( int x , int y , int button )
@@ -450,8 +431,6 @@ void testApp::mouseReleased( int x , int y , int button )
 {
     quote.inputUp ( x , y ) ;
 }
-
-
 
 void testApp::keyPressed( int key )
 {
@@ -539,7 +518,6 @@ void testApp::keyPressed( int key )
             wb->word += key ;
             //void testApp::updateNewWordBlock ( string _word , float _fontSize )
             updateNewWordBlock( wb->word , newFontSize ) ;
-
         }
   //  }
 

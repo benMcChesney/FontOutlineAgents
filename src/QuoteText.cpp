@@ -25,6 +25,13 @@ void QuoteText::setup ( )
 
 void QuoteText::createQuotePath ( )
 {
+    if ( wordBlocks.size() < 1 )
+    {
+        cout << "no word blocks QuoteText::CreateQuotePath not continuing!" << endl ;
+        return ;
+    }
+
+
     QuotePath * qp = new QuotePath( ) ;
     vector<string> textLines ;
     for ( int i = 0 ; i < wordBlocks.size() ; i++ )
@@ -33,7 +40,8 @@ void QuoteText::createQuotePath ( )
     }
     qp->textLines = textLines ;
 //    qp->font = &font ;
-    qp->setup( ) ;
+    ofTrueTypeFont * wbFont = &wordBlocks[0]->font ;
+    qp->setup( wbFont ) ;
 
     // vector<QuotePath*> quotePaths ;
     quotePaths.push_back( qp ) ;
@@ -119,13 +127,9 @@ ofPoint QuoteText::startNewCharacter( int pathIndex )
         if ( qp->curLine < qp->textLines.size() )
         {
             WordBlock * wb = wordBlocks[qp->curLine] ;
-        //    cout << "old text was : " << text << endl ;
             qp->text = wb->word ;
-            //cout << " fontPath : " << wb->fontPath << " , fontSize : " << wb->fontSize << endl ;
-            //qp->font->loadFont( wb->fontPath, wb->fontSize , true , true , true )  ;
-           // qp->collectAllPointsCharacter() ;
-            //qp->letterOffset = wordBlocks[qp->curLine]->translate ;
-        //    cout << "newText is : " << text << endl ;
+
+            qp->setFont( &wb->font ) ;
         }
         else
         {
@@ -306,7 +310,7 @@ void QuoteText::drawWordBlocks()
    // cout << "number of wordBlocks! " << wordBlocks.size() << endl ;
     for ( int i = 0 ; i < wordBlocks.size() ; i++ )
     {
-       // wordBlocks[i]->draw( ) ;
+        wordBlocks[i]->draw( ) ;
     }
 }
 

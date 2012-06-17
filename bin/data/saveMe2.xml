@@ -1,0 +1,50 @@
+<wordBlock>
+    <text>WORD3</text>
+    <fontSize>20</fontSize>
+    <fontPath>Batang.ttf</fontPath>
+    <translateX>812.119</translateX>
+    <translateY>170.133</translateY>
+</wordBlock>
+<wordBlock>
+    <text>THIS IS A WORD</text>
+    <fontSize>60</fontSize>
+    <fontPath>Batang.ttf</fontPath>
+    <translateX>108</translateX>
+    <translateY>304</translateY>
+</wordBlock>
+<wordBlock>
+    <text>JELLY BEANS</text>
+    <fontSize>40</fontSize>
+    <fontPath>Batang.ttf</fontPath>
+    <translateX>683</translateX>
+    <translateY>384</translateY>
+</wordBlock>
+<MAX />
+<wordBlock>
+    <text>WORD3 ARE </text>
+    <fontSize>70.44</fontSize>
+    <fontPath>../Batang.ttf</fontPath>
+    <translateX>244</translateX>
+    <translateY>169</translateY>
+</wordBlock>
+<wordBlock>
+    <text>THIS IS A WORD</text>
+    <fontSize>60</fontSize>
+    <fontPath>../Batang.ttf</fontPath>
+    <translateX>108</translateX>
+    <translateY>304</translateY>
+</wordBlock>
+<wordBlock>
+    <text>JELLY BEANS</text>
+    <fontSize>40</fontSize>
+    <fontPath>../Batang.ttf</fontPath>
+    <translateX>683</translateX>
+    <translateY>384</translateY>
+</wordBlock>
+<MAX SPEED>6.12</MAX SPEED>
+<MAX SPEED R OFFSET>0.48</MAX SPEED R OFFSET>
+<MAX FORCE>3.65</MAX FORCE>
+<MAX FORCE R OFFSET>1.44</MAX FORCE R OFFSET>
+<BUFFER DIST>29</BUFFER DIST>
+<PATH SAMPLING>1</PATH SAMPLING>
+<NUM AGENTS>7</NUM AGENTS>

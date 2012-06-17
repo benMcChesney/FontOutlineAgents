@@ -9,7 +9,7 @@
 #include "QuotePath.h"
 #include <iostream>
 
-void QuotePath::setup( )
+void QuotePath::setup( ofTrueTypeFont * _font )
 {
     curLine = 0 ;
     curTextIndex = 0 ;
@@ -20,6 +20,25 @@ void QuotePath::setup( )
     //cout << "textLines.size() " << textLines.size() << endl ;
     text = textLines[curLine] ;
     letter = text[curTextIndex] ;
+    setFont( _font ) ;
+    /*
+    font = _font ;
+    character = font->getCharacterAsPoints(letter);
+    collectAllPointsCharacter( ) ;
+    curTextIndex = -1 ;
+    targetIndex = 0 ;
+    nextIndex = 1 ;
+    collectAllPointsCharacter( ) ;
+    bTeleportFlag = true ;
+    bFinished = false ;
+
+    bHasLooped = false ;
+    maxLoopIndex = 15 ;*/
+
+}
+void QuotePath::setFont( ofTrueTypeFont * _font )
+{
+    font = _font ;
     character = font->getCharacterAsPoints(letter);
     collectAllPointsCharacter( ) ;
     curTextIndex = -1 ;
@@ -31,7 +50,6 @@ void QuotePath::setup( )
 
     bHasLooped = false ;
     maxLoopIndex = 15 ;
-
 }
 
 void QuotePath::collectAllPointsCharacter( )

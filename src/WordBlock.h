@@ -104,8 +104,8 @@ class WordBlock
             }
 
             ofSetColor ( 115 , 115 , 115 ) ;
-            cout << "translate: " << translate.x << " , " << translate.y << endl ;
-            cout << "word : " << word << endl ;
+            //cout << "translate: " << translate.x << " , " << translate.y << endl ;
+            //cout << "word : " << word << endl ;
             ofRect( translate.x , translate.y - bounds.height , bounds.width , bounds.height  )  ;
             ofSetColor( 255 , 255 , 255 ) ;
             font.drawString( word , translate.x , translate.y ) ;

@@ -63,7 +63,7 @@ class testApp : public ofBaseApp{
         void initProject ( ) ;
 
         float canvasAlpha ;
-        int fontSize ;
+     //   int fontSize ;
 
         string newTextLine ;
         float ySpacing ;

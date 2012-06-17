@@ -16,7 +16,9 @@ class QuotePath
     public :
         QuotePath( ) { }
 
-        void setup ( ) ;
+        void setup ( ofTrueTypeFont * _font  ) ;
+
+        void setFont( ofTrueTypeFont * _font ) ;
 
         //have to track their own indicies inside characters
         int curLine ;                   //current line
