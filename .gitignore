@@ -2,8 +2,13 @@
 *.swp
 *~.nib
 
-build/
-obj/
+build/*
+obj/*
+
+*.o
+
+/release*
+/debug*
 
 *.pbxuser
 *.perspective

@@ -12,6 +12,10 @@
 //s#include "ofxColorPicker.h"
 #include "WordBlock.h"
 #include "FontPool.h"
+#include "InspectorPanel.h"
+#include "Events.h"
+
+
 
 class testApp : public ofBaseApp{
 
@@ -29,6 +33,9 @@ class testApp : public ofBaseApp{
         ColorPool colorPool ;
 
         ofxUIDropDownList *ddl;
+
+       // ofxUICanvas *gui;
+
         ofxUICanvas *gui;
 
         void setupGUI( ) ;
@@ -74,6 +81,13 @@ class testApp : public ofBaseApp{
         float newFontSize ;
 
         void updateNewWordBlock ( string _word , float _fontSize ) ;
+
+        InspectorPanel inspector ;
+
+        void newColorHandler( ofColor &args ) ;
+        void removeLastColorHandler( int &args ) ;
+
+
 
 
 };

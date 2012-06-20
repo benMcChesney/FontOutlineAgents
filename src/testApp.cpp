@@ -6,6 +6,7 @@ void testApp::setup()
 {
     bRunAgents = false ;
 
+
     //FontPool::Instance()->addFont( "Batang.ttf" , "BATANG" ) ;
     //FontPool::Instance()->addFont( "CooperBlack.ttf" , "COOPER_BLACK" ) ;
 
@@ -18,10 +19,10 @@ void testApp::setup()
  //   colorPicker.setColorRadius( 1.0 );
 
     //This is just an easy way to grab a color from a color palette
-    colorPool.addColor( ofColor( 242 , 202 , 82 ) ) ;
-    colorPool.addColor( ofColor( 242 , 163 , 65 ) ) ;
-    colorPool.addColor( ofColor( 217 , 99 , 30 ) ) ;
-    colorPool.addColor( ofColor( 89 , 25 , 2 ) ) ;
+    //colorPool.addColor( ofColor( 242 , 202 , 82 ) ) ;
+    //colorPool.addColor( ofColor( 242 , 163 , 65 ) ) ;
+    //colorPool.addColor( ofColor( 217 , 99 , 30 ) ) ;
+    //colorPool.addColor( ofColor( 89 , 25 , 2 ) ) ;
 
     //Add our quote in line by line
     quote.setup( ) ;
@@ -45,12 +46,28 @@ void testApp::setup()
 
     ofEnableAlphaBlending() ;
     bDebugDraw = false ;
+    inspector.setup( ) ;
 
+    ofAddListener( Events::Instance()->ADD_NEW_COLOR , this , &testApp::newColorHandler ) ;
+    ofAddListener( Events::Instance()->REMOVE_LAST_COLOR , this , &testApp::removeLastColorHandler ) ;
+}
+
+void testApp::newColorHandler( ofColor &color )
+{
+    cout << "newColor HANDLER! R : " << color.r << " G: " << color.g << " B: " << color.b << endl ;
+     colorPool.setColors( inspector.colors ) ;
+     resetAgents( ) ;
+}
+
+void testApp::removeLastColorHandler( int &args )
+{
+    colorPool.setColors( inspector.colors ) ;
+    resetAgents( ) ;
 }
 
 void testApp::createNewWordBlock()
 {
-    string batangPath = ofToDataPath( "Batang.ttf" ) ;
+    string batangPath = "Batang.ttf"  ;
     quote.addWordBlock( "" , batangPath , ofPoint( ofGetWidth() / 2 , ofGetHeight() / 2 ) , newFontSize , true ) ;
 }
 
@@ -58,6 +75,8 @@ void testApp::createNewWordBlock()
 void testApp::update()
 {
     Tweenzor::update( ofGetElapsedTimeMillis() ) ;
+    inspector.update( ) ;
+
 
     if ( !bRunAgents || quote.bReadyToStart == false )
     {
@@ -70,6 +89,8 @@ void testApp::update()
     vector<Agent*>::iterator a ;
     for ( a = agents.begin() ; a != agents.end() ; a++ )
     {
+        (*a)->update() ;
+        (*a)->update() ;
         (*a)->update() ;
 
 
@@ -100,7 +121,6 @@ void testApp::update()
         count++ ;
     }
 
-//    colorPicker.update();
 }
 
 //--------------------------------------------------------------
@@ -109,8 +129,7 @@ void testApp::draw()
     ofSetColor( 215 , 215 , 215 ) ;
     ofRect( 0 , 0 , ofGetWidth() , ofGetHeight() ) ;
 
-    ofSetColor( 15 , 15 , 15)  ;
-    ofDrawBitmapString( "FPS " + ofToString( ofGetFrameRate() ) , 25 , 25 ) ;
+
 
     //newProjectBook.draw( ) ;
     quote.drawWordBlocks( ) ;
@@ -124,6 +143,7 @@ void testApp::draw()
         ofPopMatrix() ;
     }
 
+    inspector.draw( ) ;
 
 }
 
@@ -205,6 +225,7 @@ void testApp::createNewAgent()
     Agent* agent = new RibbonAgent() ;
     agent->colorPool.addColor( colorPool.getRandomColor() ) ;
     agent->colorPool.addColor( colorPool.getRandomColor() ) ;
+    agent->colorPool.addColor( colorPool.getRandomColor() ) ;
 
     // ( x , y ) , speed, maxTurn
     agent->setup( ofVec2f ( ofGetWidth()/2 , ofGetHeight()/2 ) , ofVec2f( 0.3f , 0 ) , 20.0f ) ;
@@ -271,7 +292,7 @@ void testApp::exportPDF( )
 
 void testApp::setupGUI ( )
 {
-    float canvasHeight = 250 ;
+    float canvasHeight = 125 ;
     float sliderLength = 100 ;
     float padding = 15 ;
     gui = new ofxUICanvas( 0 , ofGetHeight() - canvasHeight , ofGetWidth() , canvasHeight );
@@ -292,7 +313,7 @@ void testApp::setupGUI ( )
     //newFontSize
     float radioSize = 45 ;
     vector<string> hnames; hnames.push_back("LINES"); hnames.push_back("CIRCLES"); hnames.push_back("RECTANGLES");
-	gui->addWidgetDown(new ofxUIRadio( radioSize , radioSize , "TRAIL TYPES", hnames, OFX_UI_ORIENTATION_HORIZONTAL));
+	//gui->addWidgetDown(new ofxUIRadio( radioSize , radioSize , "TRAIL TYPES", hnames, OFX_UI_ORIENTATION_HORIZONTAL));
     //vector<string> vnames;
     /*
     vnames.push_back("ROCKS");
@@ -324,6 +345,7 @@ void testApp::resetAgents()
 
 void testApp::saveProjectFile( )
 {
+    projectXml.clear( ) ;
     ofFileDialogResult saveResult = ofSystemSaveDialog( "myProject" , "Project Name?" ) ;
     string path = saveResult.getPath() ; //
 
@@ -343,11 +365,29 @@ void testApp::saveProjectFile( )
         projectXml.pushTag( "wordBlock" , tagNum ) ;
         projectXml.setValue( "text" , wb->word ) ;
         projectXml.setValue( "fontSize" , wb->fontSize ) ;
-        projectXml.setValue( "fontPath" , wb->fontPath ) ;
+        string rawFontPath = wb->fontPath ;
+        cout << "rawPath : " << rawFontPath << endl ;
+        string shortFontPath = rawFontPath.substr ( 3 , rawFontPath.size() - 3 ) ;
+        cout << "shortened fontPath: " << shortFontPath << endl ;
+        projectXml.setValue( "fontPath" , shortFontPath ) ;
         projectXml.setValue( "translateX" , wb->translate.x ) ;
         projectXml.setValue( "translateY" , wb->translate.y ) ;
         //projectXml.setValue( "wordBlock" , quote.wordBlocks[i]->word , i ) ;
         projectXml.popTag( ) ;
+    }
+
+
+    for ( int c = 0 ; c < inspector.colors.size() ; c++ )
+    {
+        //projectXml.addTag( "color" ) ;
+        //projectXml.pushTag( "color" , c ) ;
+        //int hexColor = colorPool.pool[c].toHex() ;
+            //projectXml.setValue( "color" , hexColor ) ;
+            projectXml.setValue( "r" , colorPool.pool[c].r ) ;
+            projectXml.setValue( "g" , colorPool.pool[c].g ) ;
+            projectXml.setValue( "b" , colorPool.pool[c].b ) ;
+       // projectXml.popTag( ) ;
+
     }
 
     projectXml.setValue ( "MAX SPEED" , a_maxSpeed ) ;
@@ -373,19 +413,12 @@ void testApp::openProjectFile( )
 
     projectXml.loadFile( path ) ;
 
-   // quote.clearQuotes() ;
-
-
- //   string fontPath = projectXml.getValue ( "fontPath" , "noPath" ) ;
- //   quote.fontPath = ofToDataPath( fontPath ) ;
- //   cout << "fontPath is : " << fontPath << endl ;
-//    int fontSize = projectXml.getValue( "fontSize" , 12 ) ;
     int numWordBlocks = projectXml.getNumTags( "wordBlock" ) ;
 
     quote.clearWordBlocks() ;
     quote.setup( ) ;
 
-     for ( int i = 0 ; i < numWordBlocks ; i++ )
+    for ( int i = 0 ; i < numWordBlocks ; i++ )
     {
         projectXml.pushTag( "wordBlock" , i ) ;
         ofPoint translate = ofPoint( projectXml.getValue( "translateX" , 0 ) , projectXml.getValue( "translateY" , 0 ) ) ;
@@ -397,6 +430,26 @@ void testApp::openProjectFile( )
         projectXml.popTag( ) ;
     }
 
+
+    int numColorTags = projectXml.getNumTags( "color" ) ;
+    cout << "numColorTags : " << numColorTags << endl ;
+    colorPool.clear() ;
+    inspector.colors.clear() ;
+    for ( int c = 0 ; c < numColorTags ; c++ )
+    {
+        projectXml.pushTag( "color" , c ) ;
+
+            ofColor color ;
+            color.r = projectXml.getValue( "r" , 125 ) ;
+            color.g = projectXml.getValue( "g" , 125 ) ;
+            color.b = projectXml.getValue( "b" , 125 ) ;
+            //cout << "r : " << color.r << " g : " << color.g << " b : " << color.b << endl ;
+            colorPool.addColor( color ) ;
+        projectXml.popTag( ) ;
+
+        inspector.colors.push_back( color ) ;
+
+    }
     a_maxSpeed = projectXml.getValue ( "MAX SPEED" , a_maxSpeed , a_maxSpeed ) ;
     a_rOffsetMaxSpeed = projectXml.getValue ( "MAX SPEED R OFFSET" , a_rOffsetMaxSpeed , a_rOffsetMaxSpeed ) ;
     a_maxForce = projectXml.getValue ( "MAX FORCE" , a_maxForce , a_maxForce ) ;
@@ -413,6 +466,7 @@ void testApp::mousePressed ( int x , int y , int button )
 {
     //newProjectBook.input( x , y ) ;
     quote.inputDown ( x , y ) ;
+    inspector.input( x , y ) ;
 
 }
 
@@ -492,6 +546,7 @@ void testApp::keyPressed( int key )
                     break ;
 
             }
+            cout << "no editable path!" << endl;
         }
         else
         {
@@ -501,6 +556,7 @@ void testApp::keyPressed( int key )
                 return ;
             }
 
+            //Backspace
             else if ( key == 127|| key == 8 )
             {
                 string word = wb->word ;
@@ -510,14 +566,17 @@ void testApp::keyPressed( int key )
                     word = word1 ;
                 }
                 wb->word = word ;
+
                 updateNewWordBlock( wb->word , newFontSize ) ;
                 //updateNewWordBlock( wb->word , newFontSize ) ;
                 return ;
             }
 
             wb->word += key ;
+            cout << "updating word blcok with : " << wb->word << endl ;
             //void testApp::updateNewWordBlock ( string _word , float _fontSize )
             updateNewWordBlock( wb->word , newFontSize ) ;
+
         }
   //  }
 

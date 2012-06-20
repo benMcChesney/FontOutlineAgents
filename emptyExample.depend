@@ -2633,7 +2633,7 @@
 	"testApp.h"
 	"ofAppGlutWindow.h"
 
-1339903628 c:\users\ben\documents\of_v0071_win_cb_release\apps\github\fontagentoutlines\src\testapp.h
+1340171170 c:\users\ben\documents\of_v0071_win_cb_release\apps\github\fontagentoutlines\src\testapp.h
 	"ofMain.h"
 	"Agent.h"
 	"ColorPool.h"
@@ -2645,6 +2645,8 @@
 	"RibbonAgent.h"
 	"WordBlock.h"
 	"FontPool.h"
+	"InspectorPanel.h"
+	"Events.h"
 
 1339866140 c:\users\ben\documents\of_v0071_win_cb_release\apps\github\fontagentoutlines\src\agent.h
 	"ofMain.h"
@@ -2652,7 +2654,7 @@
 	"ColorTrail.h"
 	"AgentEvent.h"
 
-1339866140 c:\users\ben\documents\of_v0071_win_cb_release\apps\github\fontagentoutlines\src\colorpool.h
+1340167973 c:\users\ben\documents\of_v0071_win_cb_release\apps\github\fontagentoutlines\src\colorpool.h
 	"ofMain.h"
 
 1339866140 c:\users\ben\documents\of_v0071_win_cb_release\apps\github\fontagentoutlines\src\colortrail.h
@@ -2860,7 +2862,7 @@
 	"ofPoint.h"
 	"ofTypes.h"
 
-1339907830 source:c:\users\ben\documents\of_v0071_win_cb_release\apps\github\fontagentoutlines\src\testapp.cpp
+1340171404 source:c:\users\ben\documents\of_v0071_win_cb_release\apps\github\fontagentoutlines\src\testapp.cpp
 	"testApp.h"
 
 1339866140 source:c:\users\ben\documents\of_v0071_win_cb_release\apps\github\fontagentoutlines\src\agent.cpp
@@ -2870,7 +2872,7 @@
 	"QuotePath.h"
 	<iostream>
 
-1339907817 source:c:\users\ben\documents\of_v0071_win_cb_release\apps\github\fontagentoutlines\src\quotetext.cpp
+1339908696 source:c:\users\ben\documents\of_v0071_win_cb_release\apps\github\fontagentoutlines\src\quotetext.cpp
 	<iostream>
 	"QuoteText.h"
 
@@ -2879,4 +2881,27 @@
 	"FontData.h"
 
 1339879132 c:\users\ben\documents\of_v0071_win_cb_release\apps\github\fontagentoutlines\src\fontdata.h
+
+1340167601 c:\users\ben\documents\of_v0071_win_cb_release\apps\github\fontagentoutlines\src\inspectorpanel.h
+	"HitButton.h"
+	"ofxColorPicker.h"
+	"Events.h"
+
+1323140610 c:\users\ben\documents\of_v0071_win_cb_release\addons\ofxcolorpicker\src\ofxcolorpicker.h
+	"ofMain.h"
+	"ofxMSAInteractiveObject.h"
+
+1290338160 c:\users\ben\documents\of_v0071_win_cb_release\addons\ofxmsainteractiveobject\src\ofxmsainteractiveobject.h
+	"ofMain.h"
+
+1340163135 source:c:\users\ben\documents\of_v0071_win_cb_release\addons\ofxcolorpicker\src\ofxcolorpicker.cpp
+	"ofxColorPicker.h"
+
+1340163235 source:c:\users\ben\documents\of_v0071_win_cb_release\addons\ofxmsainteractiveobject\src\ofxmsainteractiveobject.cpp
+	"ofxMSAInteractiveObject.h"
+	"ofMain.h"
+
+1340166336 c:\users\ben\documents\of_v0071_win_cb_release\apps\github\fontagentoutlines\src\hitbutton.h
+
+1340167885 c:\users\ben\documents\of_v0071_win_cb_release\apps\github\fontagentoutlines\src\events.h
 

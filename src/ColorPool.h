@@ -12,33 +12,38 @@
 
 #include "ofMain.h"
 
-class ColorPool 
+class ColorPool
 {
     public :
-        ColorPool ( ) 
+        ColorPool ( )
         {
-        
+
         }
-    
-        vector <ofColor> pool ; 
-    
-    
+
+        vector <ofColor> pool ;
+
+
         //Add a color to our pool
-        void addColor ( ofColor _c ) 
+        void addColor ( ofColor _c )
         {
-            pool.push_back( _c ) ; 
+            pool.push_back( _c ) ;
         }
-    
+
         // retrieve a color from the palette
-        ofColor getRandomColor ( ) 
+        ofColor getRandomColor ( )
         {
-            int randIndex = ofRandom ( 0 , pool.size() ) ; 
-            return pool[randIndex] ; 
+            int randIndex = ofRandom ( 0 , pool.size() ) ;
+            return pool[randIndex] ;
         }
-    
-        void clear ( ) 
+
+        void clear ( )
         {
-            pool.clear() ; 
+            pool.clear() ;
+        }
+
+        void setColors( vector<ofColor> _colors )
+        {
+            pool = _colors ;
         }
 };
 #endif

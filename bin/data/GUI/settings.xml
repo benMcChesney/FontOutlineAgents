@@ -31,25 +31,10 @@
 <Widget>
     <Kind>4</Kind>
     <Name>NUM AGENTS</Name>
-    <Value>56.8</Value>
+    <Value>22.08</Value>
 </Widget>
 <Widget>
     <Kind>4</Kind>
     <Name>NEW FONT SIZE</Name>
     <Value>53.08</Value>
-</Widget>
-<Widget>
-    <Kind>2</Kind>
-    <Name>LINES</Name>
-    <Value>0</Value>
-</Widget>
-<Widget>
-    <Kind>2</Kind>
-    <Name>CIRCLES</Name>
-    <Value>1</Value>
-</Widget>
-<Widget>
-    <Kind>2</Kind>
-    <Name>RECTANGLES</Name>
-    <Value>0</Value>
 </Widget>

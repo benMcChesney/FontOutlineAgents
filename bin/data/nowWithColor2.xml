@@ -1,0 +1,43 @@
+<wordBlock>
+    <text>WORD</text>
+    <fontSize>53</fontSize>
+    <fontPath>Batang.ttf</fontPath>
+    <translateX>496</translateX>
+    <translateY>215</translateY>
+</wordBlock>
+<wordBlock>
+    <text>WORD2</text>
+    <fontSize>53</fontSize>
+    <fontPath>Batang.ttf</fontPath>
+    <translateX>600</translateX>
+    <translateY>344</translateY>
+</wordBlock>
+<wordBlock>
+    <text>WORD3</text>
+    <fontSize>53</fontSize>
+    <fontPath>Batang.ttf</fontPath>
+    <translateX>799</translateX>
+    <translateY>469</translateY>
+</wordBlock>
+<color>
+    <r>0</r>
+    <g>255</g>
+    <b>255</b>
+</color>
+<color>
+    <r>241</r>
+    <g>142</g>
+    <b>91</b>
+</color>
+<color>
+    <r>111</r>
+    <g>255</g>
+    <b>134</b>
+</color>
+<MAX SPEED>6.12</MAX SPEED>
+<MAX SPEED R OFFSET>1.48</MAX SPEED R OFFSET>
+<MAX FORCE>3.65</MAX FORCE>
+<MAX FORCE R OFFSET>0.48</MAX FORCE R OFFSET>
+<BUFFER DIST>29</BUFFER DIST>
+<PATH SAMPLING>1</PATH SAMPLING>
+<NUM AGENTS>22</NUM AGENTS>
