@@ -55,8 +55,8 @@ void testApp::setup()
 void testApp::newColorHandler( ofColor &color )
 {
     cout << "newColor HANDLER! R : " << color.r << " G: " << color.g << " B: " << color.b << endl ;
-     colorPool.setColors( inspector.colors ) ;
-     resetAgents( ) ;
+    colorPool.setColors( inspector.colors ) ;
+    resetAgents( ) ;
 }
 
 void testApp::removeLastColorHandler( int &args )
@@ -74,6 +74,8 @@ void testApp::createNewWordBlock()
 //--------------------------------------------------------------
 void testApp::update()
 {
+    ofSetWindowTitle(  "FPS: " + ofToString( ofGetFrameRate()) ) ;
+//    ofSetWindowTitle( "FPS: " + ofToString( ofGetFrameRate() ) ;
     Tweenzor::update( ofGetElapsedTimeMillis() ) ;
     inspector.update( ) ;
 
@@ -204,6 +206,19 @@ void testApp::guiEvent(ofxUIEventArgs &e)
     }
 }
 
+void testApp::openFontDialogue( )
+{
+    //
+    cout << "open Font Dialogue!" << endl ;
+    ofFileDialogResult fontResult = ofSystemLoadDialog(  "Open New .otf or .ttf font file" ) ;
+
+
+    string path = fontResult.getPath() ; //
+    cout << "path : " << path << endl ;
+    inspector.addFont( path ) ;
+
+}
+
 void testApp::updateNewWordBlock ( string _word , float _fontSize )
 {
     WordBlock * wb = quote.getEditableBlock() ;
@@ -298,7 +313,7 @@ void testApp::setupGUI ( )
     gui = new ofxUICanvas( 0 , ofGetHeight() - canvasHeight , ofGetWidth() , canvasHeight );
     //gui->addWidgetDown(new ofxUILabel("SLIDERS", OFX_UI_FONT_LARGE));
     gui->addWidgetRight(new ofxUILabel("SPACE - play/pause , S - save project", OFX_UI_FONT_LARGE));
-    gui->addWidgetRight(new ofxUILabel("R - reset , P - export PDF , N - New Word Box , E - Edit Word , ENTER - Finish Edit , BACKSPACE - Delete Word", OFX_UI_FONT_MEDIUM ));
+    gui->addWidgetRight(new ofxUILabel("R - reset , F - Load Font , N - New Word Box , E - Edit Word , ENTER - Finish Edit , BACKSPACE - Delete Word , P - PDF" , OFX_UI_FONT_MEDIUM ));
 
     gui->addWidgetDown(new ofxUISlider( sliderLength , 15 , 0.0, 12.0f, a_maxSpeed, "MAX SPEED"));
     gui->addWidgetRight(new ofxUISlider( sliderLength , 15 , 0.0f, 4.0f, a_rOffsetMaxSpeed , "MAX SPEED R OFFSET" )) ;
@@ -540,6 +555,10 @@ void testApp::keyPressed( int key )
                     quote.editWordBlockAt ( mouseX , mouseY ) ;
                     break ;
 
+                case 'f':
+                case 'F':
+                    openFontDialogue() ;
+                    break ;
                 case 127 :
                 case 8 :
                     quote.removeWordBlockAt ( mouseX , mouseY ) ;

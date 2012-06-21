@@ -69,6 +69,7 @@ class testApp : public ofBaseApp{
         void createNewWordBlock ( ) ;
         void initProject ( ) ;
 
+        void openFontDialogue() ;
         float canvasAlpha ;
      //   int fontSize ;
 
