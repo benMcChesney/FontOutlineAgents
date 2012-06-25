@@ -1,0 +1,26 @@
+<wordBlock>
+    <text>HEY</text>
+    <fontSize>53.08</fontSize>
+    <fontPath>ang.ttf</fontPath>
+    <translateX>745</translateX>
+    <translateY>583</translateY>
+</wordBlock>
+<wordBlock>
+    <text>HOW</text>
+    <fontSize>53.08</fontSize>
+    <fontPath>ang.ttf</fontPath>
+    <translateX>683</translateX>
+    <translateY>384</translateY>
+</wordBlock>
+<r>218</r>
+<g>225</g>
+<b>139</b>
+<fontPath>Batang.ttf</fontPath>
+<fontPath>Cooper_Black.ttf</fontPath>
+<MAX SPEED>6.12</MAX SPEED>
+<MAX SPEED R OFFSET>1.48</MAX SPEED R OFFSET>
+<MAX FORCE>3.65</MAX FORCE>
+<MAX FORCE R OFFSET>0.48</MAX FORCE R OFFSET>
+<BUFFER DIST>37</BUFFER DIST>
+<PATH SAMPLING>1</PATH SAMPLING>
+<NUM AGENTS>70</NUM AGENTS>

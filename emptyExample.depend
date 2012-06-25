@@ -2633,7 +2633,7 @@
 	"testApp.h"
 	"ofAppGlutWindow.h"
 
-1340250324 c:\users\ben\documents\of_v0071_win_cb_release\apps\github\fontagentoutlines\src\testapp.h
+1340598716 c:\users\ben\documents\of_v0071_win_cb_release\apps\github\fontagentoutlines\src\testapp.h
 	"ofMain.h"
 	"Agent.h"
 	"ColorPool.h"
@@ -2862,7 +2862,7 @@
 	"ofPoint.h"
 	"ofTypes.h"
 
-1340249849 source:c:\users\ben\documents\of_v0071_win_cb_release\apps\github\fontagentoutlines\src\testapp.cpp
+1340599776 source:c:\users\ben\documents\of_v0071_win_cb_release\apps\github\fontagentoutlines\src\testapp.cpp
 	"testApp.h"
 
 1339866140 source:c:\users\ben\documents\of_v0071_win_cb_release\apps\github\fontagentoutlines\src\agent.cpp
@@ -2882,10 +2882,11 @@
 
 1339879132 c:\users\ben\documents\of_v0071_win_cb_release\apps\github\fontagentoutlines\src\fontdata.h
 
-1340250238 c:\users\ben\documents\of_v0071_win_cb_release\apps\github\fontagentoutlines\src\inspectorpanel.h
+1340599007 c:\users\ben\documents\of_v0071_win_cb_release\apps\github\fontagentoutlines\src\inspectorpanel.h
 	"HitButton.h"
 	"ofxColorPicker.h"
 	"Events.h"
+	"FontPool.h"
 
 1323140610 c:\users\ben\documents\of_v0071_win_cb_release\addons\ofxcolorpicker\src\ofxcolorpicker.h
 	"ofMain.h"

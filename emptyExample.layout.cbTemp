@@ -14,7 +14,7 @@
 		<Cursor position="663" topLine="22" />
 	</File>
 	<File name="src\InspectorPanel.h" open="1" top="0" tabpos="4">
-		<Cursor position="1089" topLine="20" />
+		<Cursor position="2216" topLine="55" />
 	</File>
 	<File name="src\QuoteText.h" open="1" top="0" tabpos="5">
 		<Cursor position="337" topLine="18" />
@@ -23,9 +23,9 @@
 		<Cursor position="221" topLine="0" />
 	</File>
 	<File name="src\testApp.cpp" open="1" top="1" tabpos="2">
-		<Cursor position="1587" topLine="27" />
+		<Cursor position="12440" topLine="439" />
 	</File>
 	<File name="src\testApp.h" open="1" top="0" tabpos="1">
-		<Cursor position="1443" topLine="53" />
+		<Cursor position="1856" topLine="62" />
 	</File>
 </CodeBlocks_layout_file>

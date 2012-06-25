@@ -312,8 +312,8 @@ void testApp::setupGUI ( )
     float padding = 15 ;
     gui = new ofxUICanvas( 0 , ofGetHeight() - canvasHeight , ofGetWidth() , canvasHeight );
     //gui->addWidgetDown(new ofxUILabel("SLIDERS", OFX_UI_FONT_LARGE));
-    gui->addWidgetRight(new ofxUILabel("SPACE - play/pause , S - save project", OFX_UI_FONT_LARGE));
-    gui->addWidgetRight(new ofxUILabel("R - reset , F - Load Font , N - New Word Box , E - Edit Word , ENTER - Finish Edit , BACKSPACE - Delete Word , P - PDF" , OFX_UI_FONT_MEDIUM ));
+    gui->addWidgetRight(new ofxUILabel("SPACE - play/pause , S - save project", OFX_UI_FONT_SMALL ));
+    gui->addWidgetRight(new ofxUILabel("R - reset , F - Load Font , N - New Word Box , E - Edit Word , ENTER - Finish Edit , BACKSPACE - Delete Word , P - PDF" , OFX_UI_FONT_SMALL ));
 
     gui->addWidgetDown(new ofxUISlider( sliderLength , 15 , 0.0, 12.0f, a_maxSpeed, "MAX SPEED"));
     gui->addWidgetRight(new ofxUISlider( sliderLength , 15 , 0.0f, 4.0f, a_rOffsetMaxSpeed , "MAX SPEED R OFFSET" )) ;
@@ -403,6 +403,11 @@ void testApp::saveProjectFile( )
             projectXml.setValue( "b" , colorPool.pool[c].b ) ;
        // projectXml.popTag( ) ;
 
+    }
+
+    for ( int f = 0 ; f < inspector.fontPaths.size() ; f++ )
+    {
+        projectXml.setValue( "fontPath" , inspector.fontPaths[f] , f ) ;
     }
 
     projectXml.setValue ( "MAX SPEED" , a_maxSpeed ) ;

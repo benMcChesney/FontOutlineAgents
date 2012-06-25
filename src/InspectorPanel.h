@@ -4,6 +4,7 @@
 #include "HitButton.h"
 #include "ofxColorPicker.h"
 #include "Events.h"
+#include "FontPool.h"
 
 class InspectorPanel
 {
@@ -35,6 +36,7 @@ class InspectorPanel
 
             //Add default font
             addFont( "Batang.ttf" ) ;
+            addFont( "Cooper_Black.ttf" ) ;
         }
 
         void addFont( string fontPath )
@@ -90,6 +92,17 @@ class InspectorPanel
                 ofRect( 15 , 60 * c , 50 , 50 ) ;
             }
             ofPopMatrix( ) ;
+
+            //Draw Fonts
+            ofPushMatrix() ;
+                ofTranslate( 25 , 400 , 0 ) ;
+                ofDrawBitmapStringHighlight( "FONTS LOADED:" , 0 , 0 ) ;
+                for ( int i = 0 ; i < fontPaths.size() ; i++ )
+                {
+                    ofDrawBitmapString(  fontPaths[ i ] , 25 , (i+1) * 25 ) ;
+                }
+
+            ofPopMatrix() ;
 
         }
 
