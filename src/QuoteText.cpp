@@ -283,7 +283,7 @@ QuotePath* QuoteText::getQuotePathAt ( int index )
     }
 }
 
-void QuoteText::drawWordBlocks()
+void QuoteText::drawWordBlocks( )
 {
    // cout << "number of wordBlocks! " << wordBlocks.size() << endl ;
     for ( int i = 0 ; i < wordBlocks.size() ; i++ )

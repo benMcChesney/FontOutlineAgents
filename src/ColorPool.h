@@ -32,8 +32,17 @@ class ColorPool
         // retrieve a color from the palette
         ofColor getRandomColor ( )
         {
-            int randIndex = ofRandom ( 0 , pool.size() ) ;
-            return pool[randIndex] ;
+            if ( pool.size() > 0 )
+            {
+                int randIndex = ofRandom ( 0 , pool.size() ) ;
+                return pool[randIndex] ;
+            }
+            else
+            {
+                //cout << "CALLING GETRANDOMCOLOR() TOO SOON !" << endl ;
+                return ofColor::white ;
+            }
+
         }
 
         void clear ( )

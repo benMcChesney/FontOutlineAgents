@@ -87,6 +87,9 @@ class testApp : public ofBaseApp{
 
         void newColorHandler( ofColor &args ) ;
         void removeLastColorHandler( int &args ) ;
+        void fontUpdatedHandler ( int &args ) ;
+
+        ofFbo trailFbo ;
 
 
 

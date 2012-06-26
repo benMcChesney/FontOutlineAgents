@@ -2633,7 +2633,7 @@
 	"testApp.h"
 	"ofAppGlutWindow.h"
 
-1340598716 c:\users\ben\documents\of_v0071_win_cb_release\apps\github\fontagentoutlines\src\testapp.h
+1340685139 c:\users\ben\documents\of_v0071_win_cb_release\apps\github\fontagentoutlines\src\testapp.h
 	"ofMain.h"
 	"Agent.h"
 	"ColorPool.h"
@@ -2648,13 +2648,13 @@
 	"InspectorPanel.h"
 	"Events.h"
 
-1339866140 c:\users\ben\documents\of_v0071_win_cb_release\apps\github\fontagentoutlines\src\agent.h
+1340682471 c:\users\ben\documents\of_v0071_win_cb_release\apps\github\fontagentoutlines\src\agent.h
 	"ofMain.h"
 	"ColorPool.h"
 	"ColorTrail.h"
 	"AgentEvent.h"
 
-1340167973 c:\users\ben\documents\of_v0071_win_cb_release\apps\github\fontagentoutlines\src\colorpool.h
+1340678789 c:\users\ben\documents\of_v0071_win_cb_release\apps\github\fontagentoutlines\src\colorpool.h
 	"ofMain.h"
 
 1339866140 c:\users\ben\documents\of_v0071_win_cb_release\apps\github\fontagentoutlines\src\colortrail.h
@@ -2664,7 +2664,7 @@
 	"ofEvents.h"
 	"ofMain.h"
 
-1339875737 c:\users\ben\documents\of_v0071_win_cb_release\apps\github\fontagentoutlines\src\quotetext.h
+1340681558 c:\users\ben\documents\of_v0071_win_cb_release\apps\github\fontagentoutlines\src\quotetext.h
 	"ofMain.h"
 	"QuotePath.h"
 	"AgentEvent.h"
@@ -2673,7 +2673,7 @@
 1339907757 c:\users\ben\documents\of_v0071_win_cb_release\apps\github\fontagentoutlines\src\quotepath.h
 	"ofMain.h"
 
-1339904123 c:\users\ben\documents\of_v0071_win_cb_release\apps\github\fontagentoutlines\src\wordblock.h
+1340685322 c:\users\ben\documents\of_v0071_win_cb_release\apps\github\fontagentoutlines\src\wordblock.h
 	"ofMain.h"
 
 1338682542 c:\users\ben\documents\of_v0071_win_cb_release\addons\ofxui\src\ofxui.h
@@ -2862,17 +2862,17 @@
 	"ofPoint.h"
 	"ofTypes.h"
 
-1340599776 source:c:\users\ben\documents\of_v0071_win_cb_release\apps\github\fontagentoutlines\src\testapp.cpp
+1340685439 source:c:\users\ben\documents\of_v0071_win_cb_release\apps\github\fontagentoutlines\src\testapp.cpp
 	"testApp.h"
 
-1339866140 source:c:\users\ben\documents\of_v0071_win_cb_release\apps\github\fontagentoutlines\src\agent.cpp
+1340682534 source:c:\users\ben\documents\of_v0071_win_cb_release\apps\github\fontagentoutlines\src\agent.cpp
 	"Agent.h"
 
 1339907787 source:c:\users\ben\documents\of_v0071_win_cb_release\apps\github\fontagentoutlines\src\quotepath.cpp
 	"QuotePath.h"
 	<iostream>
 
-1339908696 source:c:\users\ben\documents\of_v0071_win_cb_release\apps\github\fontagentoutlines\src\quotetext.cpp
+1340681555 source:c:\users\ben\documents\of_v0071_win_cb_release\apps\github\fontagentoutlines\src\quotetext.cpp
 	<iostream>
 	"QuoteText.h"
 
@@ -2880,13 +2880,14 @@
 	"ofMain.h"
 	"FontData.h"
 
-1339879132 c:\users\ben\documents\of_v0071_win_cb_release\apps\github\fontagentoutlines\src\fontdata.h
+1340678093 c:\users\ben\documents\of_v0071_win_cb_release\apps\github\fontagentoutlines\src\fontdata.h
 
-1340599007 c:\users\ben\documents\of_v0071_win_cb_release\apps\github\fontagentoutlines\src\inspectorpanel.h
+1340685126 c:\users\ben\documents\of_v0071_win_cb_release\apps\github\fontagentoutlines\src\inspectorpanel.h
 	"HitButton.h"
 	"ofxColorPicker.h"
 	"Events.h"
 	"FontPool.h"
+	"FontData.h"
 
 1323140610 c:\users\ben\documents\of_v0071_win_cb_release\addons\ofxcolorpicker\src\ofxcolorpicker.h
 	"ofMain.h"
@@ -2904,5 +2905,5 @@
 
 1340166336 c:\users\ben\documents\of_v0071_win_cb_release\apps\github\fontagentoutlines\src\hitbutton.h
 
-1340167885 c:\users\ben\documents\of_v0071_win_cb_release\apps\github\fontagentoutlines\src\events.h
+1340685090 c:\users\ben\documents\of_v0071_win_cb_release\apps\github\fontagentoutlines\src\events.h
 

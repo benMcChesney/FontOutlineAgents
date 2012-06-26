@@ -5,6 +5,7 @@
 #include "ofxColorPicker.h"
 #include "Events.h"
 #include "FontPool.h"
+#include "FontData.h"
 
 class InspectorPanel
 {
@@ -21,13 +22,17 @@ class InspectorPanel
         HitButton removeColor ;
         vector<ofColor> colors ;
 
-        vector<string> fontPaths ;
+        vector<FontData> fonts ;
         int currentFont ;
 
         void setup ( )
         {
             area = ofRectangle( 0 , 0 , 305 , ofGetHeight() - 125 ) ;
             color = ofColor( 125 , 125 , 125 , 125 );
+
+            fontBegin = ofPoint ( 25 , 425 )  ;
+            fontYSpacing = 25 ;
+
             addColor.setup( "ADD COLOR" , 15 , 315 , 125 , 50 ) ;
             removeColor.setup( "REMOVE LAST COLOR" , 155 , 315 , 125 , 50 ) ;
 
@@ -36,18 +41,33 @@ class InspectorPanel
 
             //Add default font
             addFont( "Batang.ttf" ) ;
-            addFont( "Cooper_Black.ttf" ) ;
+            addFont( "CooperBlack.ttf" ) ;
         }
 
         void addFont( string fontPath )
         {
+            //Shorten Font
+            int _slashIndex = fontPath.find( "\data" ) ;
+            string shortPath = fontPath ;
+
+            if ( _slashIndex > 0 )
+            {
+                shortPath = fontPath.substr( _slashIndex + 5 ) ;
+            }
+            cout << "_slashIndex is : " << _slashIndex << endl ;
+
             currentFont = 0 ;
-            fontPaths.push_back( fontPath ) ;
+            FontData fontData ;
+            fontData.filePath = fontPath ;
+            fontData.name = shortPath ;
+            fonts.push_back( fontData ) ;
+
+            cout << "added " << shortPath << " with path of : " << fontPath << endl ;
         }
 
         string getSelectedFontPath( )
         {
-            return fontPaths[ currentFont ] ;
+            return fonts[ currentFont ].filePath ;
         }
 
         void update ( )
@@ -69,6 +89,24 @@ class InspectorPanel
                 cout << "hitting remove color!" << endl ;
                 removeLastColorSwatch( ) ;
             }
+
+            for ( int i = 0 ; i < fonts.size() ; i++ )
+            {
+                float fontBlockWidth = 300 ;
+                ofRectangle bounds = ofRectangle( fontBegin.x , fontBegin.y + i * fontYSpacing - fontYSpacing/2, fontBlockWidth , fontYSpacing  ) ;
+                if ( hitTest( x , y , bounds ) )
+                {
+                    cout << " hit test SUCCESS on @ " << i << endl ;
+                    currentFont = i ;
+                    ofNotifyEvent( Events::Instance()->FONT_UPDATED , currentFont ) ;
+                }
+            }
+
+        }
+
+        bool hitTest ( float x , float y , ofRectangle b )
+        {
+            return ( ( x > b.x && x < b.x + b.width ) && ( y > b.y && y < b.y + b.height ) ) ;
         }
 
         void draw ( )
@@ -88,23 +126,45 @@ class InspectorPanel
             ofTranslate( 225 , 15 , 0 ) ;
             for ( int c = 0 ; c < colors.size() ; c++ )
             {
+
+                if ( c == colors.size() - 1 )
+                {
+                    ofSetLineWidth( 5 ) ;
+                    ofNoFill() ;
+                    ofSetColor( 255 , 105 , 180 ) ;
+                    ofRect( 10 , 60 * c - 5, 60 , 60 ) ;
+                    ofFill() ;
+                    ofSetColor( colors[c] , 125 ) ;
+                    ofRect( 15 , 60 * c , 50 , 50 ) ;
+                }
                 ofSetColor( colors[c] ) ;
                 ofRect( 15 , 60 * c , 50 , 50 ) ;
             }
             ofPopMatrix( ) ;
 
+            ofSetColor( 255 , 255 ,255 ) ;
+
             //Draw Fonts
-            ofPushMatrix() ;
-                ofTranslate( 25 , 400 , 0 ) ;
-                ofDrawBitmapStringHighlight( "FONTS LOADED:" , 0 , 0 ) ;
-                for ( int i = 0 ; i < fontPaths.size() ; i++ )
+            ofPushMatrix();
+                ofTranslate( fontBegin.x , fontBegin.y , 0 ) ;
+                ofSetColor( 15 , 15 , 15 ) ;
+                ofDrawBitmapString( "FONTS LOADED:" , 0 , -25 ) ;
+
+                ofSetColor( 255 , 255 , 255 ) ;
+                for ( int i = 0 ; i < fonts.size() ; i++ )
                 {
-                    ofDrawBitmapString(  fontPaths[ i ] , 25 , (i+1) * 25 ) ;
+                    if ( currentFont == i )
+                        ofDrawBitmapStringHighlight( fonts[ i ].name , 0 , i* fontYSpacing ) ;
+                    else
+                        ofDrawBitmapString(  fonts[ i ].name , 0 , i * fontYSpacing ) ;
                 }
 
             ofPopMatrix() ;
 
         }
+
+        ofPoint fontBegin ;
+        float fontYSpacing ;
 
         void removeLastColorSwatch ( )
         {

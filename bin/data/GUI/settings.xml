@@ -1,27 +1,27 @@
 <Widget>
     <Kind>4</Kind>
     <Name>MAX SPEED</Name>
-    <Value>6.12</Value>
+    <Value>5.52</Value>
 </Widget>
 <Widget>
     <Kind>4</Kind>
     <Name>MAX SPEED R OFFSET</Name>
-    <Value>1.48</Value>
+    <Value>1.12</Value>
 </Widget>
 <Widget>
     <Kind>4</Kind>
     <Name>MAX FORCE</Name>
-    <Value>3.65</Value>
+    <Value>0.4</Value>
 </Widget>
 <Widget>
     <Kind>4</Kind>
     <Name>MAX FORCE R OFFSET</Name>
-    <Value>0.48</Value>
+    <Value>0.2</Value>
 </Widget>
 <Widget>
     <Kind>4</Kind>
     <Name>BUFFER DIST</Name>
-    <Value>37</Value>
+    <Value>19</Value>
 </Widget>
 <Widget>
     <Kind>4</Kind>
@@ -31,10 +31,10 @@
 <Widget>
     <Kind>4</Kind>
     <Name>NUM AGENTS</Name>
-    <Value>70.44</Value>
+    <Value>39.44</Value>
 </Widget>
 <Widget>
     <Kind>4</Kind>
     <Name>NEW FONT SIZE</Name>
-    <Value>53.08</Value>
+    <Value>120.04</Value>
 </Widget>

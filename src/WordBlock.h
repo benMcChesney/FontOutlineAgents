@@ -81,7 +81,11 @@ class WordBlock
             dragOffset = ofPoint ( ) ;
             lastDrag = -2 ;
         }
-
+        void updateFont( string fontPath , int fontSize )
+        {
+            font.loadFont( fontPath, fontSize , true, true, true ) ;
+            bounds = font.getStringBoundingBox( word , 0 , 0 ) ;
+        }
         void updateWord ( )
         {
             font.loadFont( fontPath , fontSize , true , true , true ) ;

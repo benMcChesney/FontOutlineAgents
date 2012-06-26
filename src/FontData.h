@@ -5,7 +5,8 @@ class FontData
 {
     public :
         FontData( ) { }
-         string filePath ;
+
+        string filePath ;
         string name ;
 };
 

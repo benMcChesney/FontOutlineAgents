@@ -50,6 +50,12 @@ void testApp::setup()
 
     ofAddListener( Events::Instance()->ADD_NEW_COLOR , this , &testApp::newColorHandler ) ;
     ofAddListener( Events::Instance()->REMOVE_LAST_COLOR , this , &testApp::removeLastColorHandler ) ;
+    ofAddListener( Events::Instance()->FONT_UPDATED , this , &testApp::fontUpdatedHandler ) ;
+
+    trailFbo.allocate( ofGetWidth() , ofGetHeight() ) ;
+    trailFbo.begin() ;
+    ofClear( 0 , 0 , 0, 1 ) ;
+    trailFbo.end() ;
 }
 
 void testApp::newColorHandler( ofColor &color )
@@ -68,7 +74,7 @@ void testApp::removeLastColorHandler( int &args )
 void testApp::createNewWordBlock()
 {
     string batangPath = "Batang.ttf"  ;
-    quote.addWordBlock( "" , batangPath , ofPoint( ofGetWidth() / 2 , ofGetHeight() / 2 ) , newFontSize , true ) ;
+    quote.addWordBlock( "" , inspector.getSelectedFontPath() , ofPoint( ofGetWidth() / 2 , ofGetHeight() / 2 ) , newFontSize , true ) ;
 }
 
 //--------------------------------------------------------------
@@ -125,6 +131,8 @@ void testApp::update()
 
 }
 
+
+
 //--------------------------------------------------------------
 void testApp::draw()
 {
@@ -136,14 +144,22 @@ void testApp::draw()
     //newProjectBook.draw( ) ;
     quote.drawWordBlocks( ) ;
 
+    trailFbo.begin() ;
+
     //Call the agent draw() ! Nice and simple
     for ( int a = 0 ; a < agents.size() ; a++ )
     {
         ofPushMatrix() ;
             int wordIndex = quote.getQuotePathAt( a )->curWord ;
-            agents[a]->draw() ;
+            agents[a]->draw ( false ) ;
         ofPopMatrix() ;
     }
+
+    trailFbo.end() ;
+
+    ofSetColor( 255 , 255 , 255 ) ;
+    trailFbo.draw( 0 , 0 ) ;
+
 
     inspector.draw( ) ;
 
@@ -187,6 +203,13 @@ void testApp::guiEvent(ofxUIEventArgs &e)
     if ( name == "NEW FONT SIZE" )
     {
         newFontSize = ((ofxUISlider *) e.widget)->getScaledValue() ;
+
+         WordBlock * wb = quote.getEditableBlock( ) ;
+         if ( wb != NULL )
+         {
+             updateNewWordBlock( wb->word , newFontSize ) ;
+             resetAgents() ;
+         }
     }
     //newFontSize
     /*
@@ -210,7 +233,7 @@ void testApp::openFontDialogue( )
 {
     //
     cout << "open Font Dialogue!" << endl ;
-    ofFileDialogResult fontResult = ofSystemLoadDialog(  "Open New .otf or .ttf font file" ) ;
+    ofFileDialogResult fontResult = ofSystemLoadDialog(  "Open New .otf or .ttf font file" , false ) ;
 
 
     string path = fontResult.getPath() ; //
@@ -230,9 +253,22 @@ void testApp::updateNewWordBlock ( string _word , float _fontSize )
 
     wb->word = _word ;
     wb->fontSize = _fontSize ;
+    //wb->set
     wb->updateWord( ) ;
+    wb->updateFont(  inspector.getSelectedFontPath() , wb->fontSize ) ;
+    //wb->font.loadFont( inspector.getSelectedFontPath() , wb->fontSize , true, true, true ) ;
 }
 
+
+void testApp::fontUpdatedHandler( int &args )
+{
+    WordBlock * wb = quote.getEditableBlock() ;
+    if ( wb != NULL )
+    {
+       wb->updateFont( inspector.getSelectedFontPath() , wb->fontSize  ) ;
+    }
+
+}
 void testApp::createNewAgent()
 {
     int index = agents.size() ;
@@ -281,6 +317,7 @@ void testApp::exportPDF( )
         //ofSetColor( 0 , 0 , 0 ) ;
         //ofRect( 0 , 0, ofGetWidth() , ofGetHeight() ) ;
         agents[i]->draw( false ) ;
+        agents[i]->drawEntirePath( ) ;
         ofEndSaveScreenAsPDF() ;
     }
 
@@ -289,6 +326,8 @@ void testApp::exportPDF( )
     ofBeginSaveScreenAsPDF( combinedName ) ;
     ofSetColor( 255 , 255 , 255 , 0 ) ;
     ofRect( 0 , 0, ofGetWidth() , ofGetHeight() ) ;
+
+
     //ofTranslate( quote.charTranslateOffset.x , quote.charTranslateOffset.y ) ;
 
     for ( int i = 0 ; i < agents.size() ; i++ )
@@ -323,7 +362,7 @@ void testApp::setupGUI ( )
     gui->addWidgetDown(new ofxUISlider( sliderLength , 15 , 0.0, 50.0f, a_targetBuffer, "BUFFER DIST"));
     gui->addWidgetRight(new ofxUISlider( sliderLength , 15 , 1 , 14 , a_pathSampling, "PATH SAMPLING"));
     gui->addWidgetRight(new ofxUISlider( sliderLength , 15 , 1 , 125 , a_numAgents, "NUM AGENTS"));
-    gui->addWidgetRight(new ofxUISlider( sliderLength , 15 , 1 , 125 , newFontSize, "NEW FONT SIZE" ));
+    gui->addWidgetRight(new ofxUISlider( sliderLength * 2 , 15 , 1 , 125 , newFontSize, "NEW FONT SIZE" ));
 
     //newFontSize
     float radioSize = 45 ;
@@ -347,6 +386,11 @@ void testApp::resetAgents()
 {
     if ( !quote.bReadyToStart )
         return ;
+
+    trailFbo.begin() ;
+    ofClear( 0 , 0 , 0, 1 ) ;
+    trailFbo.end() ;
+
     quote.resetQuotePaths( ) ;
     agents.clear() ;
 
@@ -405,9 +449,9 @@ void testApp::saveProjectFile( )
 
     }
 
-    for ( int f = 0 ; f < inspector.fontPaths.size() ; f++ )
+    for ( int f = 0 ; f < inspector.fonts.size() ; f++ )
     {
-        projectXml.setValue( "fontPath" , inspector.fontPaths[f] , f ) ;
+        projectXml.setValue( "fontPath" , inspector.fonts[f].filePath , f ) ;
     }
 
     projectXml.setValue ( "MAX SPEED" , a_maxSpeed ) ;
@@ -599,6 +643,7 @@ void testApp::keyPressed( int key )
             wb->word += key ;
             cout << "updating word blcok with : " << wb->word << endl ;
             //void testApp::updateNewWordBlock ( string _word , float _fontSize )
+           //   WordBlock * wb = quote.getEditableBlock( ) ;
             updateNewWordBlock( wb->word , newFontSize ) ;
 
         }

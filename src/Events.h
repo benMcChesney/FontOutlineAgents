@@ -16,6 +16,7 @@ class Events
 
         ofEvent<ofColor> ADD_NEW_COLOR ;
         ofEvent<int> REMOVE_LAST_COLOR ;
+        ofEvent<int> FONT_UPDATED ;
 
     protected:
     private:
