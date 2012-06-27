@@ -47,12 +47,12 @@ class InspectorPanel
         void addFont( string fontPath )
         {
             //Shorten Font
-            int _slashIndex = fontPath.find( "\data" ) ;
+            int _slashIndex = fontPath.find( "data" ) ;
             string shortPath = fontPath ;
 
             if ( _slashIndex > 0 )
             {
-                shortPath = fontPath.substr( _slashIndex + 5 ) ;
+                shortPath = fontPath.substr( _slashIndex + 4 ) ;
             }
             cout << "_slashIndex is : " << _slashIndex << endl ;
 

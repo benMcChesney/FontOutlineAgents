@@ -129,6 +129,7 @@ void testApp::update()
         count++ ;
     }
 
+    cout << "num of Agents : " << agents.size() << endl ; 
 }
 
 
