@@ -1,6 +1,8 @@
 FontOutlineAgents
 =================
 
+Built for Windows + Mac OS X 10.7
+
 Drawing the outlines of type using particle or agent to make generative type designs from existing fonts. Using open frameworks 
 
 A truetype font is loaded and shape outlines are created.
